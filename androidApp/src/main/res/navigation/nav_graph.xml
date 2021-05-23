@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/startDrinkingFragment">
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.pd.beertimer.feature.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/countDownFragment"
+        android:name="com.pd.beertimer.feature.countdown.CountDownFragment"
+        android:label="CountDownFragment"
+        tools:layout="@layout/fragment_timer"/>
+    <action
+        android:id="@+id/action_global_countDownFragment"
+        app:destination="@id/countDownFragment" />
+    <fragment
+        android:id="@+id/startDrinkingFragment"
+        android:name="com.pd.beertimer.feature.startdrinking.StartDrinkingFragment"
+        android:label="StartDrinkingFragment"
+        tools:layout="@layout/fragment_startdrinking">
+        <action
+            android:id="@+id/action_startDrinkingFragment_to_countDownFragment"
+            app:destination="@id/countDownFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_startDrinkingFragment"
+        app:destination="@id/startDrinkingFragment" />
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="com.pd.beertimer.feature.info.InfoFragment"
+        android:label="InfoFragment"
+        tools:layout="@layout/fragment_info"/>
+    <action
+        android:id="@+id/action_global_infoFragment"
+        app:destination="@id/infoFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+        app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    <fragment
+        android:id="@+id/meFragment"
+        android:name="com.pd.beertimer.feature.me.MeFragment"
+        android:label="MeFragment"
+        tools:layout="@layout/fragment_me">
+        <action
+            android:id="@+id/action_meFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_meFragment_to_myDrinksFragment"
+            app:destination="@id/myDrinksFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_meFragment"
+        app:destination="@id/meFragment" />
+    <fragment
+        android:id="@+id/myDrinksFragment"
+        android:name="com.pd.beertimer.feature.drinks.MyDrinksFragment"
+        android:label="MyDrinksFragment"
+        tools:layout="@layout/fragment_my_drinks">
+        <action
+            android:id="@+id/action_myDrinksFragment_to_addDrinkFragment"
+            app:destination="@id/addDrinkFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addDrinkFragment"
+        android:name="com.pd.beertimer.feature.drinks.AddDrinkFragment"
+        android:label="AddDrinkFragment"
+        tools:layout="@layout/fragment_add_drink"/>
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.pd.beertimer.feature.welcome.WelcomeFragment"
+        android:label="WelcomeFragment" /><action android:id="@+id/action_global_welcomeFragment" app:destination="@id/welcomeFragment"/>
+</navigation>

@@ -1,5 +1,6 @@
 package com.pd.beertimer.module
 
+import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -19,21 +20,29 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val beerTimeModules = module {
-    factory {
-        InfoViewModel(androidContext())
+fun beerTimeModules(applicationContext: Application) = module {
+    single<Context> {
+        applicationContext.applicationContext
     }
 
-    factory {
+    single<Application> {
+        applicationContext
+    }
+
+    viewModel {
+        InfoViewModel(applicationContext = get())
+    }
+
+    viewModel {
         ProfileViewModel(profileStorage = get())
     }
 
     factory {
-        VolumeConverter(get())
+        VolumeConverter(sharedPreferences = get())
     }
 
     factory {
-        androidApplication().getSharedPreferences(
+        get<Context>().getSharedPreferences(
             SHARED_PREF_BEER_TIME,
             Context.MODE_PRIVATE
         )
@@ -46,21 +55,21 @@ val beerTimeModules = module {
     }
 
     single {
-        AlarmUtils(androidContext())
+        AlarmUtils(context = get())
     }
 
     viewModel {
         StartDrinkingViewModel(
             drinkRepository = get(),
-            applicationContext = androidApplication(),
+            applicationContext = get(),
             profileStorage = get(),
             firebaseAnalytics = get()
         )
     }
 
-    factory {
-        ProfileStorage(appContext = androidContext())
-    }
+//    factory {
+//        ProfileStorage(appContext = get())
+//    }
 
     single {
         getFirebaseAnalytics()
@@ -79,7 +88,7 @@ val beerTimeModules = module {
     }
 
     single {
-        getRoomDatabase(androidApplication())
+        getRoomDatabase(get())
     }
 }
 

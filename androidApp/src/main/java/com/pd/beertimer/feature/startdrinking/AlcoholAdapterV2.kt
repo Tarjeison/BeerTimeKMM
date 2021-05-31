@@ -9,8 +9,8 @@ import com.pd.beertimer.R
 import com.pd.beertimer.models.AlcoholUnit
 import com.pd.beertimer.util.VolumeConverter
 import kotlinx.android.synthetic.main.item_drink_v2.view.*
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 
 class AlcoholAdapterV2(private val alcoholUnits: MutableList<AlcoholUnit>) :

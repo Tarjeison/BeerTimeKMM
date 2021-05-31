@@ -1,8 +1,8 @@
 package com.pd.beertimer.util
 
 import com.pd.beertimer.models.AlcoholUnit
-import com.pd.beertimer.models.Gender
-import com.pd.beertimer.models.UserProfile
+import com.tlapp.beertimemm.models.Gender
+import com.tlapp.beertimemm.models.UserProfile
 import kotlinx.serialization.Serializable
 import java.time.Duration
 import java.time.LocalDateTime

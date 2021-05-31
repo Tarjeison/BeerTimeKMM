@@ -52,6 +52,9 @@ android {
 }
 
 dependencies {
+
+    implementation project(":shared")
+
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.4'
     // For Kotlin use navigation-fragment-ktx
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.4'
@@ -68,8 +71,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // Koin
-    implementation  'org.koin:koin-android:2.2.0-alpha-1'
-    implementation "org.koin:koin-androidx-viewmodel:2.2.0-alpha-1"
+    // implementation "org.koin:koin-androidx-viewmodel:3.0.2"
+    implementation "io.insert-koin:koin-android:3.0.2"
+    implementation "io.insert-koin:koin-core:3.0.2"
 
     // Bottom bar
     implementation 'nl.joery.animatedbottombar:library:1.0.8'

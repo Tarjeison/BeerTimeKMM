@@ -1,4 +1,4 @@
-package com.pd.beertimer.models
+package com.tlapp.beertimemm.models
 
 import kotlinx.serialization.Serializable
 
@@ -10,6 +10,10 @@ enum class Gender {
     MALE,
     FEMALE;
     companion object {
+
+        const val FILE_WEIGHT = "weight"
+        const val FILE_GENDER = "gender"
+
         fun stringToGender(s: String): Gender {
             return when (s) {
                 "MALE" -> MALE

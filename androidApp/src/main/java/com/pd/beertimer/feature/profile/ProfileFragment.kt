@@ -10,11 +10,11 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import com.pd.beertimer.R
 import com.pd.beertimer.databinding.FragmentProfileBinding
-import com.pd.beertimer.models.Gender
-import com.pd.beertimer.models.UserProfile
 import com.pd.beertimer.util.SHARED_PREF_USES_LITERS
 import com.pd.beertimer.util.ToastHelper
 import com.pd.beertimer.util.viewBinding
+import com.tlapp.beertimemm.models.Gender
+import com.tlapp.beertimemm.models.UserProfile
 import kotlinx.android.synthetic.main.fragment_profile.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel

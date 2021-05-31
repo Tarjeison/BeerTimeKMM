@@ -12,8 +12,8 @@ import kotlinx.android.synthetic.main.item_drink_v2.view.icDrink
 import kotlinx.android.synthetic.main.item_drink_v2.view.tvDrinkName
 import kotlinx.android.synthetic.main.item_drink_v2.view.tvPercentAndVolume
 import kotlinx.android.synthetic.main.item_my_drink.view.*
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class MyDrinksAdapter(
     private val drinkList: MutableList<MyDrinkItem>,

@@ -6,25 +6,29 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import com.pd.beertimer.NotificationBroadcast
+import com.tlapp.beertimemm.models.DrinkingCalculator
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import java.time.LocalDateTime
-import java.time.ZoneId
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
 
 private const val REQUEST_CODE: Int = 1337727272
 
+@ExperimentalTime
 class AlarmUtils(context: Context) : ContextWrapper(context) {
 
     fun setFirstAlarmAndStoreTimesToSharedPref(
-        localDateTimes: List<LocalDateTime>,
+        drinkingTimes: List<Instant>,
         calculator: DrinkingCalculator
     ) {
-        saveDrinkingValuesToSharedPref(localDateTimes, calculator)
+        saveDrinkingValuesToSharedPref(drinkingTimes, calculator)
 
         // Drop first time as it is when the user started drinking
-        localDateTimes.getOrNull(1)?.let {
-            val millisTriggerTime = it.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        drinkingTimes.getOrNull(1)?.let {
+            val millisTriggerTime = it.toEpochMilliseconds()
             scheduleAlarmClock(millisTriggerTime)
         }
     }
@@ -58,40 +62,28 @@ class AlarmUtils(context: Context) : ContextWrapper(context) {
         return true
     }
 
-    fun getExistingDrinkTimesFromSharedPref(): List<LocalDateTime>? {
+    fun getExistingDrinkTimesFromSharedPref(): List<Instant>? {
         val sharedPref =
             baseContext.getSharedPreferences(SHARED_PREF_BEER_TIME, Context.MODE_PRIVATE)
         sharedPref.getString(SHARED_PREF_DRINKING_TIMES, null)?.let {
-            var drinkingTimesString = it.trim('[', ']')
-            if (drinkingTimesString.isEmpty()) return null
-            drinkingTimesString = drinkingTimesString.replace(" ", "")
-            val drinkingTimesStringArray = drinkingTimesString.split(",")
-            val drinkingLocalDateTimes = drinkingTimesStringArray.map { drinkingTimeString ->
-                LocalDateTime.parse(drinkingTimeString)
-            }
-            if (drinkingLocalDateTimes.last() > LocalDateTime.now()) {
-                return drinkingLocalDateTimes
+            val drinkingTimes = Json.decodeFromString<List<Instant>>(it)
+            if (drinkingTimes.last() > Clock.System.now()) {
+                return drinkingTimes
             }
         }
         return null
     }
 
-    fun getNextDrinkingTimeFromSharedPref(): Pair<LocalDateTime, Boolean>? {
+    fun getNextDrinkingTimeFromSharedPref(): Pair<Instant, Boolean>? {
         val sharedPref =
             baseContext.getSharedPreferences(SHARED_PREF_BEER_TIME, Context.MODE_PRIVATE)
         sharedPref.getString(SHARED_PREF_DRINKING_TIMES, null)?.let { drinkingTimesFromSharedPref ->
-            var drinkingTimesString = drinkingTimesFromSharedPref.trim('[', ']')
-            if (drinkingTimesString.isEmpty()) return null
-            drinkingTimesString = drinkingTimesString.replace(" ", "")
-            val drinkingTimesStringArray = drinkingTimesString.split(",")
-            val drinkingLocalDateTimes = drinkingTimesStringArray.map { drinkingTimeString ->
-                LocalDateTime.parse(drinkingTimeString)
-            }
-            val currentTime = LocalDateTime.now().plusSeconds(10) // Give some leeway
+            val drinkingTimes = Json.decodeFromString<List<Instant>>(drinkingTimesFromSharedPref)
+            val currentTime = Clock.System.now().plus(Duration.Companion.seconds(10)) // Give some leeway
             val nextDrinkingTime =
-                drinkingLocalDateTimes.firstOrNull { it > currentTime } ?: return null
+                drinkingTimes.firstOrNull { it > currentTime } ?: return null
             val isLast =
-                drinkingLocalDateTimes.indexOf(nextDrinkingTime) == drinkingLocalDateTimes.lastIndex
+                drinkingTimes.indexOf(nextDrinkingTime) == drinkingTimes.lastIndex
             return Pair(nextDrinkingTime, isLast)
         }
         return null
@@ -109,21 +101,21 @@ class AlarmUtils(context: Context) : ContextWrapper(context) {
     private fun clearDrinkingValuesSharedPref() {
         val sharedPref =
             baseContext.getSharedPreferences(SHARED_PREF_BEER_TIME, Context.MODE_PRIVATE)
-        with(sharedPref.edit()) {
-            remove(SHARED_PREF_DRINKING_TIMES)
-            remove(SHARED_PREF_DRINKING_CALCULATOR)
-        }.apply()
+        sharedPref.edit()
+            .remove(SHARED_PREF_DRINKING_TIMES)
+            .remove(SHARED_PREF_DRINKING_CALCULATOR)
+            .apply()
     }
 
     private fun saveDrinkingValuesToSharedPref(
-        drinkingTimes: List<LocalDateTime>,
+        drinkingTimes: List<Instant>,
         calculator: DrinkingCalculator
     ) {
         val sharedPref =
             baseContext.getSharedPreferences(SHARED_PREF_BEER_TIME, Context.MODE_PRIVATE)
-        with(sharedPref.edit()) {
-            putString(SHARED_PREF_DRINKING_TIMES, drinkingTimes.toString())
-            putString(SHARED_PREF_DRINKING_CALCULATOR, Json.encodeToString(calculator))
-        }.apply()
+        sharedPref.edit()
+            .putString(SHARED_PREF_DRINKING_TIMES, Json.encodeToString(drinkingTimes))
+            .putString(SHARED_PREF_DRINKING_CALCULATOR, Json.encodeToString(calculator))
+            .apply()
     }
 }

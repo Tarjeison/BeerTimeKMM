@@ -6,7 +6,9 @@ import com.github.mikephil.charting.components.LimitLine
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.pd.beertimer.util.toHourMinuteString
-import java.time.LocalDateTime
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 class ChartHelper {
     fun setLineDataSetAttributes(lineDataSet: LineDataSet) {
@@ -43,9 +45,10 @@ class ChartHelper {
         return limitLine
     }
 
-    fun createAxisLabelFormatterFromLocalDateTimeList(list: List<LocalDateTime>, context: Context): IndexAxisValueFormatter {
-        val labels = list.map {
-            it.toHourMinuteString(context)
+    fun createAxisLabelFormatterFromLocalDateTimeList(list: List<Instant>, context: Context): IndexAxisValueFormatter {
+        val labels = list.map { instant ->
+
+            instant.toLocalDateTime(TimeZone.currentSystemDefault()).toHourMinuteString(context)
         }
         return IndexAxisValueFormatter(labels)
     }

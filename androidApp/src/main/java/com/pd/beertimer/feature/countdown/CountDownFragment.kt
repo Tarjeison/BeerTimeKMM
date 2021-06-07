@@ -17,21 +17,24 @@ import com.pd.beertimer.R
 import com.pd.beertimer.feature.countdown.charts.ChartHelper
 import com.pd.beertimer.feature.profile.ProfileViewModel
 import com.pd.beertimer.util.AlarmUtils
-import com.pd.beertimer.util.DrinkingCalculator
 import com.pd.beertimer.util.ifLet
 import com.pd.beertimer.util.ordinal
+import com.tlapp.beertimemm.models.DrinkingCalculator
 import kotlinx.android.synthetic.main.fragment_timer.*
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.time.Duration
-import java.time.LocalDateTime
 import java.util.concurrent.TimeUnit
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
 
 
+@ExperimentalTime
 class CountDownFragment : Fragment() {
 
     private lateinit var countDownTimer: CountDownTimer
-    private var drinkingTimes: List<LocalDateTime>? = null
+    private var drinkingTimes: List<Instant>? = null
     private var drinkingCalculator: DrinkingCalculator? = null
     private val profileViewModel: ProfileViewModel by viewModel()
     private val alarmUtils: AlarmUtils by inject()
@@ -71,7 +74,7 @@ class CountDownFragment : Fragment() {
             ivCountDownPineapple.visibility = View.VISIBLE
             clNumOfUnits.visibility = View.VISIBLE
 
-            val now = LocalDateTime.now()
+            val now = Clock.System.now()
             val pastUnits = it.filter { drinkTime ->
                 drinkTime < now
             }.size
@@ -108,7 +111,7 @@ class CountDownFragment : Fragment() {
         if (this::countDownTimer.isInitialized) {
             countDownTimer.cancel()
         }
-        countDownTimer = object : CountDownTimer(duration.toMillis(), 1000) {
+        countDownTimer = object : CountDownTimer(duration.inWholeMilliseconds, 1000) {
             override fun onFinish() {
                 setupCountDownTimer()
                 setViewsDrinkingStarted()
@@ -122,11 +125,11 @@ class CountDownFragment : Fragment() {
     }
 
     private fun getDurationToNextDateTime(): Duration? {
-        val now = LocalDateTime.now()
+        val now = Clock.System.now()
         drinkingTimes?.let {
             it.forEach { drinkingTime ->
-                if (drinkingTime.isAfter(now)) {
-                    return Duration.between(now, drinkingTime)
+                if (drinkingTime > now) {
+                    return drinkingTime.minus(now)
                 }
             }
         }
@@ -167,7 +170,7 @@ class CountDownFragment : Fragment() {
         ) { (profile, drinkingCalculator, dTimes) ->
 
             val bacEstimates =
-                (drinkingCalculator as DrinkingCalculator).generateBACPrediction(dTimes as List<LocalDateTime>)
+                (drinkingCalculator as DrinkingCalculator).generateBACPrediction(dTimes as List<Instant>)
 
             bacEstimates?.let { estimates ->
                 val bac: List<Entry> = estimates.map {

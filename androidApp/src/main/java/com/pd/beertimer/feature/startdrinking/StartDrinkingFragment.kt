@@ -13,10 +13,13 @@ import com.pd.beertimer.BuildConfig
 import com.pd.beertimer.R
 import com.pd.beertimer.databinding.FragmentStartdrinkingBinding
 import com.pd.beertimer.util.*
+import com.tlapp.beertimemm.models.DrinkingCalculator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.time.ExperimentalTime
 
+@ExperimentalTime
 class StartDrinkingFragment : Fragment(R.layout.fragment_startdrinking) {
 
     private val binding by viewBinding(FragmentStartdrinkingBinding::bind)

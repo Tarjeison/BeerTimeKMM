@@ -3,8 +3,8 @@ package com.pd.beertimer.room
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.pd.beertimer.models.AlcoholUnit
 import com.pd.beertimer.models.MyDrinkItem
+import com.tlapp.beertimemm.models.AlcoholUnit
 
 
 @Entity

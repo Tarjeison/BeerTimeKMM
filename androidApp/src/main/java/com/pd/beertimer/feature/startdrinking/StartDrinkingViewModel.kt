@@ -10,14 +10,23 @@ import com.google.firebase.analytics.ktx.logEvent
 import com.pd.beertimer.BuildConfig
 import com.pd.beertimer.R
 import com.pd.beertimer.feature.drinks.DrinkRepository
-import com.pd.beertimer.models.AlcoholUnit
-import com.pd.beertimer.util.*
+import com.pd.beertimer.util.Failure
+import com.pd.beertimer.util.Result
+import com.pd.beertimer.util.Success
+import com.pd.beertimer.util.toHourMinuteString
 import com.tlapp.beertimemm.ProfileStorage
+import com.tlapp.beertimemm.models.AlcoholUnit
+import com.tlapp.beertimemm.models.DrinkingCalculator
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import java.time.LocalDateTime
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Duration
+import kotlin.time.ExperimentalTime
 
+@ExperimentalTime
 class StartDrinkingViewModel(
     private val applicationContext: Application,
     private val drinkRepository: DrinkRepository,
@@ -64,12 +73,14 @@ class StartDrinkingViewModel(
     fun setFinishDrinkingInHoursMinutes(seekBarValue: Int) {
         val minDrinkingTimeInHours = if (BuildConfig.DEBUG) 0 else 1
         val hoursDrinking = (seekBarValue / 60) + minDrinkingTimeInHours
-        var minutesDrinking = (seekBarValue - ((seekBarValue / 60) * 60) + (10 - seekBarValue%10))
-        minutesDrinking -= LocalDateTime.now().minute % 10
+        Clock.System.now().plus(Duration.Companion.minutes(2)).plus(Duration.Companion.minutes(2))
+        var minutesDrinking = (seekBarValue - ((seekBarValue / 60) * 60) + (10 - seekBarValue % 10))
+        minutesDrinking -= Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).minute % 10
         finishDrinkingInHoursMinutes = Pair(hoursDrinking, minutesDrinking)
         val seekBarUIModel = SeekBarUIModel(
-            displayString = LocalDateTime.now().plusHours(hoursDrinking.toLong())
-                .plusMinutes(minutesDrinking.toLong()).toHourMinuteString(applicationContext, true)
+            displayString = Clock.System.now().plus(Duration.Companion.hours(hoursDrinking)).plus(Duration.minutes(minutesDrinking)).toLocalDateTime(
+                TimeZone.currentSystemDefault()
+            ).toHourMinuteString(applicationContext, true)
         )
         _finishBarLiveData.postValue(seekBarUIModel)
     }
@@ -78,13 +89,14 @@ class StartDrinkingViewModel(
         hasSetPeakTime = true
         val minDrinkingTimeInHours = if (BuildConfig.DEBUG) 0 else 1
         val hoursDrinking = (seekBarValue / 60) + minDrinkingTimeInHours
-        var minutesDrinking = (seekBarValue - ((seekBarValue / 60) * 60)) + (10 - seekBarValue%10)
-        minutesDrinking -= LocalDateTime.now().minute % 10
+        var minutesDrinking = (seekBarValue - ((seekBarValue / 60) * 60)) + (10 - seekBarValue % 10)
+        minutesDrinking -= Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).minute % 10
 
         peakInHoursMinutes = Pair(hoursDrinking, minutesDrinking)
         val seekBarUIModel = SeekBarUIModel(
-            displayString = LocalDateTime.now().plusHours(hoursDrinking.toLong())
-                .plusMinutes(minutesDrinking.toLong()).toHourMinuteString(applicationContext, true)
+            displayString = Clock.System.now().plus(Duration.Companion.hours(hoursDrinking)).plus(Duration.minutes(minutesDrinking)).toLocalDateTime(
+                TimeZone.currentSystemDefault()
+            ).toHourMinuteString(applicationContext, true)
         )
         _peakHourLiveData.postValue(seekBarUIModel)
     }
@@ -129,10 +141,10 @@ class StartDrinkingViewModel(
             DrinkingCalculator(
                 userProfile = profile,
                 wantedBloodLevel = selectedBloodLevel,
-                endTime = LocalDateTime.now().plusHours(selectedHoursDrinking.first.toLong())
-                    .plusMinutes(selectedHoursDrinking.second.toLong()),
-                peakTime = LocalDateTime.now().plusHours(selectedPeakHour.first.toLong())
-                    .plusMinutes(selectedPeakHour.second.toLong()),
+                endTime = Clock.System.now().plus(Duration.hours(selectedHoursDrinking.first)
+                    .plus(Duration.minutes(selectedHoursDrinking.second))),
+                peakTime = Clock.System.now().plus(Duration.hours(selectedPeakHour.first)
+                    .plus(Duration.minutes(selectedPeakHour.second))),
                 preferredUnit = selectedUnit
             )
         )

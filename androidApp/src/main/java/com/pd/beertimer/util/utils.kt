@@ -2,7 +2,8 @@ package com.pd.beertimer.util
 
 import android.content.Context
 import android.text.format.DateFormat
-import java.time.LocalDateTime
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.toJavaLocalDateTime
 import java.time.format.DateTimeFormatter
 
 inline fun <T : Any> ifLet(vararg elements: T?, closure: (List<T>) -> Unit) {
@@ -25,5 +26,5 @@ fun LocalDateTime.toHourMinuteString(context: Context, showAmPm: Boolean = false
     } else {
         if (showAmPm) "hh:mm a" else "hh:mm"
     }
-    return this.format(DateTimeFormatter.ofPattern(pattern)).replace(" ", "")
+    return this.toJavaLocalDateTime().format(DateTimeFormatter.ofPattern(pattern)).replace(" ", "")
 }

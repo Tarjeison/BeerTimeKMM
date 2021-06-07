@@ -9,8 +9,9 @@ import androidx.core.app.NotificationManagerCompat
 import com.pd.beertimer.util.AlarmUtils
 import com.pd.beertimer.util.CHANNEL_ID
 import com.pd.beertimer.util.NOTIFICATION_ID
-import java.time.ZoneId
+import kotlin.time.ExperimentalTime
 
+@ExperimentalTime
 class NotificationBroadcast : BroadcastReceiver() {
     override fun onReceive(context: Context?, p1: Intent?) {
         context?.let {
@@ -24,10 +25,7 @@ class NotificationBroadcast : BroadcastReceiver() {
             alarmUtils.getNextDrinkingTimeFromSharedPref()?.let { nextDrinkingTimeAndLastIndicator ->
                 isLastAlarm = false
                 val triggerTimeInMs =
-                    nextDrinkingTimeAndLastIndicator.first
-                        .atZone(ZoneId.systemDefault())
-                        .toInstant()
-                        .toEpochMilli()
+                    nextDrinkingTimeAndLastIndicator.first.toEpochMilliseconds()
                 alarmUtils.scheduleAlarmClock(triggerTimeInMs)
             }
             val pendingIntent: PendingIntent = PendingIntent.getActivity(it, 0, intent, 0)

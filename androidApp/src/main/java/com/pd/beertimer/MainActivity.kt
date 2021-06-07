@@ -26,7 +26,9 @@ import kotlinx.coroutines.launch
 import nl.joery.animatedbottombar.AnimatedBottomBar
 import org.koin.android.ext.android.getKoin
 import org.koin.android.ext.android.inject
+import kotlin.time.ExperimentalTime
 
+@ExperimentalTime
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
 
     private var menu: Menu? = null

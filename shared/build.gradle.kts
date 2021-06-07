@@ -33,6 +33,7 @@ kotlin {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
                 implementation("io.insert-koin:koin-core:3.0.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.2.1")
             }
         }
         val commonTest by getting {

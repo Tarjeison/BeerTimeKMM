@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.pd.beertimer.R
-import com.pd.beertimer.models.AlcoholUnit
 import com.pd.beertimer.util.VolumeConverter
+import com.tlapp.beertimemm.models.AlcoholUnit
 import kotlinx.android.synthetic.main.item_drink_v2.view.*
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject

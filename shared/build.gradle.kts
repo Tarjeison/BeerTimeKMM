@@ -5,6 +5,7 @@ plugins {
     kotlin("native.cocoapods")
     id("com.android.library")
     id("kotlinx-serialization")
+    id("com.squareup.sqldelight")
 }
 
 version = "1.0"
@@ -31,8 +32,11 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation("com.squareup.sqldelight:runtime:1.5.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2-native-mt")
                 implementation("io.insert-koin:koin-core:3.0.2")
+                implementation("com.squareup.sqldelight:coroutines-extensions:1.5.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.2.1")
             }
         }
@@ -44,14 +48,22 @@ kotlin {
 
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation("com.squareup.sqldelight:android-driver:1.5.0")
+            }
+        }
         val androidTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
                 implementation("junit:junit:4.13.2")
             }
         }
-        val iosMain by getting
+        val iosMain by getting {
+            dependencies {
+                implementation("com.squareup.sqldelight:native-driver:1.5.0")
+            }
+        }
         val iosTest by getting
     }
 }
@@ -62,5 +74,12 @@ android {
     defaultConfig {
         minSdkVersion(22)
         targetSdkVersion(30)
+    }
+}
+
+sqldelight {
+    database("Drink") {
+        packageName = "drinkdb"
+        sourceFolders = listOf("sqldelight")
     }
 }

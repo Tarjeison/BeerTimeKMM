@@ -1,0 +1,26 @@
+CREATE TABLE DrinkEntity (
+  key INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  percentage REAL AS Float NOT NULL,
+  volume REAL AS Float NOT NULL,
+  icon_name TEXT NOT NULL
+);
+
+INSERT INTO DrinkEntity (key, name, percentage, volume, icon_name)
+VALUES (?, "Small beer", 0.047, 0.33 ,"ic_small_beer");
+
+INSERT INTO DrinkEntity (key, name, percentage, volume, icon_name)
+VALUES (?, "Beer", 0.047, 0.5 ,"ic_beer");
+
+INSERT INTO DrinkEntity (key, name, percentage, volume, icon_name)
+VALUES (?, "Wine", 0.125, 0.150 ,"ic_wine");
+
+insertItem:
+INSERT OR REPLACE INTO DrinkEntity (key, name, percentage, volume, icon_name)
+VALUES (?, ?, ?, ? ,?);
+
+selectAll:
+SELECT * FROM DrinkEntity ORDER BY key;
+
+delete:
+DELETE FROM DrinkEntity WHERE key = ?;

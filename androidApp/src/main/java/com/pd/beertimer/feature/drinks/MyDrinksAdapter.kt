@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.pd.beertimer.R
-import com.pd.beertimer.models.MyDrinkItem
+import com.tlapp.beertimemm.models.MyDrinkItem
 import com.pd.beertimer.util.VolumeConverter
 import kotlinx.android.synthetic.main.item_drink_v2.view.icDrink
 import kotlinx.android.synthetic.main.item_drink_v2.view.tvDrinkName
@@ -17,7 +17,7 @@ import org.koin.core.component.inject
 
 class MyDrinksAdapter(
     private val drinkList: MutableList<MyDrinkItem>,
-    private val onDeleteClick: (Int) -> Unit
+    private val onDeleteClick: (Long) -> Unit
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), KoinComponent {
 
@@ -52,7 +52,7 @@ class MyDrinksAdapter(
                 volumeConverter.floatLiterToVolumeString(drinkItem.volume)
             )
             itemView.ivDelete.setOnClickListener {
-                onDeleteClick.invoke(drinkItem.id)
+                onDeleteClick.invoke(drinkItem.key)
             }
         }
 

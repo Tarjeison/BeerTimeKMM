@@ -9,7 +9,6 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.pd.beertimer.BuildConfig
 import com.pd.beertimer.R
-import com.pd.beertimer.feature.drinks.DrinkRepository
 import com.pd.beertimer.util.Failure
 import com.pd.beertimer.util.Result
 import com.pd.beertimer.util.Success
@@ -17,6 +16,8 @@ import com.pd.beertimer.util.toHourMinuteString
 import com.tlapp.beertimemm.ProfileStorage
 import com.tlapp.beertimemm.models.AlcoholUnit
 import com.tlapp.beertimemm.models.DrinkingCalculator
+import com.tlapp.beertimemm.sqldelight.DatabaseHelper
+import com.tlapp.beertimemm.sqldelight.toAlcoholUnit
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -29,7 +30,7 @@ import kotlin.time.ExperimentalTime
 @ExperimentalTime
 class StartDrinkingViewModel(
     private val applicationContext: Application,
-    private val drinkRepository: DrinkRepository,
+    private val databaseHelper: DatabaseHelper,
     private val profileStorage: ProfileStorage,
     private val firebaseAnalytics: FirebaseAnalytics
 ) : ViewModel() {
@@ -53,7 +54,7 @@ class StartDrinkingViewModel(
 
     @ExperimentalCoroutinesApi
     fun getDrinks() {
-        drinkRepository.getDrinks().onEach {
+        databaseHelper.selectAllItems().onEach {
             _drinksLiveData.postValue(it.map { drink ->
                 drink.toAlcoholUnit()
             })

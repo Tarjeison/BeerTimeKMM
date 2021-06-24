@@ -8,13 +8,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pd.beertimer.R
 import com.pd.beertimer.models.DrinkIconItem
-import com.pd.beertimer.room.Drink
 import com.pd.beertimer.util.*
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.take
+import com.tlapp.beertimemm.sqldelight.DatabaseHelper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class AddDrinkViewModel(private val drinkRepository: DrinkRepository, private val sharedPreferences: SharedPreferences) : ViewModel() {
+class AddDrinkViewModel(private val databaseHelper: DatabaseHelper, private val sharedPreferences: SharedPreferences) : ViewModel() {
 
     private val _addDrinkResultLiveData = MutableLiveData<Result<Int, Pair<AddDrinkInputField, Int>>>()
     val addDrinkResultLiveData: LiveData<Result<Int, Pair<AddDrinkInputField, Int>>> = _addDrinkResultLiveData
@@ -54,17 +53,15 @@ class AddDrinkViewModel(private val drinkRepository: DrinkRepository, private va
         val drinkPercentageValid = validateDrinkPercentage(drinkPercentage) ?: return
         val drinkVolumeValid = validateDrinkVolume(drinkVolume) ?: return
         val drinkIconNameValid = drinkIconName ?: "ic_beer"
-        drinkRepository.insert(
-            Drink(
+        viewModelScope.launch(Dispatchers.IO) {
+            databaseHelper.insertDrink(
                 name = drinkNameValid,
-                volume = drinkVolumeValid,
                 percentage = drinkPercentageValid,
+                volume = drinkVolumeValid,
                 iconName = drinkIconNameValid
             )
-        ).take(1).onEach {
             _addDrinkResultLiveData.postValue(Success(R.string.add_drink_success))
-        }.launchIn(viewModelScope)
-
+        }
     }
 
     private fun validateDrinkPercentage(drinkPercentage: String?): Float? {

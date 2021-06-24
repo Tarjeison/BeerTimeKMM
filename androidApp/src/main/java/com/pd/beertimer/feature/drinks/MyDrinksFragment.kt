@@ -42,7 +42,7 @@ class MyDrinksFragment : Fragment(R.layout.fragment_my_drinks) {
         return drinksAdapter
     }
 
-    private val onDeleteAction = { drinkId: Int ->
+    private val onDeleteAction = { drinkId: Long ->
         viewModel.deleteDrink(drinkId)
     }
 }

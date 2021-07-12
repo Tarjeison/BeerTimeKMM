@@ -57,6 +57,7 @@ kotlin {
             dependencies {
                 implementation(kotlin("test-junit"))
                 implementation("junit:junit:4.13.2")
+                implementation("org.junit.jupiter:junit-jupiter:5.7.0")
             }
         }
         val iosMain by getting {

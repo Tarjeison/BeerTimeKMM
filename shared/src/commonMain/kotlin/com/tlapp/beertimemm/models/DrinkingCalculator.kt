@@ -28,7 +28,7 @@ data class DrinkingCalculator(
         val startTime = Clock.System.now()
         val drinkingTimes = mutableListOf<Instant>()
         drinkingTimes.addAll(calculateDrinkInterval(startTime, peakTime, wantedBloodLevel))
-        if (peakTime.minus(endTime).inWholeMinutes > 30L) {
+        if (endTime.minus(peakTime).inWholeMinutes > 30L) {
             drinkingTimes.addAll(calculateDrinkInterval(peakTime, endTime, 0F))
         }
 

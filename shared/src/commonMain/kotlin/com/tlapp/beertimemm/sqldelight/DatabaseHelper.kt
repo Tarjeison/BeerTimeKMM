@@ -24,7 +24,7 @@ class DatabaseHelper(
             .mapToList()
             .flowOn(backgroundDispatcher)
 
-    suspend fun insertDrink(name: String, percentage: Float, volume: Float, iconName: String) {
+    fun insertDrink(name: String, percentage: Float, volume: Float, iconName: String) {
         dbRef.drinkQueries.insertItem(
             key = null,
             name = name,
@@ -34,7 +34,7 @@ class DatabaseHelper(
         )
     }
 
-    suspend fun deleteDrink(drinkId: Long) {
+    fun deleteDrink(drinkId: Long) {
         dbRef.drinkQueries.delete(drinkId)
     }
 }

@@ -2,7 +2,7 @@ package com.pd.beertimer
 
 import android.app.Application
 import com.pd.beertimer.module.beerTimeModules
-import com.tlapp.beertimemm.initKoin
+import com.tlapp.beertimemm.di.initKoin
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime

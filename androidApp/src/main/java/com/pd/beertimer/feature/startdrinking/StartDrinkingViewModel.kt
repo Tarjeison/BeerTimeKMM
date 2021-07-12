@@ -9,11 +9,11 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.pd.beertimer.BuildConfig
 import com.pd.beertimer.R
-import com.pd.beertimer.util.Failure
-import com.pd.beertimer.util.Result
-import com.pd.beertimer.util.Success
+import com.tlapp.beertimemm.utils.Failure
+import com.tlapp.beertimemm.utils.Result
+import com.tlapp.beertimemm.utils.Success
 import com.pd.beertimer.util.toHourMinuteString
-import com.tlapp.beertimemm.ProfileStorage
+import com.tlapp.beertimemm.storage.ProfileStorage
 import com.tlapp.beertimemm.models.AlcoholUnit
 import com.tlapp.beertimemm.models.DrinkingCalculator
 import com.tlapp.beertimemm.sqldelight.DatabaseHelper

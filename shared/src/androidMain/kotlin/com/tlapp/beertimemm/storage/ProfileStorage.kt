@@ -1,7 +1,8 @@
-package com.tlapp.beertimemm
+package com.tlapp.beertimemm.storage
 
 import android.content.SharedPreferences
 import com.tlapp.beertimemm.models.UserProfile
+import com.tlapp.beertimemm.utils.PROFILE_KEY
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

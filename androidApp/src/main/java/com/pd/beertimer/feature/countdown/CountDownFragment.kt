@@ -98,7 +98,7 @@ class CountDownFragment : Fragment() {
                 .setPositiveButton(
                     R.string.yes
                 ) { _, _ ->
-                    alarmUtils.deleteNextAlarm()
+                    alarmUtils.cancelAlarm()
                     setViewsDrinkingNotStarted()
                 }
                 .setNegativeButton(R.string.no, null)

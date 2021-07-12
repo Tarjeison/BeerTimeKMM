@@ -14,6 +14,8 @@ import com.pd.beertimer.R
 import com.pd.beertimer.databinding.FragmentStartdrinkingBinding
 import com.pd.beertimer.util.*
 import com.tlapp.beertimemm.models.DrinkingCalculator
+import com.tlapp.beertimemm.utils.Failure
+import com.tlapp.beertimemm.utils.Success
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -158,7 +160,7 @@ class StartDrinkingFragment : Fragment(R.layout.fragment_startdrinking) {
                 return
             }
             val alarmUtils = AlarmUtils(it)
-            alarmUtils.deleteNextAlarm()
+            alarmUtils.cancelAlarm()
             alarmUtils.setFirstAlarmAndStoreTimesToSharedPref(
                 drinkingTimes,
                 calculator

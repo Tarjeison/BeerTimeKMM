@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.pd.beertimer.R
 import com.pd.beertimer.databinding.FragmentAddDrinkBinding
 import com.pd.beertimer.util.*
+import com.tlapp.beertimemm.utils.Failure
+import com.tlapp.beertimemm.utils.Success
 import kotlinx.android.synthetic.main.fragment_add_drink.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel

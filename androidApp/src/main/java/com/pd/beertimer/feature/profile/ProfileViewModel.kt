@@ -1,7 +1,7 @@
 package com.pd.beertimer.feature.profile
 
 import androidx.lifecycle.ViewModel
-import com.tlapp.beertimemm.ProfileStorage
+import com.tlapp.beertimemm.storage.ProfileStorage
 import com.tlapp.beertimemm.models.UserProfile
 
 

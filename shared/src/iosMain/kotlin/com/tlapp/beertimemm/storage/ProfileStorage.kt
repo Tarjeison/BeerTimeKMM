@@ -1,4 +1,4 @@
-package com.tlapp.beertimemm
+package com.tlapp.beertimemm.storage
 
 import com.tlapp.beertimemm.models.UserProfile
 

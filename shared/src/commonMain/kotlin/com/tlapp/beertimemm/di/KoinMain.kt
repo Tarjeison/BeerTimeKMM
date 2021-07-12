@@ -1,4 +1,4 @@
-package com.tlapp.beertimemm
+package com.tlapp.beertimemm.di
 
 import com.tlapp.beertimemm.sqldelight.DatabaseHelper
 import kotlinx.coroutines.Dispatchers

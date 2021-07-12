@@ -14,7 +14,10 @@ import com.pd.beertimer.util.AlarmUtils
 import com.pd.beertimer.util.SHARED_PREF_BEER_TIME
 import com.pd.beertimer.util.StorageHelper
 import com.pd.beertimer.util.VolumeConverter
+import com.tlapp.beertimemm.drinking.DrinkNotificationScheduler
+import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.bind
 import org.koin.dsl.module
 import kotlin.time.ExperimentalTime
 
@@ -54,8 +57,8 @@ fun beerTimeModules(applicationContext: Application) = module {
     }
 
     single {
-        AlarmUtils(context = get())
-    }
+        AlarmUtils(application = androidApplication())
+    }.bind(DrinkNotificationScheduler::class)
 
     viewModel {
         StartDrinkingViewModel(

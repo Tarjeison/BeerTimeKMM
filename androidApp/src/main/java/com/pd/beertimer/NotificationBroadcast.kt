@@ -20,13 +20,13 @@ class NotificationBroadcast : BroadcastReceiver() {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
 
-            val alarmUtils = AlarmUtils(context)
+            val alarmUtils = AlarmUtils(context.applicationContext)
             var isLastAlarm = true
             alarmUtils.getNextDrinkingTimeFromSharedPref()?.let { nextDrinkingTimeAndLastIndicator ->
                 isLastAlarm = false
                 val triggerTimeInMs =
                     nextDrinkingTimeAndLastIndicator.first.toEpochMilliseconds()
-                alarmUtils.scheduleAlarmClock(triggerTimeInMs)
+                alarmUtils.scheduleNotification(triggerTimeInMs)
             }
             val pendingIntent: PendingIntent = PendingIntent.getActivity(it, 0, intent, 0)
 

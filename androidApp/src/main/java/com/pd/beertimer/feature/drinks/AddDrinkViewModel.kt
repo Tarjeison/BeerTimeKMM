@@ -10,6 +10,9 @@ import com.pd.beertimer.R
 import com.pd.beertimer.models.DrinkIconItem
 import com.pd.beertimer.util.*
 import com.tlapp.beertimemm.sqldelight.DatabaseHelper
+import com.tlapp.beertimemm.utils.Failure
+import com.tlapp.beertimemm.utils.Result
+import com.tlapp.beertimemm.utils.Success
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -44,7 +47,8 @@ class AddDrinkViewModel(private val databaseHelper: DatabaseHelper, private val 
         drinkIconName: String?
     ) {
         val drinkNameValid = drinkName.takeIf { it?.isNotEmpty() == true } ?: run {
-            _addDrinkResultLiveData.postValue(Failure(
+            _addDrinkResultLiveData.postValue(
+                Failure(
                 Pair(AddDrinkInputField.DRINK_NAME, R.string.add_drink_missing_name))
             )
             return
@@ -66,20 +70,23 @@ class AddDrinkViewModel(private val databaseHelper: DatabaseHelper, private val 
 
     private fun validateDrinkPercentage(drinkPercentage: String?): Float? {
         val drinkPercentageNonNullFloat = drinkPercentage?.toFloatOrNull() ?: run {
-            _addDrinkResultLiveData.postValue(Failure(
+            _addDrinkResultLiveData.postValue(
+                Failure(
                 Pair(AddDrinkInputField.DRINK_PERCENTAGE, R.string.add_drink_missing_percentage))
             )
             return null
         }
         return when {
             drinkPercentageNonNullFloat > 100F -> {
-                _addDrinkResultLiveData.postValue(Failure(
+                _addDrinkResultLiveData.postValue(
+                    Failure(
                     Pair(AddDrinkInputField.DRINK_PERCENTAGE, R.string.add_drink_to_strong))
                 )
                 null
             }
             drinkPercentageNonNullFloat < 2F -> {
-                _addDrinkResultLiveData.postValue(Failure(
+                _addDrinkResultLiveData.postValue(
+                    Failure(
                     Pair(AddDrinkInputField.DRINK_PERCENTAGE, R.string.add_drink_to_weak))
                 )
                 null
@@ -93,7 +100,8 @@ class AddDrinkViewModel(private val databaseHelper: DatabaseHelper, private val 
     private fun validateDrinkVolume(drinkVolume: String?): Float? {
         val isUsingLiters = sharedPreferences.getBoolean(SHARED_PREF_USES_LITERS, true)
         val drinkValidFormat =  drinkVolume?.toFloatOrNull() ?: run {
-            _addDrinkResultLiveData.postValue(Failure(
+            _addDrinkResultLiveData.postValue(
+                Failure(
                 Pair(AddDrinkInputField.DRINK_VOLUME, R.string.add_drink_missing_volume))
             )
             return null
@@ -106,7 +114,8 @@ class AddDrinkViewModel(private val databaseHelper: DatabaseHelper, private val 
                 } else {
                     R.string.add_drink_volume_too_low_ounce
                 }
-                _addDrinkResultLiveData.postValue(Failure(
+                _addDrinkResultLiveData.postValue(
+                    Failure(
                     Pair(AddDrinkInputField.DRINK_VOLUME, errorRes))
                 )
                 null
@@ -117,7 +126,8 @@ class AddDrinkViewModel(private val databaseHelper: DatabaseHelper, private val 
                 } else {
                     R.string.add_drink_volume_too_high_ounce
                 }
-                _addDrinkResultLiveData.postValue(Failure(
+                _addDrinkResultLiveData.postValue(
+                    Failure(
                     Pair(AddDrinkInputField.DRINK_VOLUME, errorRes))
                 )
                 null

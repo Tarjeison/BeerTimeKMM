@@ -28,7 +28,7 @@ kotlin {
         frameworkName = "shared"
         podfile = project.file("../iosApp/Podfile")
     }
-    
+
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -44,8 +44,6 @@ kotlin {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
-
-
             }
         }
         val androidMain by getting {

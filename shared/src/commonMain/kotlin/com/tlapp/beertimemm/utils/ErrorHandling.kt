@@ -1,4 +1,4 @@
-package com.pd.beertimer.util
+package com.tlapp.beertimemm.utils
 
 sealed class Result<out Success, out Failure>
 

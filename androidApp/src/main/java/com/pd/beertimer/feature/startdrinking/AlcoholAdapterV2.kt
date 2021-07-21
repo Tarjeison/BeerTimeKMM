@@ -37,17 +37,6 @@ class AlcoholAdapterV2(
         this.notifyDataSetChanged()
     }
 
-    fun getSelectedUnit(): AlcoholUnit? {
-        return alcoholUnits.firstOrNull { it.isSelected }
-    }
-
-    private fun setItemSelected(selectedAlcoholUnit: AlcoholUnit) {
-        alcoholUnits.forEach {
-            it.isSelected = it == selectedAlcoholUnit
-        }
-        this.notifyDataSetChanged()
-    }
-
     inner class AlcoholViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(alcoholUnit: AlcoholUnit) {
@@ -62,11 +51,9 @@ class AlcoholAdapterV2(
             )
             itemView.rbDrinkSelect.setOnClickListener {
                 onSelected.invoke(alcoholUnit)
-                setItemSelected(alcoholUnit)
             }
             itemView.setOnClickListener {
                 onSelected.invoke(alcoholUnit)
-                setItemSelected(alcoholUnit)
             }
         }
 

@@ -5,7 +5,7 @@ import kotlinx.datetime.Instant
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
-expect class DrinkStorage {
+internal expect class DrinkStorage {
     fun getExistingDrinkingTimes(): List<Instant>?
     fun getNextDrinkingTime(): NextDrinkingTime?
     fun getCurrentDrinkingCalculator(): DrinkingCalculator?

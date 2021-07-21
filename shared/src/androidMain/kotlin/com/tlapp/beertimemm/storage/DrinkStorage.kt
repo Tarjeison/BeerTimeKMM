@@ -13,7 +13,7 @@ import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
-actual class DrinkStorage(private val sharedPreferences: SharedPreferences) {
+internal actual class DrinkStorage(private val sharedPreferences: SharedPreferences) {
     actual fun getExistingDrinkingTimes(): List<Instant>? {
         sharedPreferences.getString(DRINKING_TIMES_KEY, null)?.let {
             val drinkingTimes = Json.decodeFromString<List<Instant>>(it)

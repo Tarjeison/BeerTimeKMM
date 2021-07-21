@@ -5,7 +5,7 @@ import kotlinx.datetime.Instant
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
-actual class DrinkStorage {
+internal actual class DrinkStorage {
     actual fun getExistingDrinkingTimes(): List<Instant>? {
         TODO("Not yet implemented")
     }

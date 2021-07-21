@@ -18,8 +18,8 @@ import com.pd.beertimer.feature.countdown.charts.ChartHelper
 import com.pd.beertimer.feature.profile.ProfileViewModel
 import com.pd.beertimer.util.ifLet
 import com.pd.beertimer.util.ordinal
+import com.tlapp.beertimemm.drinking.DrinkCoordinator
 import com.tlapp.beertimemm.models.DrinkingCalculator
-import com.tlapp.beertimemm.storage.DrinkStorage
 import kotlinx.android.synthetic.main.fragment_timer.*
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
@@ -37,7 +37,7 @@ class CountDownFragment : Fragment() {
     private var drinkingTimes: List<Instant>? = null
     private var drinkingCalculator: DrinkingCalculator? = null
     private val profileViewModel: ProfileViewModel by viewModel()
-    private val drinkStorage: DrinkStorage by inject()
+    private val drinkCoordinator: DrinkCoordinator by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,7 +53,7 @@ class CountDownFragment : Fragment() {
                 val resId = resources.getIdentifier(
                     unit.iconName,
                     "drawable",
-                    requireContext().packageName
+                    context?.packageName
                 )
                 if (resId != 0) {
                     ivCurrentlyDrinking.setImageDrawable(
@@ -98,7 +98,7 @@ class CountDownFragment : Fragment() {
                 .setPositiveButton(
                     R.string.yes
                 ) { _, _ ->
-                    // alarmUtils.cancelAlarm()
+                    drinkCoordinator.stopDrinking()
                     setViewsDrinkingNotStarted()
                 }
                 .setNegativeButton(R.string.no, null)
@@ -267,8 +267,8 @@ class CountDownFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        drinkingTimes = drinkStorage.getExistingDrinkingTimes()
-        drinkingCalculator = drinkStorage.getCurrentDrinkingCalculator()
+        drinkingTimes = drinkCoordinator.getDrinkingTimes()
+        drinkingCalculator = drinkCoordinator.getDrinkingCalculator()
         if (drinkingTimes == null) {
             setViewsDrinkingNotStarted()
         } else {

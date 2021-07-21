@@ -16,11 +16,15 @@ import com.tlapp.beertimemm.sqldelight.DatabaseHelper
 import com.tlapp.beertimemm.sqldelight.toAlcoholUnit
 import com.tlapp.beertimemm.storage.DrinkStorage
 import com.tlapp.beertimemm.storage.ProfileStorage
+import com.tlapp.beertimemm.utils.AlwaysDistinct
 import com.tlapp.beertimemm.utils.DateTimeExtensions.toHourMinuteString
 import com.tlapp.beertimemm.utils.Failure
 import com.tlapp.beertimemm.utils.Success
 import com.tlapp.beertimemm.utils.isDebug
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -39,9 +43,8 @@ class StartDrinkingModel : KoinComponent {
     private var wantedBloodLevel = 0f
     private var finishDrinkingInHoursMinutes: Pair<Int, Int> = Pair(0, 0)
     private var peakInHoursMinutes: Pair<Int, Int> = Pair(0, 0)
-    private var selectedUnit: AlcoholUnit? = null
 
-    private var hasSetPeakTime = false
+    private val selectedUnitFlow = MutableStateFlow<AlcoholUnit?>(null)
 
     private val _wantedBloodLevelUiModelFlow = MutableStateFlow<String?>(null)
     val wantedBloodLevelUiModelFlow: StateFlow<String?> get() = _wantedBloodLevelUiModelFlow
@@ -52,17 +55,23 @@ class StartDrinkingModel : KoinComponent {
     private val _peakTimeSeekBarUiModelFlow = MutableStateFlow<String?>(null)
     val peakTimeSeekBarUiModelFlow: StateFlow<String?> get() = _peakTimeSeekBarUiModelFlow
 
-    private val _errorToastFlow = MutableStateFlow<String?>(null)
-    val errorToastFlow: StateFlow<String?> get() = _errorToastFlow
+    private val _errorToastFlow = MutableStateFlow<AlwaysDistinct<String>?>(null)
+    val errorToastFlow: StateFlow<AlwaysDistinct<String>?> get() = _errorToastFlow
 
-    private val _alertFlow = MutableStateFlow<AlertDialogUiModel?>(null)
-    val alertFlow: StateFlow<AlertDialogUiModel?> get() = _alertFlow
+    private val _alertFlow = MutableStateFlow<AlwaysDistinct<AlertDialogUiModel>?>(null)
+    val alertFlow: StateFlow<AlwaysDistinct<AlertDialogUiModel>?> get() = _alertFlow
 
-    private val _navigateToCountDownFlow = MutableStateFlow<Boolean?>(null)
-    val navigateToCountDownFlow: StateFlow<Boolean?> get() = _navigateToCountDownFlow
+    private val _navigateToCountDownFlow = MutableStateFlow<AlwaysDistinct<Boolean>?>(null)
+    val navigateToCountDownFlow: StateFlow<AlwaysDistinct<Boolean>?> get() = _navigateToCountDownFlow
 
-    fun getDrinks() = databaseHelper.selectAllItems().map { drinkList ->
-        drinkList.map { it.toAlcoholUnit() }
+    fun getDrinks(): Flow<List<AlcoholUnit>> {
+        return databaseHelper.selectAllItems().combine(selectedUnitFlow) { drinks, selectedUnit ->
+            drinks.map { drinkEntity ->
+                drinkEntity.toAlcoholUnit().also {
+                    it.isSelected = it == selectedUnit
+                }
+            }
+        }
     }
 
     fun setWantedBloodLevel(wantedBloodLevelProgress: Int) {
@@ -98,12 +107,12 @@ class StartDrinkingModel : KoinComponent {
     }
 
     fun setSelectedUnit(selectedUnit: AlcoholUnit) {
-        this.selectedUnit = selectedUnit
+        selectedUnitFlow.value = selectedUnit
     }
 
     fun startDrinking() {
         if (drinkStorage.getNextDrinkingTime() != null) {
-            _alertFlow.value = AlertDialogUiModel(
+            val alertDialogUiModel = AlertDialogUiModel(
                 title = ALREADY_DRINKING_ALERT_TITLE,
                 message = ALREADY_DRINKING_ALERT_MESSAGE,
                 positiveButtonText = ALREADY_DRINKING_ALERT_POSITIVE_BUTTON,
@@ -112,6 +121,7 @@ class StartDrinkingModel : KoinComponent {
                     validateValuesAndCreateCalculation()
                 }
             )
+            _alertFlow.value = AlwaysDistinct(alertDialogUiModel)
         } else {
             validateValuesAndCreateCalculation()
         }
@@ -119,34 +129,34 @@ class StartDrinkingModel : KoinComponent {
 
     private fun validateValuesAndCreateCalculation() {
 
-        val selectedUnitNonNull = selectedUnit ?: run {
-            _errorToastFlow.value = ERROR_NO_DRINK_SELECTED
+        val selectedUnitNonNull = selectedUnitFlow.value ?: run {
+            _errorToastFlow.value = AlwaysDistinct(ERROR_NO_DRINK_SELECTED)
             return
         }
 
         val selectedBloodLevel = if (wantedBloodLevel != 0f) {
             wantedBloodLevel
         } else {
-            _errorToastFlow.value = ERROR_NO_BLOOD_LEVEL_SET
+            _errorToastFlow.value = AlwaysDistinct(ERROR_NO_BLOOD_LEVEL_SET)
             return
         }
 
         val selectedHoursDrinking = if (finishDrinkingInHoursMinutes.first != 0 || isDebug()) {
             finishDrinkingInHoursMinutes
         } else {
-            _errorToastFlow.value = ERROR_TOO_SHORT_DRINK_INTERVAL
+            _errorToastFlow.value = AlwaysDistinct(ERROR_TOO_SHORT_DRINK_INTERVAL)
             return
         }
 
         val selectedPeakHour = if (peakInHoursMinutes.first != 0 || isDebug()) {
             peakInHoursMinutes
         } else {
-            _errorToastFlow.value = ERROR_TOO_SHORT_DRINK_INTERVAL
+            _errorToastFlow.value = AlwaysDistinct(ERROR_TOO_SHORT_DRINK_INTERVAL)
             return
         }
 
         val profile = profileStorage.getUserProfile() ?: kotlin.run {
-            _errorToastFlow.value = ERROR_NO_PROFILE_FOUND
+            _errorToastFlow.value = AlwaysDistinct(ERROR_NO_PROFILE_FOUND)
             return
         }
 
@@ -172,8 +182,8 @@ class StartDrinkingModel : KoinComponent {
         )
 
         when (val result = drinkCoordinator.startDrinking(drinkingCalculator)) {
-            is Success -> _navigateToCountDownFlow.value = true
-            is Failure -> _errorToastFlow.value = result.reason
+            is Success -> _navigateToCountDownFlow.value = AlwaysDistinct(true)
+            is Failure -> _errorToastFlow.value = AlwaysDistinct(result.reason)
         }
     }
 }

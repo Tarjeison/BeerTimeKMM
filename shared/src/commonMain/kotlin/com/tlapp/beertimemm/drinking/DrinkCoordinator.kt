@@ -33,4 +33,13 @@ class DrinkCoordinator: KoinComponent {
         drinkNotificationScheduler.scheduleNotification(drinkingTimes[1].toEpochMilliseconds())
         return Success(true)
     }
+
+    fun stopDrinking() {
+        drinkStorage.clear()
+        drinkNotificationScheduler.cancelAlarm()
+    }
+
+    fun getDrinkingTimes() = drinkStorage.getExistingDrinkingTimes()
+
+    fun getDrinkingCalculator() = drinkStorage.getCurrentDrinkingCalculator()
 }

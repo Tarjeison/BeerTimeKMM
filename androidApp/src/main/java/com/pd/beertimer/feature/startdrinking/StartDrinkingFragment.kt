@@ -7,17 +7,14 @@ import android.widget.SeekBar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.logEvent
 import com.pd.beertimer.BuildConfig
 import com.pd.beertimer.R
 import com.pd.beertimer.databinding.FragmentStartdrinkingBinding
-import com.pd.beertimer.util.*
-import com.tlapp.beertimemm.models.DrinkingCalculator
-import com.tlapp.beertimemm.utils.Failure
-import com.tlapp.beertimemm.utils.Success
+import com.pd.beertimer.util.ToastHelper
+import com.pd.beertimer.util.observe
+import com.pd.beertimer.util.viewBinding
+import com.tlapp.beertimemm.models.AlcoholUnit
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.time.ExperimentalTime
 
@@ -27,30 +24,46 @@ class StartDrinkingFragment : Fragment(R.layout.fragment_startdrinking) {
     private val binding by viewBinding(FragmentStartdrinkingBinding::bind)
 
     private val startDrinkingViewModel: StartDrinkingViewModel by viewModel()
-    private val firebaseAnalytics: FirebaseAnalytics by inject()
-    private val alarmUtils: AlarmUtils by inject()
-
-
     private lateinit var alcoholAdapter: AlcoholAdapterV2
 
 
     @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        startDrinkingViewModel.getDrinks()
 
         observe(startDrinkingViewModel.drinksLiveData) {
             getAlcoholAdapter().setData(it)
             binding.bStartDrinking.visibility = View.VISIBLE
         }
         observe(startDrinkingViewModel.finishBarLiveData) {
-            binding.tvHoursValue.text = it.displayString
+            binding.tvHoursValue.text = it
         }
         observe(startDrinkingViewModel.peakHourLiveData) {
-            binding.tvPeakValue.text = it.displayString
+            binding.tvPeakValue.text = it
         }
         observe(startDrinkingViewModel.wantedBloodLevelLiveData) {
             binding.tvBloodLevelValue.text = it
+        }
+        observe(startDrinkingViewModel.toastLiveData) {
+            ToastHelper.createToast(
+                layoutInflater,
+                context,
+                it,
+                R.drawable.ic_pineapple_confused
+            )
+        }
+        observe(startDrinkingViewModel.alertDialogLiveData) {
+            AlertDialog.Builder(this.context)
+                .setTitle(it.title)
+                .setMessage(it.message)
+                .setPositiveButton(
+                    it.positiveButtonText
+                ) { _, _ -> it.onClick.invoke() }
+                .setNegativeButton(it.negativeButtonText, null)
+                .show()
+        }
+        observe(startDrinkingViewModel.navigationLiveData) {
+            findNavController().navigate(R.id.action_global_countDownFragment)
         }
 
         binding.rvAlcoholUnit.layoutManager = LinearLayoutManager(context)
@@ -68,9 +81,13 @@ class StartDrinkingFragment : Fragment(R.layout.fragment_startdrinking) {
 
     private fun getAlcoholAdapter(): AlcoholAdapterV2 {
         if (!this::alcoholAdapter.isInitialized) {
-            alcoholAdapter = AlcoholAdapterV2(mutableListOf())
+            alcoholAdapter = AlcoholAdapterV2(mutableListOf(), onUnitSelected())
         }
         return alcoholAdapter
+    }
+
+    private fun onUnitSelected() = { selectedUnit: AlcoholUnit ->
+        startDrinkingViewModel.setSelectedUnit(selectedUnit)
     }
 
     private fun initSeekBars() {
@@ -89,10 +106,10 @@ class StartDrinkingFragment : Fragment(R.layout.fragment_startdrinking) {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
                 startDrinkingViewModel.setFinishDrinkingInHoursMinutes(p1)
                 binding.sbPeak.max = p1
-                if (startDrinkingViewModel.peakTimeNotSet()) {
-                    startDrinkingViewModel.setPeakTimeInHoursMinutes(p1)
-                    binding.sbPeak.progress = p1
-                }
+//                if (startDrinkingViewModel.peakTimeNotSet()) {
+//                    startDrinkingViewModel.setPeakTimeInHoursMinutes(p1)
+//                    binding.sbPeak.progress = p1
+//                }
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {}
@@ -115,76 +132,7 @@ class StartDrinkingFragment : Fragment(R.layout.fragment_startdrinking) {
 
     private fun initStartDrinkingButton() {
         binding.bStartDrinking.setOnClickListener {
-            val selectedUnit = getAlcoholAdapter().getSelectedUnit()
-            if (selectedUnit == null) {
-                ToastHelper.createToast(
-                    layoutInflater,
-                    context,
-                    R.string.error_startdrinking_select_unit,
-                    R.drawable.ic_pineapple_confused
-                )
-                return@setOnClickListener
-            }
-            val calculationResult =
-                startDrinkingViewModel.validateValuesAndCreateCalculation(selectedUnit)
-            when (calculationResult) {
-                is Success -> {
-                    // TODO: Fix this shit
-                    if (isDrinking()) {
-                        alertAlreadyDrinking(calculationResult.value)
-                    } else {
-                        startDrinking(calculationResult.value)
-                    }
-                }
-                is Failure -> {
-                    ToastHelper.createToast(
-                        layoutInflater,
-                        context,
-                        calculationResult.reason,
-                        R.drawable.ic_pineapple_confused)
-                }
-            }
+            startDrinkingViewModel.startDrinking()
         }
-    }
-
-    private fun startDrinking(calculator: DrinkingCalculator) {
-        context?.let {
-            val drinkingTimes = calculator.calculateDrinkingTimes()
-            if (drinkingTimes.isEmpty()) {
-                ToastHelper.createToast(
-                    layoutInflater,
-                    context,
-                    R.string.startdrinking_nothing_to_drink,
-                    R.drawable.ic_pineapple_confused
-                )
-                return
-            }
-            val alarmUtils = AlarmUtils(it)
-            alarmUtils.cancelAlarm()
-            alarmUtils.setFirstAlarmAndStoreTimesToSharedPref(
-                drinkingTimes,
-                calculator
-            )
-            firebaseAnalytics.logEvent("started_drinking") {
-                param("drinking_start_time", drinkingTimes.first().toString())
-                param("drinking_end_time", drinkingTimes.last().toString())
-            }
-            findNavController().navigate(R.id.action_startDrinkingFragment_to_countDownFragment)
-        }
-    }
-
-    private fun alertAlreadyDrinking(calculator: DrinkingCalculator) {
-        AlertDialog.Builder(this.context)
-            .setTitle(R.string.startdrinking_are_you_sure)
-            .setMessage(R.string.startdrinking_already_drinking)
-            .setPositiveButton(
-                R.string.yes
-            ) { _, _ -> startDrinking(calculator) }
-            .setNegativeButton(R.string.no, null)
-            .show()
-    }
-
-    private fun isDrinking(): Boolean {
-        return alarmUtils.getExistingDrinkTimesFromSharedPref() != null
     }
 }

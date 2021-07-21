@@ -55,7 +55,7 @@ dependencies {
 
     implementation project(":shared")
 
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.4'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.0-alpha04'
     // For Kotlin use navigation-fragment-ktx
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.4'
     // For Kotlin use navigation-ui-ktx
@@ -76,7 +76,7 @@ dependencies {
     implementation "io.insert-koin:koin-core:3.0.2"
 
     // Bottom bar
-    implementation 'nl.joery.animatedbottombar:library:1.0.8'
+    implementation 'nl.joery.animatedbottombar:library:1.1.0'
 
     // Firebase
     implementation 'com.google.firebase:firebase-analytics-ktx:18.0.2'

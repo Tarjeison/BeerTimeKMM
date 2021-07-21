@@ -1,6 +1,8 @@
 package com.tlapp.beertimemm.di
 
+import com.tlapp.beertimemm.drinking.DrinkCoordinator
 import com.tlapp.beertimemm.sqldelight.DatabaseHelper
+import com.tlapp.beertimemm.viewmodels.StartDrinkingModel
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
@@ -8,6 +10,7 @@ import org.koin.core.module.Module
 import org.koin.core.parameter.parametersOf
 import org.koin.core.scope.Scope
 import org.koin.dsl.module
+import kotlin.time.ExperimentalTime
 
 fun initKoin(appModule: Module): KoinApplication {
     val koinApplication = startKoin {
@@ -31,12 +34,21 @@ internal inline fun <reified T> Scope.getWith(vararg params: Any?): T {
     return get(parameters = { parametersOf(*params) })
 }
 
+@OptIn(ExperimentalTime::class)
 private val coreModule = module {
     single {
         DatabaseHelper(
             get(),
             Dispatchers.Default
         )
+    }
+
+    single {
+        DrinkCoordinator()
+    }
+
+    factory {
+        StartDrinkingModel()
     }
 }
 

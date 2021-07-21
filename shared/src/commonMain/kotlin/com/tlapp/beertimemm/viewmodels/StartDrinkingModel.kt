@@ -1,7 +1,6 @@
 package com.tlapp.beertimemm.viewmodels
 
 import com.tlapp.beertimemm.drinking.DrinkCoordinator
-import com.tlapp.beertimemm.storage.ProfileStorage
 import com.tlapp.beertimemm.models.AlcoholUnit
 import com.tlapp.beertimemm.models.AlertDialogUiModel
 import com.tlapp.beertimemm.models.DrinkingCalculator
@@ -16,9 +15,9 @@ import com.tlapp.beertimemm.resources.Strings.ERROR_TOO_SHORT_DRINK_INTERVAL
 import com.tlapp.beertimemm.sqldelight.DatabaseHelper
 import com.tlapp.beertimemm.sqldelight.toAlcoholUnit
 import com.tlapp.beertimemm.storage.DrinkStorage
+import com.tlapp.beertimemm.storage.ProfileStorage
 import com.tlapp.beertimemm.utils.DateTimeExtensions.toHourMinuteString
 import com.tlapp.beertimemm.utils.Failure
-import com.tlapp.beertimemm.utils.Result
 import com.tlapp.beertimemm.utils.Success
 import com.tlapp.beertimemm.utils.isDebug
 import kotlinx.coroutines.flow.*
@@ -57,17 +56,13 @@ class StartDrinkingModel : KoinComponent {
     val errorToastFlow: StateFlow<String?> get() = _errorToastFlow
 
     private val _alertFlow = MutableStateFlow<AlertDialogUiModel?>(null)
-    val alertFlot: StateFlow<AlertDialogUiModel?> get() = _alertFlow
+    val alertFlow: StateFlow<AlertDialogUiModel?> get() = _alertFlow
 
     private val _navigateToCountDownFlow = MutableStateFlow<Boolean?>(null)
     val navigateToCountDownFlow: StateFlow<Boolean?> get() = _navigateToCountDownFlow
 
-
-    fun getDrinks() = flow {
-        val alcoholUnits = databaseHelper.selectAllItems().map { drinkList ->
-            drinkList.map { it.toAlcoholUnit() }
-        }
-        emit(alcoholUnits)
+    fun getDrinks() = databaseHelper.selectAllItems().map { drinkList ->
+        drinkList.map { it.toAlcoholUnit() }
     }
 
     fun setWantedBloodLevel(wantedBloodLevelProgress: Int) {
@@ -100,6 +95,10 @@ class StartDrinkingModel : KoinComponent {
             Clock.System.now().plus(Duration.Companion.hours(hoursDrinking)).plus(Duration.minutes(minutesDrinking)).toLocalDateTime(
                 TimeZone.currentSystemDefault()
             ).toHourMinuteString(true)
+    }
+
+    fun setSelectedUnit(selectedUnit: AlcoholUnit) {
+        this.selectedUnit = selectedUnit
     }
 
     fun startDrinking() {
@@ -158,15 +157,19 @@ class StartDrinkingModel : KoinComponent {
 //            param("profile", profile.toString())
 //        }
 
-        val drinkingCalculator =  DrinkingCalculator(
-                userProfile = profile,
-                wantedBloodLevel = selectedBloodLevel,
-                endTime = Clock.System.now().plus(Duration.hours(selectedHoursDrinking.first)
-                    .plus(Duration.minutes(selectedHoursDrinking.second))),
-                peakTime = Clock.System.now().plus(Duration.hours(selectedPeakHour.first)
-                    .plus(Duration.minutes(selectedPeakHour.second))),
-                preferredUnit = selectedUnitNonNull
-            )
+        val drinkingCalculator = DrinkingCalculator(
+            userProfile = profile,
+            wantedBloodLevel = selectedBloodLevel,
+            endTime = Clock.System.now().plus(
+                Duration.hours(selectedHoursDrinking.first)
+                    .plus(Duration.minutes(selectedHoursDrinking.second))
+            ),
+            peakTime = Clock.System.now().plus(
+                Duration.hours(selectedPeakHour.first)
+                    .plus(Duration.minutes(selectedPeakHour.second))
+            ),
+            preferredUnit = selectedUnitNonNull
+        )
 
         when (val result = drinkCoordinator.startDrinking(drinkingCalculator)) {
             is Success -> _navigateToCountDownFlow.value = true

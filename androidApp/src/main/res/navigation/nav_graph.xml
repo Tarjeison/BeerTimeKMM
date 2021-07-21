@@ -17,18 +17,16 @@
         tools:layout="@layout/fragment_timer"/>
     <action
         android:id="@+id/action_global_countDownFragment"
+        app:popUpTo="@id/startDrinkingFragment"
         app:destination="@id/countDownFragment" />
     <fragment
         android:id="@+id/startDrinkingFragment"
         android:name="com.pd.beertimer.feature.startdrinking.StartDrinkingFragment"
         android:label="StartDrinkingFragment"
-        tools:layout="@layout/fragment_startdrinking">
-        <action
-            android:id="@+id/action_startDrinkingFragment_to_countDownFragment"
-            app:destination="@id/countDownFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_startdrinking"/>
     <action
         android:id="@+id/action_global_startDrinkingFragment"
+        app:restoreState="true"
         app:destination="@id/startDrinkingFragment" />
     <fragment
         android:id="@+id/infoFragment"
@@ -56,6 +54,7 @@
     </fragment>
     <action
         android:id="@+id/action_global_meFragment"
+        app:popUpTo="@id/startDrinkingFragment"
         app:destination="@id/meFragment" />
     <fragment
         android:id="@+id/myDrinksFragment"

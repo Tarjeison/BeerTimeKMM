@@ -61,12 +61,7 @@ fun beerTimeModules(applicationContext: Application) = module {
     }.bind(DrinkNotificationScheduler::class)
 
     viewModel {
-        StartDrinkingViewModel(
-            databaseHelper = get(),
-            applicationContext = get(),
-            profileStorage = get(),
-            firebaseAnalytics = get()
-        )
+        StartDrinkingViewModel()
     }
 
     single {

@@ -32,4 +32,25 @@ object ToastHelper {
             }
         }
     }
+
+    fun createToast(
+        layoutInflater: LayoutInflater,
+        nullableContext: Context?,
+        message: String,
+        @DrawableRes imageId: Int
+    ) {
+        nullableContext?.let { context ->
+            val layout: View = layoutInflater.inflate(R.layout.view_toast, null)
+            val text: TextView = layout.findViewById(R.id.tvMessage)
+            val image: ImageView = layout.findViewById(R.id.ivToast)
+            image.setImageResource(imageId)
+            text.text = message
+            with(Toast(context)) {
+                setGravity(Gravity.CENTER_VERTICAL or Gravity.TOP, 0, 300)
+                duration = Toast.LENGTH_SHORT
+                view = layout
+                show()
+            }
+        }
+    }
 }

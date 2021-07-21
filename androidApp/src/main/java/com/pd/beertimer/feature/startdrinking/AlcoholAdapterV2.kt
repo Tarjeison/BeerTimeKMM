@@ -13,7 +13,10 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 
-class AlcoholAdapterV2(private val alcoholUnits: MutableList<AlcoholUnit>) :
+class AlcoholAdapterV2(
+    private val alcoholUnits: MutableList<AlcoholUnit>,
+    private val onSelected: (AlcoholUnit) -> Unit
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>(), KoinComponent {
     private val volumeConverter: VolumeConverter by inject()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -58,9 +61,11 @@ class AlcoholAdapterV2(private val alcoholUnits: MutableList<AlcoholUnit>) :
                 volumeConverter.floatLiterToVolumeString(alcoholUnit.volume)
             )
             itemView.rbDrinkSelect.setOnClickListener {
+                onSelected.invoke(alcoholUnit)
                 setItemSelected(alcoholUnit)
             }
             itemView.setOnClickListener {
+                onSelected.invoke(alcoholUnit)
                 setItemSelected(alcoholUnit)
             }
         }

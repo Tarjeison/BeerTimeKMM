@@ -109,10 +109,23 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
                 newIndex: Int,
                 newTab: AnimatedBottomBar.Tab
             ) {
+                val currentDestinationId = findNavController(R.id.nav_host_fragment).currentDestination?.id
                 when (newTab.id) {
-                    R.id.tab_home -> findNavController(R.id.nav_host_fragment).navigate(R.id.action_global_startDrinkingFragment)
-                    R.id.tab_timer -> findNavController(R.id.nav_host_fragment).navigate(R.id.countDownFragment)
-                    R.id.tab_profile -> findNavController(R.id.nav_host_fragment).navigate(R.id.action_global_meFragment)
+                    R.id.tab_home -> {
+                        if (currentDestinationId != R.id.startDrinkingFragment) {
+                            findNavController(R.id.nav_host_fragment).popBackStack(R.id.startDrinkingFragment, false)
+                        }
+                    }
+                    R.id.tab_timer -> {
+                        if (currentDestinationId != R.id.countDownFragment) {
+                            findNavController(R.id.nav_host_fragment).navigate(R.id.action_global_countDownFragment)
+                        }
+                    }
+                    R.id.tab_profile -> {
+                        if (currentDestinationId != R.id.profileFragment) {
+                            findNavController(R.id.nav_host_fragment).navigate(R.id.action_global_meFragment)
+                        }
+                    }
                     else -> throw ClassNotFoundException()
                 }
             }

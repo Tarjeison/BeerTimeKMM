@@ -29,7 +29,5 @@ class InfoFragment : Fragment() {
         rvInfo.layoutManager = LinearLayoutManager(context)
         rvInfo.adapter = infoAdapter
         infoAdapter.notifyDataSetChanged()
-
-
     }
 }

@@ -1,4 +1,4 @@
-package com.tlapp.beertimemm
+package com.tlapp.beertimemm.di
 
 import org.koin.core.module.Module
 import org.koin.dsl.module

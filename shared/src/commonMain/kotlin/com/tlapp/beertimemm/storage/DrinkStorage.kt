@@ -10,11 +10,15 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
-internal class DrinkStorage(private val settings: Settings) {
+internal class DrinkStorage(private val settings: Settings): KoinComponent {
+    private val clock: Clock by inject()
+
     fun getExistingDrinkingTimes(): List<Instant>? {
         return settings.get<String>(DRINKING_TIMES_KEY)?.let {
             Json.decodeFromString<List<Instant>>(it)
@@ -24,7 +28,7 @@ internal class DrinkStorage(private val settings: Settings) {
     fun getNextDrinkingTime(): NextDrinkingTime? {
         return settings.get<String>(DRINKING_TIMES_KEY)?.let { drinkingTimesFromSettings ->
             val drinkingTimes = Json.decodeFromString<List<Instant>>(drinkingTimesFromSettings)
-            val currentTime = Clock.System.now().plus(Duration.Companion.seconds(10)) // Give some leeway
+            val currentTime = clock.now().plus(Duration.Companion.seconds(10)) // Give some leeway
             val nextDrinkingTime =
                 drinkingTimes.firstOrNull { it > currentTime } ?: return null
             val isLast =
@@ -32,11 +36,13 @@ internal class DrinkStorage(private val settings: Settings) {
             NextDrinkingTime(nextDrinkingTime, isLast)
         }
     }
+
     fun getCurrentDrinkingCalculator(): DrinkingCalculator? {
         return settings.get<String>(DRINKING_CALCULATOR_KEY)?.let {
             Json.decodeFromString<DrinkingCalculator>(it)
         }
     }
+
     fun clear() {
         settings.remove(DRINKING_TIMES_KEY)
         settings.remove(DRINKING_CALCULATOR_KEY)

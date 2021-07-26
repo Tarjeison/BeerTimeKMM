@@ -1,11 +1,13 @@
 package com.tlapp.beertimemm.di
 
 import com.tlapp.beertimemm.drinking.DrinkCoordinator
+import com.tlapp.beertimemm.drinking.DrinkCoordinatorImpl
 import com.tlapp.beertimemm.sqldelight.DatabaseHelper
 import com.tlapp.beertimemm.storage.DrinkStorage
 import com.tlapp.beertimemm.storage.ProfileStorage
 import com.tlapp.beertimemm.viewmodels.StartDrinkingModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.datetime.Clock
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -45,8 +47,8 @@ private val coreModule = module {
         )
     }
 
-    single {
-        DrinkCoordinator()
+    single<DrinkCoordinator> {
+        DrinkCoordinatorImpl()
     }
 
     single {
@@ -55,6 +57,10 @@ private val coreModule = module {
 
     single {
         ProfileStorage(settings = get())
+    }
+
+    factory<Clock> {
+        Clock.System
     }
 
     factory {

@@ -1,0 +1,13 @@
+package com.tlapp.beertimemm
+
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.runBlocking
+import org.junit.runner.RunWith
+
+@RunWith(AndroidJUnit4::class)
+actual abstract class BaseTest {
+    actual fun <T> runTest(block: suspend CoroutineScope.() -> T) {
+        runBlocking { block() }
+    }
+}

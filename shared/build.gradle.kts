@@ -43,8 +43,11 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
+                implementation("com.russhwolf:multiplatform-settings-test:0.7.7")
+                implementation("io.insert-koin:koin-test:3.0.2")
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
+                implementation("app.cash.turbine:turbine:0.5.1")
             }
         }
         val androidMain by getting {
@@ -54,8 +57,14 @@ kotlin {
         }
         val androidTest by getting {
             dependencies {
-                implementation(kotlin("test-junit"))
-                implementation("junit:junit:4.13.2")
+                implementation("org.jetbrains.kotlin:kotlin-test-junit:1.5.10")
+                implementation("org.jetbrains.kotlin:kotlin-test:1.5.10")
+                implementation("androidx.test.ext:junit:1.1.3")
+                implementation("androidx.test:core:1.4.0")
+                implementation("androidx.test:runner:1.4.0")
+                implementation("org.robolectric:robolectric:4.5.1")
+                // Koin for JUnit 4
+                implementation("io.insert-koin:koin-test-junit4:3.0.2")
                 implementation("org.junit.jupiter:junit-jupiter:5.7.0")
             }
         }

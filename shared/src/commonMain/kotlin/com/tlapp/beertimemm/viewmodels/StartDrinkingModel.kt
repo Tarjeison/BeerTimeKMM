@@ -16,11 +16,7 @@ import com.tlapp.beertimemm.sqldelight.DatabaseHelper
 import com.tlapp.beertimemm.sqldelight.toAlcoholUnit
 import com.tlapp.beertimemm.storage.DrinkStorage
 import com.tlapp.beertimemm.storage.ProfileStorage
-import com.tlapp.beertimemm.utils.AlwaysDistinct
-import com.tlapp.beertimemm.utils.DateTimeExtensions.toHourMinuteString
-import com.tlapp.beertimemm.utils.Failure
-import com.tlapp.beertimemm.utils.Success
-import com.tlapp.beertimemm.utils.isDebug
+import com.tlapp.beertimemm.utils.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -39,6 +35,8 @@ class StartDrinkingModel : KoinComponent {
     private val profileStorage: ProfileStorage by inject()
     private val drinkStorage: DrinkStorage by inject()
     private val drinkCoordinator: DrinkCoordinator by inject()
+    private val clock: Clock by inject()
+    private val displayDateHelper: DisplayDateHelper by inject()
 
     private var wantedBloodLevel = 0f
     private var finishDrinkingInHoursMinutes: Pair<Int, Int> = Pair(0, 0)
@@ -83,27 +81,31 @@ class StartDrinkingModel : KoinComponent {
     fun setFinishDrinkingInHoursMinutes(seekBarValue: Int) {
         val minDrinkingTimeInHours = if (isDebug()) 0 else 1
         val hoursDrinking = (seekBarValue / 60) + minDrinkingTimeInHours
-        Clock.System.now().plus(Duration.Companion.minutes(2)).plus(Duration.Companion.minutes(2))
+        clock.now().plus(Duration.Companion.minutes(2)).plus(Duration.Companion.minutes(2))
         var minutesDrinking = (seekBarValue - ((seekBarValue / 60) * 60) + (10 - seekBarValue % 10))
-        minutesDrinking -= Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).minute % 10
+        minutesDrinking -= clock.now().toLocalDateTime(TimeZone.currentSystemDefault()).minute % 10
         finishDrinkingInHoursMinutes = Pair(hoursDrinking, minutesDrinking)
         _finishDrinkingSeekBarUiModelFlow.value =
-            Clock.System.now().plus(Duration.Companion.hours(hoursDrinking)).plus(Duration.minutes(minutesDrinking)).toLocalDateTime(
-                TimeZone.currentSystemDefault()
-            ).toHourMinuteString(true)
+            displayDateHelper.localDateTimeToHourMinuteString(
+                clock.now().plus(Duration.Companion.hours(hoursDrinking)).plus(Duration.minutes(minutesDrinking)).toLocalDateTime(
+                    TimeZone.currentSystemDefault()
+                ), true
+            )
     }
 
     fun setPeakTimeInHoursMinutes(seekBarValue: Int) {
         val minDrinkingTimeInHours = if (isDebug()) 0 else 1
         val hoursDrinking = (seekBarValue / 60) + minDrinkingTimeInHours
         var minutesDrinking = (seekBarValue - ((seekBarValue / 60) * 60)) + (10 - seekBarValue % 10)
-        minutesDrinking -= Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).minute % 10
+        minutesDrinking -= clock.now().toLocalDateTime(TimeZone.currentSystemDefault()).minute % 10
 
         peakInHoursMinutes = Pair(hoursDrinking, minutesDrinking)
         _peakTimeSeekBarUiModelFlow.value =
-            Clock.System.now().plus(Duration.Companion.hours(hoursDrinking)).plus(Duration.minutes(minutesDrinking)).toLocalDateTime(
-                TimeZone.currentSystemDefault()
-            ).toHourMinuteString(true)
+            displayDateHelper.localDateTimeToHourMinuteString(
+                clock.now().plus(Duration.Companion.hours(hoursDrinking)).plus(Duration.minutes(minutesDrinking)).toLocalDateTime(
+                    TimeZone.currentSystemDefault()
+                ), true
+            )
     }
 
     fun setSelectedUnit(selectedUnit: AlcoholUnit) {

@@ -113,7 +113,7 @@ class StartDrinkingModel : KoinComponent {
     }
 
     fun startDrinking() {
-        if (drinkStorage.getNextDrinkingTime() != null) {
+        if (drinkCoordinator.isDrinking()) {
             val alertDialogUiModel = AlertDialogUiModel(
                 title = ALREADY_DRINKING_ALERT_TITLE,
                 message = ALREADY_DRINKING_ALERT_MESSAGE,

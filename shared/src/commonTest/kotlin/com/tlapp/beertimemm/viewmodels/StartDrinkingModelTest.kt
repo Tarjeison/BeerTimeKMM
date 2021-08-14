@@ -16,15 +16,16 @@ import com.tlapp.beertimemm.resources.Strings.ERROR_NO_BLOOD_LEVEL_SET
 import com.tlapp.beertimemm.resources.Strings.ERROR_NO_DRINK_SELECTED
 import com.tlapp.beertimemm.resources.Strings.ERROR_NO_PROFILE_FOUND
 import com.tlapp.beertimemm.sqldelight.DatabaseHelper
-import com.tlapp.beertimemm.storage.DrinkStorage
 import com.tlapp.beertimemm.storage.ProfileStorage
-import com.tlapp.beertimemm.utils.DRINKING_TIMES_KEY
 import com.tlapp.beertimemm.utils.DisplayDateHelper
 import com.tlapp.beertimemm.utils.Failure
 import com.tlapp.beertimemm.utils.PROFILE_KEY
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.datetime.*
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.koin.core.context.startKoin
@@ -36,7 +37,6 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
@@ -70,7 +70,6 @@ internal class StartDrinkingModelTest : BaseTest(), KoinTest {
             modules(module {
                 single { databaseHelper }
                 single { ProfileStorage(mockSettings) }
-                single { DrinkStorage(mockSettings) }
                 single<DrinkNotificationScheduler> { drinkCoordinator }
                 single { StartDrinkingModel() }
                 single<Clock> { clockMock }
@@ -87,7 +86,7 @@ internal class StartDrinkingModelTest : BaseTest(), KoinTest {
     }
 
     @Test
-    fun `when no drink is selected, toastFlow is updated with correct error`() = runTest {
+    fun whenNoDrinkIsSelected_toastFlowIsUpdatedWithCorrectError() = runTest {
         val startDrinkingModel = getKoin().get<StartDrinkingModel>()
         startDrinkingModel.startDrinking()
         startDrinkingModel.errorToastFlow.filterNotNull().test {
@@ -97,7 +96,7 @@ internal class StartDrinkingModelTest : BaseTest(), KoinTest {
     }
 
     @Test
-    fun `when wanted blood level is 0f, toastFlow is updated with correct error`() = runTest {
+    fun whenWantedBloodLevelIs0f_toastFlowIsUpdatedWithCorrectError() = runTest {
         val startDrinkingModel = getKoin().get<StartDrinkingModel>()
         startDrinkingModel.setSelectedUnit(TEST_ALCOHOL_UNIT)
         startDrinkingModel.startDrinking()
@@ -108,7 +107,7 @@ internal class StartDrinkingModelTest : BaseTest(), KoinTest {
     }
 
     @Test
-    fun `when no profile is found, toastFlow is updated with correct error`() = runTest {
+    fun whenNoProfileIsFound_toastFlowIsUpdatedWithCorrectError() = runTest {
         val startDrinkingModel = getKoin().get<StartDrinkingModel>()
         startDrinkingModel.setSelectedUnit(TEST_ALCOHOL_UNIT)
         startDrinkingModel.setWantedBloodLevel(20)
@@ -120,7 +119,7 @@ internal class StartDrinkingModelTest : BaseTest(), KoinTest {
     }
 
     @Test
-    fun `when startDrinking succeeds and drinkCoordinator returns success, navigationFlow is updated`() = runTest {
+    fun whenStartDrinkingSucceedsAndDrinkCoordinatorReturnsSuccess_navigationFlowIsUpdated() = runTest {
         val startDrinkingModel = getKoin().get<StartDrinkingModel>()
         mockSettings.putString(PROFILE_KEY, Json.encodeToString(UserProfile(Gender.MALE, 70)))
         startDrinkingModel.setSelectedUnit(TEST_ALCOHOL_UNIT)
@@ -133,7 +132,7 @@ internal class StartDrinkingModelTest : BaseTest(), KoinTest {
     }
 
     @Test
-    fun `when startDrinking succeeds and drinkCoordinator returns failure, navigationFlow is not updated and errorFlow is updated`() = runTest {
+    fun whenStartDrinkingSucceedsAndDrinkCoordinatorRreturnsFailure_navigationFlowIsNotUpdatedAndErrorFlowIsUpdated() = runTest {
         val startDrinkingModel = getKoin().get<StartDrinkingModel>()
         mockSettings.putString(PROFILE_KEY, Json.encodeToString(UserProfile(Gender.MALE, 70)))
         drinkCoordinatorMock.startDrinkingReturnValue = Failure("Test")
@@ -150,13 +149,22 @@ internal class StartDrinkingModelTest : BaseTest(), KoinTest {
     }
 
     @Test
-    fun when_drinkTimes_are_present_alertDialogFlowIsTriggered() = runTest {
-        val drinkingTimes = listOf(currentInstant.plus(Duration.Companion.hours(2)))
-        mockSettings.putString(DRINKING_TIMES_KEY, Json.encodeToString(drinkingTimes))
+    fun whenDrinkCoordinatorReturnsIsDrinking_alertDialogFlowIsTriggered() = runTest {
         val startDrinkingModel = get<StartDrinkingModel>()
+        drinkCoordinatorMock.isDrinkingReturnValue = true
         startDrinkingModel.startDrinking()
         startDrinkingModel.alertFlow.filterNotNull().test {
             expectEvent()
+            expectNoEvents()
+        }
+    }
+
+    @Test
+    fun whenDrinkCoordinatorReturnsIsDrinkingFalse_alertDialogFlowIsNotTriggered() = runTest {
+        val startDrinkingModel = get<StartDrinkingModel>()
+        drinkCoordinatorMock.isDrinkingReturnValue = false
+        startDrinkingModel.startDrinking()
+        startDrinkingModel.alertFlow.filterNotNull().test {
             expectNoEvents()
         }
     }

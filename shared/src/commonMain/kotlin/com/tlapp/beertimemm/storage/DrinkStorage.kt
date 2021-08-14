@@ -17,23 +17,10 @@ import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 internal class DrinkStorage(private val settings: Settings): KoinComponent {
-    private val clock: Clock by inject()
 
     fun getExistingDrinkingTimes(): List<Instant>? {
         return settings.get<String>(DRINKING_TIMES_KEY)?.let {
             Json.decodeFromString<List<Instant>>(it)
-        }
-    }
-
-    fun getNextDrinkingTime(): NextDrinkingTime? {
-        return settings.get<String>(DRINKING_TIMES_KEY)?.let { drinkingTimesFromSettings ->
-            val drinkingTimes = Json.decodeFromString<List<Instant>>(drinkingTimesFromSettings)
-            val currentTime = clock.now().plus(Duration.Companion.seconds(10)) // Give some leeway
-            val nextDrinkingTime =
-                drinkingTimes.firstOrNull { it > currentTime } ?: return null
-            val isLast =
-                drinkingTimes.indexOf(nextDrinkingTime) == drinkingTimes.lastIndex
-            NextDrinkingTime(nextDrinkingTime, isLast)
         }
     }
 

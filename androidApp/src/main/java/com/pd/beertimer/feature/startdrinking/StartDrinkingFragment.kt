@@ -26,7 +26,6 @@ class StartDrinkingFragment : Fragment(R.layout.fragment_startdrinking) {
     private val startDrinkingViewModel: StartDrinkingViewModel by viewModel()
     private lateinit var alcoholAdapter: AlcoholAdapterV2
 
-
     @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

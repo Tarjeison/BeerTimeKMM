@@ -5,6 +5,7 @@ import com.tlapp.beertimemm.drinking.DrinkCoordinatorImpl
 import com.tlapp.beertimemm.sqldelight.DatabaseHelper
 import com.tlapp.beertimemm.storage.DrinkStorage
 import com.tlapp.beertimemm.storage.ProfileStorage
+import com.tlapp.beertimemm.viewmodels.CountDownModel
 import com.tlapp.beertimemm.viewmodels.StartDrinkingModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.datetime.Clock
@@ -16,6 +17,7 @@ import org.koin.core.scope.Scope
 import org.koin.dsl.module
 import kotlin.time.ExperimentalTime
 
+@ExperimentalTime
 fun initKoin(appModule: Module): KoinApplication {
     val koinApplication = startKoin {
         modules(
@@ -65,6 +67,10 @@ private val coreModule = module {
 
     factory {
         StartDrinkingModel()
+    }
+
+    factory {
+        CountDownModel()
     }
 }
 

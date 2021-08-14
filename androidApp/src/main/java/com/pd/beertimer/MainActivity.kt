@@ -14,9 +14,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import com.pd.beertimer.feature.welcome.WelcomeFragment
-import com.pd.beertimer.util.AlarmUtils
 import com.pd.beertimer.util.CHANNEL_ID
 import com.pd.beertimer.util.SHARED_PREF_FIRST_TIME_LAUNCH
+import com.tlapp.beertimemm.drinking.DrinkCoordinator
 import kotlinx.android.synthetic.main.activity_main.*
 import nl.joery.animatedbottombar.AnimatedBottomBar
 import org.koin.android.ext.android.inject
@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 
     private var menu: Menu? = null
     private val sharedPreferences: SharedPreferences by inject()
+    private val drinkCoordinator: DrinkCoordinator by inject()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         setupToolbar()
         checkForFirstTimeLaunch()
         if (savedInstanceState == null) {
-            if (!AlarmUtils(this).getExistingDrinkTimesFromSharedPref().isNullOrEmpty()) {
+            if (drinkCoordinator.isDrinking()) {
                 findNavController(R.id.nav_host_fragment).navigate(R.id.action_global_countDownFragment)
             }
         }

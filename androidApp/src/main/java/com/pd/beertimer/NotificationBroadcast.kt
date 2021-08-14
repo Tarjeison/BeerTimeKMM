@@ -6,39 +6,43 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.pd.beertimer.util.AlarmUtils
 import com.pd.beertimer.util.CHANNEL_ID
 import com.pd.beertimer.util.NOTIFICATION_ID
+import com.tlapp.beertimemm.drinking.DrinkCoordinator
+import com.tlapp.beertimemm.drinking.DrinkNotificationScheduler
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
-class NotificationBroadcast : BroadcastReceiver() {
+class NotificationBroadcast : BroadcastReceiver(), KoinComponent {
+    private val drinkCoordinator: DrinkCoordinator by inject()
+    private val notificationScheduler: DrinkNotificationScheduler by inject()
     override fun onReceive(context: Context?, p1: Intent?) {
-        context?.let {
+        context?.let { contextNonNull ->
 
-            val intent = Intent(it, MainActivity::class.java).apply {
+            val intent = Intent(contextNonNull, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
 
-            val alarmUtils = AlarmUtils(context.applicationContext)
             var isLastAlarm = true
-            alarmUtils.getNextDrinkingTimeFromSharedPref()?.let { nextDrinkingTimeAndLastIndicator ->
+            drinkCoordinator.getNextDrinkDrinkingTime()?.let {
                 isLastAlarm = false
-                val triggerTimeInMs =
-                    nextDrinkingTimeAndLastIndicator.first.toEpochMilliseconds()
-                alarmUtils.scheduleNotification(triggerTimeInMs)
+                val triggerTimeInMs = it.toEpochMilliseconds()
+                notificationScheduler.scheduleNotification(triggerTimeInMs)
             }
-            val pendingIntent: PendingIntent = PendingIntent.getActivity(it, 0, intent, 0)
 
-            val builder = NotificationCompat.Builder(it, CHANNEL_ID)
+            val pendingIntent: PendingIntent = PendingIntent.getActivity(contextNonNull, 0, intent, 0)
+
+            val builder = NotificationCompat.Builder(contextNonNull, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_beer)
-                .setContentTitle(it.getText(R.string.notification_title))
+                .setContentTitle(contextNonNull.getText(R.string.notification_title))
                 .setContentText(
                     // Setting info in PendingIntent was a hassle, so this is a lazy implementation
                     if (isLastAlarm) {
-                        it.getString(R.string.notification_last)
+                        contextNonNull.getString(R.string.notification_last)
                     } else {
-                        it.getString(R.string.notification_text)
+                        contextNonNull.getString(R.string.notification_text)
                     }
                 )
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -46,7 +50,7 @@ class NotificationBroadcast : BroadcastReceiver() {
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
 
-            with(NotificationManagerCompat.from(it)) {
+            with(NotificationManagerCompat.from(contextNonNull)) {
                 notify(NOTIFICATION_ID, builder.build())
             }
         }

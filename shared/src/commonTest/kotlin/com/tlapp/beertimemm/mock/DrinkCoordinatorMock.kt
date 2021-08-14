@@ -11,8 +11,17 @@ import kotlin.time.ExperimentalTime
 class DrinkCoordinatorMock: DrinkCoordinator {
     var lastSetDrinkingCalculator: DrinkingCalculator? = null
     var stoppedDrinkingInvoked: Boolean = false
-
+    var isDrinkingReturnValue = false
+    var drinkingTimesReturnValue: List<Instant>? = null
     var startDrinkingReturnValue: Result<Boolean, String> = Success(true)
+
+    fun reset() {
+        lastSetDrinkingCalculator = null
+        stoppedDrinkingInvoked = false
+        isDrinkingReturnValue = false
+        startDrinkingReturnValue = Success(true)
+        drinkingTimesReturnValue = null
+    }
 
     override fun startDrinking(drinkingCalculator: DrinkingCalculator): Result<Boolean, String> {
         lastSetDrinkingCalculator = drinkingCalculator
@@ -28,6 +37,14 @@ class DrinkCoordinatorMock: DrinkCoordinator {
     }
 
     override fun getDrinkingTimes(): List<Instant>? {
-        return lastSetDrinkingCalculator?.calculateDrinkingTimes()
+        return drinkingTimesReturnValue
+    }
+
+    override fun getNextDrinkDrinkingTime(): Instant? {
+        return lastSetDrinkingCalculator?.calculateDrinkingTimes()?.last()
+    }
+
+    override fun isDrinking(): Boolean {
+        return isDrinkingReturnValue
     }
 }

@@ -18,4 +18,9 @@ object Strings {
     const val ERROR_ONLY_ONE_DRINK = "Seems like you'll only have one unit to meet your wanted BAC. No need to use this app for that!"
     const val ERROR_TOO_MANY_DRINKS = "Woah, take it easy. This would require over 30 units. I suggest drinking something stronger!"
 
+    // CountDownModel
+    const val N_DRINKS_FIRST_DRINK = "Enjoy your first drink! I'll let you know when it's time for more"
+    const val N_DRINKS_LAST_DRINK = "Enjoy your last drink!"
+    const val COUNTDOWN_LAST_DRINK_DESCRIPTION = "Until finished"
+    const val COUNTDOWN_DESCRIPTION = "Until next drink"
 }

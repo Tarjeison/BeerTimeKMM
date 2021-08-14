@@ -6,6 +6,7 @@ import com.tlapp.beertimemm.storage.DrinkStorage
 import com.tlapp.beertimemm.utils.Failure
 import com.tlapp.beertimemm.utils.Result
 import com.tlapp.beertimemm.utils.Success
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -17,12 +18,15 @@ interface DrinkCoordinator {
     fun stopDrinking()
     fun getDrinkingCalculator(): DrinkingCalculator?
     fun getDrinkingTimes(): List<Instant>?
+    fun getNextDrinkDrinkingTime(): Instant?
+    fun isDrinking(): Boolean
 }
 
 @ExperimentalTime
 class DrinkCoordinatorImpl(): DrinkCoordinator, KoinComponent {
     private val drinkStorage: DrinkStorage by inject()
     private val drinkNotificationScheduler: DrinkNotificationScheduler by inject()
+    private val clock: Clock by inject()
 
     override fun startDrinking(drinkingCalculator: DrinkingCalculator): Result<Boolean, String> {
         val drinkingTimes = drinkingCalculator.calculateDrinkingTimes()
@@ -49,6 +53,14 @@ class DrinkCoordinatorImpl(): DrinkCoordinator, KoinComponent {
     }
 
     override fun getDrinkingTimes() = drinkStorage.getExistingDrinkingTimes()
+
+    override fun getNextDrinkDrinkingTime(): Instant? {
+        return drinkStorage.getExistingDrinkingTimes()?.find { it > clock.now() }
+    }
+
+    override fun isDrinking(): Boolean {
+        return drinkStorage.getExistingDrinkingTimes()?.any { it > clock.now() } ?: false
+    }
 
     override fun getDrinkingCalculator() = drinkStorage.getCurrentDrinkingCalculator()
 }

@@ -5,12 +5,13 @@ import android.content.Context
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
+import com.pd.beertimer.feature.countdown.CountDownViewModel
 import com.pd.beertimer.feature.drinks.AddDrinkViewModel
 import com.pd.beertimer.feature.drinks.MyDrinksViewModel
 import com.pd.beertimer.feature.info.InfoViewModel
 import com.pd.beertimer.feature.profile.ProfileViewModel
 import com.pd.beertimer.feature.startdrinking.StartDrinkingViewModel
-import com.pd.beertimer.util.AlarmUtils
+import com.pd.beertimer.util.NotificationScheduler
 import com.pd.beertimer.util.SHARED_PREF_BEER_TIME
 import com.pd.beertimer.util.StorageHelper
 import com.pd.beertimer.util.VolumeConverter
@@ -29,6 +30,10 @@ fun beerTimeModules(applicationContext: Application) = module {
 
     single<Application> {
         applicationContext
+    }
+
+    viewModel {
+        CountDownViewModel()
     }
 
     viewModel {
@@ -57,7 +62,7 @@ fun beerTimeModules(applicationContext: Application) = module {
     }
 
     single {
-        AlarmUtils(application = androidApplication())
+        NotificationScheduler(application = androidApplication())
     }.bind(DrinkNotificationScheduler::class)
 
     viewModel {

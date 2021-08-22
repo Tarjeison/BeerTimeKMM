@@ -7,18 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
-		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		943B9C22002F6736CA69E1DF /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C71B00E654ABC168DC4B2F6A /* Pods_iosApp.framework */; };
+		C8E7E32126D261FF00D35ADF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8E7E32026D261FF00D35ADF /* Main.storyboard */; };
+		C8E7E32326D2624300D35ADF /* StartDrinkingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E7E32226D2624300D35ADF /* StartDrinkingViewController.swift */; };
+		C8E7E32926D2649700D35ADF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8E7E32826D2649700D35ADF /* Assets.xcassets */; };
+		C8E7E32B26D267D100D35ADF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E7E32A26D267D100D35ADF /* AppDelegate.swift */; };
+		C8E7E32D26D26D7E00D35ADF /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8E7E32C26D26D7E00D35ADF /* Color.xcassets */; };
+		C8E7E33026D2714C00D35ADF /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E7E32F26D2714C00D35ADF /* CustomSlider.swift */; };
+		C8F1EB5626D29244002724E0 /* Koin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F1EB5526D29244002724E0 /* Koin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3622A3241EBE645FFEB8696 /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
 		C71B00E654ABC168DC4B2F6A /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8E7E32026D261FF00D35ADF /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		C8E7E32226D2624300D35ADF /* StartDrinkingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDrinkingViewController.swift; sourceTree = "<group>"; };
+		C8E7E32826D2649700D35ADF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C8E7E32A26D267D100D35ADF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C8E7E32C26D26D7E00D35ADF /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
+		C8E7E32F26D2714C00D35ADF /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
+		C8F1EB5526D29244002724E0 /* Koin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Koin.swift; sourceTree = "<group>"; };
 		F073D32319EE7B2DDC03193C /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.release.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -55,9 +65,14 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
-				7555FF82242A565900829871 /* ContentView.swift */,
+				C8E7E32E26D2713B00D35ADF /* Views */,
+				C8E7E32826D2649700D35ADF /* Assets.xcassets */,
 				7555FF8C242A565B00829871 /* Info.plist */,
-				2152FB032600AC8F00CF470E /* iOSApp.swift */,
+				C8E7E32026D261FF00D35ADF /* Main.storyboard */,
+				C8E7E32226D2624300D35ADF /* StartDrinkingViewController.swift */,
+				C8E7E32A26D267D100D35ADF /* AppDelegate.swift */,
+				C8E7E32C26D26D7E00D35ADF /* Color.xcassets */,
+				C8F1EB5526D29244002724E0 /* Koin.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -70,13 +85,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C8E7E32E26D2713B00D35ADF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C8E7E32F26D2714C00D35ADF /* CustomSlider.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		DC39580563D8C04428A2E4FB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
 				B3622A3241EBE645FFEB8696 /* Pods-iosApp.debug.xcconfig */,
 				F073D32319EE7B2DDC03193C /* Pods-iosApp.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -139,6 +161,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C8E7E32926D2649700D35ADF /* Assets.xcassets in Resources */,
+				C8E7E32126D261FF00D35ADF /* Main.storyboard in Resources */,
+				C8E7E32D26D26D7E00D35ADF /* Color.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,8 +199,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
-				7555FF83242A565900829871 /* ContentView.swift in Sources */,
+				C8E7E32B26D267D100D35ADF /* AppDelegate.swift in Sources */,
+				C8E7E33026D2714C00D35ADF /* CustomSlider.swift in Sources */,
+				C8F1EB5626D29244002724E0 /* Koin.swift in Sources */,
+				C8E7E32326D2624300D35ADF /* StartDrinkingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +337,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-framework",
+					"\"shared\"",
+					"-lsqlite3",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = orgIdentifier.iosApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -328,6 +363,14 @@
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-framework",
+					"\"shared\"",
+					"-lsqlite3",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = orgIdentifier.iosApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";

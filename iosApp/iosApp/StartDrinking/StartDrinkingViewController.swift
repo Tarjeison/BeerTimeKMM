@@ -16,10 +16,7 @@ class StartDrinkingViewController : UIViewController {
     let hoursDrinkingSliderTag = 2
 
     
-    var wantedBloodLevelImageView: UIImageView!
-    var wantedBloodLevelSlider: UISlider!
-    var wantedBloodLevelText: UITextView!
-    var wantedBloodLevelSelectedValue: UITextView!
+    var wantedBloodLevelView: WantedBloodLevelView!
     
     var hoursDrinkingImageView: UIImageView!
     var hoursDrinkingSlider: UISlider!
@@ -27,8 +24,10 @@ class StartDrinkingViewController : UIViewController {
     var hoursDrinkingSelectedValue: UITextView!
     
     lazy var viewModel = NativeStartDrinkingViewModel(
-        onWantedBloodLevelTextChanged: { displayValue in
-            self.wantedBloodLevelSelectedValue.text = displayValue
+        onWantedBloodLevelTextChanged: { [weak self] displayValue in
+            if let vc = self {
+                vc.wantedBloodLevelView.updateText(text: displayValue)
+            }
         },
         onDrinkUntilDisplayTextChanged: { displayValue in
             self.hoursDrinkingSelectedValue.text = displayValue
@@ -41,69 +40,34 @@ class StartDrinkingViewController : UIViewController {
     override func viewDidLoad() {
         print("init")
 
-        wantedBloodLevelImageView = UIImageView()
-        wantedBloodLevelSlider = UISlider()
-        wantedBloodLevelText = UITextView()
-        wantedBloodLevelSelectedValue = UITextView()
+        wantedBloodLevelView = WantedBloodLevelView()
+        wantedBloodLevelView.onSliderChanged = { [weak self] (tag, value) in
+            if let vc = self {
+                vc.updateViewModelOnSliderChanged(tag: tag, value: value)
+            }
+        }
         hoursDrinkingImageView = UIImageView()
         hoursDrinkingSlider = UISlider()
         hoursDrinkingText = UITextView()
         hoursDrinkingSelectedValue = UITextView()
         
-        view.addSubview(wantedBloodLevelSlider)
-        view.addSubview(wantedBloodLevelText)
-        view.addSubview(wantedBloodLevelImageView)
-        view.addSubview(wantedBloodLevelSelectedValue)
+        view.addSubview(wantedBloodLevelView)
         
         view.addSubview(hoursDrinkingImageView)
         view.addSubview(hoursDrinkingSlider)
         view.addSubview(hoursDrinkingText)
         view.addSubview(hoursDrinkingSelectedValue)
         
-        initWantedBloodLevelViews()
+        wantedBloodLevelView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        wantedBloodLevelView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        wantedBloodLevelView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        wantedBloodLevelView.translatesAutoresizingMaskIntoConstraints = false
+        wantedBloodLevelView.layoutIfNeeded()
+
         initHoursDrinkingViews()
         viewModel.observeUpdates()
     }
-    
-    func initWantedBloodLevelViews() {
-        if let image = UIImage(named: "reading") {
-            wantedBloodLevelImageView.image = image
-            print("Image found")
-            wantedBloodLevelImageView.contentMode = .scaleAspectFit
-            wantedBloodLevelImageView.translatesAutoresizingMaskIntoConstraints = false
-        }
-        
-        wantedBloodLevelImageView.widthAnchor.constraint(equalToConstant: imageSize).isActive = true
-        wantedBloodLevelImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        wantedBloodLevelImageView.heightAnchor.constraint(equalToConstant: imageSize).isActive = true
-        wantedBloodLevelImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
-        
-        wantedBloodLevelSlider.translatesAutoresizingMaskIntoConstraints = false
-        wantedBloodLevelSlider.maximumValue = 15
-        wantedBloodLevelSlider.minimumValue = 0
-        wantedBloodLevelSlider.thumbTintColor = UIColor(named: "Green")
-        wantedBloodLevelSlider.topAnchor.constraint(equalTo: wantedBloodLevelImageView.bottomAnchor, constant: 16).isActive = true
-        wantedBloodLevelSlider.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor, multiplier: 0.9).isActive = true
-        wantedBloodLevelSlider.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        wantedBloodLevelSlider.tag = wantedBloodLevelSliderTag
-        wantedBloodLevelSlider.addTarget(self, action: #selector(sliderValueChanged), for: UIControl.Event.valueChanged)
-        
-        wantedBloodLevelText.translatesAutoresizingMaskIntoConstraints = false
-        wantedBloodLevelText.font = .systemFont(ofSize: 16)
-        wantedBloodLevelText.text = "Wanted blood level"
-        wantedBloodLevelText.sizeToFit()
-        wantedBloodLevelText.isScrollEnabled = false
-        wantedBloodLevelText.leftAnchor.constraint(equalTo: wantedBloodLevelSlider.leftAnchor).isActive = true
-        wantedBloodLevelText.topAnchor.constraint(equalTo: wantedBloodLevelSlider.bottomAnchor, constant: 4).isActive = true
-        
-        wantedBloodLevelSelectedValue.translatesAutoresizingMaskIntoConstraints = false
-        wantedBloodLevelSelectedValue.font = .systemFont(ofSize: 16)
-        wantedBloodLevelSelectedValue.text = ""
-        wantedBloodLevelSelectedValue.sizeToFit()
-        wantedBloodLevelSelectedValue.isScrollEnabled = false
-        wantedBloodLevelSelectedValue.bottomAnchor.constraint(equalTo: wantedBloodLevelSlider.topAnchor, constant: 4).isActive = true
-        wantedBloodLevelSelectedValue.rightAnchor.constraint(equalTo: wantedBloodLevelSlider.rightAnchor).isActive = true
-    }
+
     
     func initHoursDrinkingViews() {
         if UIImage(named: "drunk") != nil {
@@ -116,7 +80,7 @@ class StartDrinkingViewController : UIViewController {
         hoursDrinkingImageView.widthAnchor.constraint(equalToConstant: imageSize).isActive = true
         hoursDrinkingImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         hoursDrinkingImageView.heightAnchor.constraint(equalToConstant: imageSize).isActive = true
-        hoursDrinkingImageView.topAnchor.constraint(equalTo: wantedBloodLevelText.bottomAnchor, constant: 16).isActive = true
+        hoursDrinkingImageView.topAnchor.constraint(equalTo: wantedBloodLevelView.bottomAnchor, constant: 16).isActive = true
         
         hoursDrinkingSlider.translatesAutoresizingMaskIntoConstraints = false
         hoursDrinkingSlider.maximumValue = 720
@@ -145,6 +109,18 @@ class StartDrinkingViewController : UIViewController {
         hoursDrinkingSelectedValue.rightAnchor.constraint(equalTo: hoursDrinkingSlider.rightAnchor).isActive = true
         
         
+    }
+    
+    func updateViewModelOnSliderChanged(tag: Int, value: Float){
+        switch tag {
+        case wantedBloodLevelSliderTag:
+            viewModel.updatedSelectedBloodLevel(seekbarValue: Int32(value))
+        case hoursDrinkingSliderTag:
+            viewModel.updateFinishDrinking(seekbarValue: Int32(value))
+        default:
+            break
+            
+        }
     }
     
     @objc func sliderValueChanged(sender: UISlider){

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		943B9C22002F6736CA69E1DF /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C71B00E654ABC168DC4B2F6A /* Pods_iosApp.framework */; };
+		C855A6DE26D432F10068FA39 /* WantedBloodLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C855A6DD26D432F10068FA39 /* WantedBloodLevelView.swift */; };
 		C8E7E32126D261FF00D35ADF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C8E7E32026D261FF00D35ADF /* Main.storyboard */; };
 		C8E7E32326D2624300D35ADF /* StartDrinkingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E7E32226D2624300D35ADF /* StartDrinkingViewController.swift */; };
 		C8E7E32926D2649700D35ADF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8E7E32826D2649700D35ADF /* Assets.xcassets */; };
@@ -22,6 +23,7 @@
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3622A3241EBE645FFEB8696 /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
 		C71B00E654ABC168DC4B2F6A /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C855A6DD26D432F10068FA39 /* WantedBloodLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WantedBloodLevelView.swift; sourceTree = "<group>"; };
 		C8E7E32026D261FF00D35ADF /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		C8E7E32226D2624300D35ADF /* StartDrinkingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDrinkingViewController.swift; sourceTree = "<group>"; };
 		C8E7E32826D2649700D35ADF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -65,11 +67,11 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				C855A6DC26D4328C0068FA39 /* StartDrinking */,
 				C8E7E32E26D2713B00D35ADF /* Views */,
 				C8E7E32826D2649700D35ADF /* Assets.xcassets */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				C8E7E32026D261FF00D35ADF /* Main.storyboard */,
-				C8E7E32226D2624300D35ADF /* StartDrinkingViewController.swift */,
 				C8E7E32A26D267D100D35ADF /* AppDelegate.swift */,
 				C8E7E32C26D26D7E00D35ADF /* Color.xcassets */,
 				C8F1EB5526D29244002724E0 /* Koin.swift */,
@@ -83,6 +85,15 @@
 				C71B00E654ABC168DC4B2F6A /* Pods_iosApp.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C855A6DC26D4328C0068FA39 /* StartDrinking */ = {
+			isa = PBXGroup;
+			children = (
+				C8E7E32226D2624300D35ADF /* StartDrinkingViewController.swift */,
+				C855A6DD26D432F10068FA39 /* WantedBloodLevelView.swift */,
+			);
+			path = StartDrinking;
 			sourceTree = "<group>";
 		};
 		C8E7E32E26D2713B00D35ADF /* Views */ = {
@@ -202,6 +213,7 @@
 				C8E7E32B26D267D100D35ADF /* AppDelegate.swift in Sources */,
 				C8E7E33026D2714C00D35ADF /* CustomSlider.swift in Sources */,
 				C8F1EB5626D29244002724E0 /* Koin.swift in Sources */,
+				C855A6DE26D432F10068FA39 /* WantedBloodLevelView.swift in Sources */,
 				C8E7E32326D2624300D35ADF /* StartDrinkingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -27,6 +27,11 @@ class StartDrinkingViewController : UIViewController, OnSliderChanged {
             if let vc = self {
                 vc.hoursDrinkingView.hoursDrinkingSelectedValue.text = displayValue
             }
+        },
+        onPeakHourDisplayTextChanged: { [weak self] displayValue in
+            if let vc = self {
+                vc.hoursDrinkingView.peakHourDisplayText.text = displayValue
+            }
         })
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -54,13 +59,10 @@ class StartDrinkingViewController : UIViewController, OnSliderChanged {
         wantedBloodLevelView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         wantedBloodLevelView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         wantedBloodLevelView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        wantedBloodLevelView.layoutIfNeeded()
         
-        hoursDrinkingView.translatesAutoresizingMaskIntoConstraints = false
         hoursDrinkingView.topAnchor.constraint(equalTo: wantedBloodLevelView.bottomAnchor, constant: 16).isActive = true
         hoursDrinkingView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         hoursDrinkingView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-        hoursDrinkingView.layoutIfNeeded()
         
     }
     
@@ -70,14 +72,12 @@ class StartDrinkingViewController : UIViewController, OnSliderChanged {
             viewModel.updatedSelectedBloodLevel(seekbarValue: Int32(value))
         case _hoursDrinkingSliderTag:
             viewModel.updateFinishDrinking(seekbarValue: Int32(value))
+        case _peakHourSliderTag:
+            viewModel.updatePeakHour(seekbarValue: Int32(value))
         default:
             break
             
         }
-    }
-    
-    @objc func sliderValueChanged(sender: UISlider){
-        
     }
 }
 

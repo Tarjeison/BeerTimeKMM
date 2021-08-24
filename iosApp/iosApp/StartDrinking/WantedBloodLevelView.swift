@@ -20,15 +20,16 @@ class WantedBloodLevelView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        initSubviews()
+        initViews()
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        initSubviews()
+        initViews()
     }
     
-    func initSubviews() {
+    func initViews() {
+        translatesAutoresizingMaskIntoConstraints = false 
         wantedBloodLevelImageView = UIImageView()
         wantedBloodLevelSlider = UISlider()
         wantedBloodLevelText = UITextView()

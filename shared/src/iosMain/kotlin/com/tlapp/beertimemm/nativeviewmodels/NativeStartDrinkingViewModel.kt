@@ -13,7 +13,8 @@ import kotlin.time.ExperimentalTime
 @ExperimentalTime
 class NativeStartDrinkingViewModel(
     private val onWantedBloodLevelTextChanged: (String) -> Unit,
-    private val onDrinkUntilDisplayTextChanged: (String) -> Unit
+    private val onDrinkUntilDisplayTextChanged: (String) -> Unit,
+    private val onPeakHourDisplayTextChanged: (String) -> Unit
 ) {
 
     private val startDrinkingModel = StartDrinkingModel()
@@ -32,6 +33,10 @@ class NativeStartDrinkingViewModel(
             startDrinkingModel.finishDrinkingSeekBarUiModelFlow.filterNotNull().onEach {
                 onDrinkUntilDisplayTextChanged.invoke(it)
             }.launchIn(this)
+
+            startDrinkingModel.peakTimeSeekBarUiModelFlow.filterNotNull().onEach {
+                onPeakHourDisplayTextChanged.invoke(it)
+            }.launchIn(this)
         }
     }
 
@@ -41,6 +46,10 @@ class NativeStartDrinkingViewModel(
 
     fun updateFinishDrinking(seekbarValue: Int) {
         startDrinkingModel.setFinishDrinkingInHoursMinutes(seekbarValue)
+    }
+
+    fun updatePeakHour(seekbarValue: Int) {
+        startDrinkingModel.setPeakTimeInHoursMinutes(seekbarValue)
     }
 
     fun onDestroy() {

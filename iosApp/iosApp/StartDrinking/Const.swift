@@ -12,3 +12,4 @@ import UIKit
 let _imageSize: CGFloat = 62
 let _wantedBloodLevelSliderTag = 1
 let _hoursDrinkingSliderTag = 2
+let _peakHourSliderTag = 3

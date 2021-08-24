@@ -17,29 +17,39 @@ class HoursDrinkingView: UIView {
     var hoursDrinkingSlider: UISlider!
     var hoursDrinkingText: UITextView!
     var hoursDrinkingSelectedValue: UITextView!
+    var peakHourSlider: UISlider!
+    var peakHourText: UITextView!
+    var peakHourDisplayText: UITextView!
     
     var onSliderChanged: OnSliderChanged?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        initSubviews()
+        initViews()
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        initSubviews()
+        initViews()
     }
     
-    func initSubviews() {
+    func initViews() {
+        translatesAutoresizingMaskIntoConstraints = false
         hoursDrinkingImageView = UIImageView()
         hoursDrinkingSlider = UISlider()
         hoursDrinkingText = UITextView()
         hoursDrinkingSelectedValue = UITextView()
+        peakHourSlider = UISlider()
+        peakHourText = UITextView()
+        peakHourDisplayText = UITextView()
         
         addSubview(hoursDrinkingImageView)
         addSubview(hoursDrinkingSlider)
         addSubview(hoursDrinkingText)
         addSubview(hoursDrinkingSelectedValue)
+        addSubview(peakHourText)
+        addSubview(peakHourSlider)
+        addSubview(peakHourDisplayText)
         
         setupViews()
     }
@@ -68,7 +78,7 @@ class HoursDrinkingView: UIView {
         hoursDrinkingSlider.topAnchor.constraint(equalTo: hoursDrinkingImageView.bottomAnchor, constant: 16).isActive = true
         hoursDrinkingSlider.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.9).isActive = true
         hoursDrinkingSlider.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        hoursDrinkingSlider.tag = 2
+        hoursDrinkingSlider.tag = _hoursDrinkingSliderTag
         hoursDrinkingSlider.addTarget(self, action: #selector(sliderValueChanged), for: UIControl.Event.valueChanged)
         
         hoursDrinkingText.translatesAutoresizingMaskIntoConstraints = false
@@ -76,7 +86,6 @@ class HoursDrinkingView: UIView {
         hoursDrinkingText.text = "How long will you be drinking?"
         hoursDrinkingText.sizeToFit()
         hoursDrinkingText.isScrollEnabled = false
-        hoursDrinkingText.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         hoursDrinkingText.leftAnchor.constraint(equalTo: hoursDrinkingSlider.leftAnchor).isActive = true
         hoursDrinkingText.topAnchor.constraint(equalTo: hoursDrinkingSlider.bottomAnchor, constant: 4).isActive = true
         
@@ -87,6 +96,33 @@ class HoursDrinkingView: UIView {
         hoursDrinkingSelectedValue.isScrollEnabled = false
         hoursDrinkingSelectedValue.bottomAnchor.constraint(equalTo: hoursDrinkingSlider.topAnchor, constant: 4).isActive = true
         hoursDrinkingSelectedValue.rightAnchor.constraint(equalTo: hoursDrinkingSlider.rightAnchor).isActive = true
+        
+        peakHourSlider.translatesAutoresizingMaskIntoConstraints = false
+        peakHourSlider.maximumValue = 720
+        peakHourSlider.minimumValue = 0
+        peakHourSlider.thumbTintColor = UIColor(named: "Green")
+        peakHourSlider.topAnchor.constraint(equalTo: hoursDrinkingText.bottomAnchor, constant: 32).isActive = true
+        peakHourSlider.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.9).isActive = true
+        peakHourSlider.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        peakHourSlider.tag = _peakHourSliderTag
+        peakHourSlider.addTarget(self, action: #selector(sliderValueChanged), for: UIControl.Event.valueChanged)
+        
+        peakHourDisplayText.translatesAutoresizingMaskIntoConstraints = false
+        peakHourDisplayText.font = .systemFont(ofSize: 16)
+        peakHourDisplayText.text = ""
+        peakHourDisplayText.sizeToFit()
+        peakHourDisplayText.isScrollEnabled = false
+        peakHourDisplayText.bottomAnchor.constraint(equalTo: peakHourSlider.topAnchor, constant: 4).isActive = true
+        peakHourDisplayText.rightAnchor.constraint(equalTo: peakHourSlider.rightAnchor).isActive = true
+        
+        peakHourText.translatesAutoresizingMaskIntoConstraints = false
+        peakHourText.font = .systemFont(ofSize: 16)
+        peakHourText.text = "When do you want to reach your BAC target?"
+        peakHourText.sizeToFit()
+        peakHourText.isScrollEnabled = false
+        peakHourText.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        peakHourText.leftAnchor.constraint(equalTo: peakHourSlider.leftAnchor).isActive = true
+        peakHourText.topAnchor.constraint(equalTo: peakHourSlider.bottomAnchor, constant: 4).isActive = true
     }
     
     @objc func sliderValueChanged(sender: UISlider){

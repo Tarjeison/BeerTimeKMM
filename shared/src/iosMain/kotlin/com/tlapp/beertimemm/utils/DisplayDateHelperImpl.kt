@@ -1,18 +1,20 @@
 package com.tlapp.beertimemm.utils
 
-import kotlinx.datetime.LocalDateTime
-
+import kotlinx.datetime.*
+import platform.Foundation.*
 actual class DisplayDateHelperImpl : DisplayDateHelper {
+
+    private val timeFormatter = NSDateFormatter().apply {
+        dateStyle = NSDateFormatterNoStyle
+        timeStyle = NSDateFormatterShortStyle
+    }
+
     actual override fun localDateTimeToHourMinuteString(
         localDateTime: LocalDateTime,
         showAmPm: Boolean
     ): String {
-        // TODO: Figure out why NSDate doesn't work
-        var hourString = localDateTime.hour.toString()
-        if (hourString.length == 1) hourString = "0$hourString"
-        var minuteString = localDateTime.minute.toString()
-        if (minuteString.length == 1) minuteString = "0$minuteString"
-        return "${hourString}:${minuteString}"
-
+        val nsDate = localDateTime.toInstant(TimeZone.currentSystemDefault()).toNSDate()
+        return timeFormatter.stringFromDate(nsDate)
     }
 }
+

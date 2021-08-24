@@ -105,6 +105,7 @@ class StartDrinkingFragment : Fragment(R.layout.fragment_startdrinking) {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
                 startDrinkingViewModel.setFinishDrinkingInHoursMinutes(p1)
                 binding.sbPeak.max = p1
+                startDrinkingViewModel.setPeakTimeInHoursMinutes(binding.sbPeak.progress)
 //                if (startDrinkingViewModel.peakTimeNotSet()) {
 //                    startDrinkingViewModel.setPeakTimeInHoursMinutes(p1)
 //                    binding.sbPeak.progress = p1

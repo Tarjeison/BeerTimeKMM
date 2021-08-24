@@ -72,6 +72,8 @@ class StartDrinkingViewController : UIViewController, OnSliderChanged {
             viewModel.updatedSelectedBloodLevel(seekbarValue: Int32(value))
         case _hoursDrinkingSliderTag:
             viewModel.updateFinishDrinking(seekbarValue: Int32(value))
+            hoursDrinkingView.peakHourSlider.maximumValue = value
+            viewModel.updatePeakHour(seekbarValue: Int32(hoursDrinkingView.peakHourSlider.value))
         case _peakHourSliderTag:
             viewModel.updatePeakHour(seekbarValue: Int32(value))
         default:

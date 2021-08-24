@@ -10,11 +10,8 @@ import Foundation
 import UIKit
 
 class WantedBloodLevelView: UIView {
-    let imageSize: CGFloat = 62
-    let wantedBloodLevelSliderTag = 1
     
-    
-    var onSliderChanged: ((Int, Float) -> Void)?
+    var onSliderChanged: OnSliderChanged?
     
     var wantedBloodLevelImageView: UIImageView!
     var wantedBloodLevelSlider: UISlider!
@@ -45,10 +42,6 @@ class WantedBloodLevelView: UIView {
         arrangeViews()
     }
     
-    func updateText(text: String) {
-        wantedBloodLevelSelectedValue.text = text 
-    }
-    
     func arrangeViews() {
         if let image = UIImage(named: "reading") {
             wantedBloodLevelImageView.image = image
@@ -57,9 +50,9 @@ class WantedBloodLevelView: UIView {
             wantedBloodLevelImageView.translatesAutoresizingMaskIntoConstraints = false
         }
         
-        wantedBloodLevelImageView.widthAnchor.constraint(equalToConstant: imageSize).isActive = true
+        wantedBloodLevelImageView.widthAnchor.constraint(equalToConstant: _imageSize).isActive = true
         wantedBloodLevelImageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        wantedBloodLevelImageView.heightAnchor.constraint(equalToConstant: imageSize).isActive = true
+        wantedBloodLevelImageView.heightAnchor.constraint(equalToConstant: _imageSize).isActive = true
         wantedBloodLevelImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
         
         wantedBloodLevelSlider.translatesAutoresizingMaskIntoConstraints = false
@@ -69,7 +62,7 @@ class WantedBloodLevelView: UIView {
         wantedBloodLevelSlider.topAnchor.constraint(equalTo: wantedBloodLevelImageView.bottomAnchor, constant: 16).isActive = true
         wantedBloodLevelSlider.widthAnchor.constraint(equalTo: safeAreaLayoutGuide.widthAnchor, multiplier: 0.9).isActive = true
         wantedBloodLevelSlider.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-        wantedBloodLevelSlider.tag = wantedBloodLevelSliderTag
+        wantedBloodLevelSlider.tag = _wantedBloodLevelSliderTag
         wantedBloodLevelSlider.addTarget(self, action: #selector(sliderValueChanged), for: UIControl.Event.valueChanged)
         
         wantedBloodLevelText.translatesAutoresizingMaskIntoConstraints = false
@@ -91,7 +84,7 @@ class WantedBloodLevelView: UIView {
     }
     
     @objc func sliderValueChanged(sender: UISlider){
-        self.onSliderChanged?(wantedBloodLevelSliderTag, wantedBloodLevelSlider.value)
+        self.onSliderChanged?.sliderChanged(_wantedBloodLevelSliderTag, wantedBloodLevelSlider.value)
     }
     
 }

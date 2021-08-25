@@ -1,6 +1,7 @@
 package com.tlapp.beertimemm.nativeviewmodels
 
 import co.touchlab.stately.ensureNeverFrozen
+import com.tlapp.beertimemm.models.AlcoholUnit
 import com.tlapp.beertimemm.viewmodels.StartDrinkingModel
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -14,7 +15,8 @@ import kotlin.time.ExperimentalTime
 class NativeStartDrinkingViewModel(
     private val onWantedBloodLevelTextChanged: (String) -> Unit,
     private val onDrinkUntilDisplayTextChanged: (String) -> Unit,
-    private val onPeakHourDisplayTextChanged: (String) -> Unit
+    private val onPeakHourDisplayTextChanged: (String) -> Unit,
+    private val onDrinkListChanged: (List<AlcoholUnit>) -> Unit
 ) {
 
     private val startDrinkingModel = StartDrinkingModel()
@@ -37,7 +39,15 @@ class NativeStartDrinkingViewModel(
             startDrinkingModel.peakTimeSeekBarUiModelFlow.filterNotNull().onEach {
                 onPeakHourDisplayTextChanged.invoke(it)
             }.launchIn(this)
+
+            startDrinkingModel.getDrinks().filterNotNull().onEach {
+                onDrinkListChanged.invoke(it)
+            }.launchIn(this)
         }
+    }
+
+    fun updateSelectedUnit(alcoholUnit: AlcoholUnit) {
+        startDrinkingModel.setSelectedUnit(alcoholUnit)
     }
 
     fun updatedSelectedBloodLevel(seekbarValue: Int) {

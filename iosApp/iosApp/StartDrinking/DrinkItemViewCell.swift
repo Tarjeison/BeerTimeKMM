@@ -29,14 +29,14 @@ class DrinkItemViewCell: UITableViewCell {
         drinkIcon.translatesAutoresizingMaskIntoConstraints = false
         drinkName.translatesAutoresizingMaskIntoConstraints = false
         drinkDescription.translatesAutoresizingMaskIntoConstraints = false
-        
         addSubview(drinkIcon)
         addSubview(drinkName)
         addSubview(drinkDescription)
         
         drinkIcon.leftAnchor.constraint(equalTo: leftAnchor, constant: 32).isActive = true
-        drinkIcon.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 16).isActive = true
-        drinkIcon.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -16).isActive = true
+        // drinkIcon.topAnchor.constraint(equalTo: topAnchor, constant: 16).isActive = true
+        // drinkIcon.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -16).isActive = true
+        drinkIcon.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         drinkIcon.heightAnchor.constraint(equalToConstant: 32).isActive = true
         drinkIcon.widthAnchor.constraint(equalToConstant: 32).isActive = true
         

@@ -66,7 +66,13 @@ class StartDrinkingViewController : UIViewController, UITableViewDelegate, UITab
                 vc.updateTableViewToWrapHeight()
                 vc.updateScrollViewHeight()
             }
-        })
+        },
+        onNewToastMessage: { [weak self] displayValue in
+            if let vc = self {
+                vc.showToast(message: displayValue)
+            }
+        }
+        )
     
     override func viewWillDisappear(_ animated: Bool) {
         viewModel.onDestroy()
@@ -111,22 +117,24 @@ class StartDrinkingViewController : UIViewController, UITableViewDelegate, UITab
     func setupTableView() {
         drinkTableView = UITableView()
         drinkTableView.translatesAutoresizingMaskIntoConstraints = false
+        
         let headerView: UIView = UIView.init(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 30))
         let labelView: UILabel = UILabel.init(frame: CGRect(x: 32, y: 5, width: view.frame.width, height: 24))
         labelView.text = "What will you be drinking?"
         labelView.font = .systemFont(ofSize: 16)
         headerView.addSubview(labelView)
+        
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 128))
         let startDrinkingButton = UIButton(frame: CGRect(x: 0, y: 0, width: 400, height: 84))
         footerView.addSubview(startDrinkingButton)
         startDrinkingButton.translatesAutoresizingMaskIntoConstraints = false
-        
         startDrinkingButton.setTitle("Start drinking", for: .normal)
         startDrinkingButton.backgroundColor = UIColor(named: "Green")
         startDrinkingButton.titleLabel?.sizeToFit()
         startDrinkingButton.layer.cornerRadius = 10
         startDrinkingButton.centerXAnchor.constraint(equalTo: footerView.centerXAnchor).isActive = true
         startDrinkingButton.centerYAnchor.constraint(equalTo: footerView.centerYAnchor).isActive = true
+        startDrinkingButton.addTarget(self, action: #selector(startDrinkingPressed), for: .touchUpInside)
         
         drinkTableView.tableFooterView = footerView
         drinkTableView.rowHeight = 64
@@ -184,6 +192,10 @@ class StartDrinkingViewController : UIViewController, UITableViewDelegate, UITab
             break
             
         }
+    }
+    
+    @objc func startDrinkingPressed() {
+        viewModel.startDrinking()
     }
 }
 

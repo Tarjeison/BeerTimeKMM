@@ -16,7 +16,8 @@ class NativeStartDrinkingViewModel(
     private val onWantedBloodLevelTextChanged: (String) -> Unit,
     private val onDrinkUntilDisplayTextChanged: (String) -> Unit,
     private val onPeakHourDisplayTextChanged: (String) -> Unit,
-    private val onDrinkListChanged: (List<AlcoholUnit>) -> Unit
+    private val onDrinkListChanged: (List<AlcoholUnit>) -> Unit,
+    private val onNewToastMessage: (String) -> Unit
 ) {
 
     private val startDrinkingModel = StartDrinkingModel()
@@ -43,6 +44,10 @@ class NativeStartDrinkingViewModel(
             startDrinkingModel.getDrinks().filterNotNull().onEach {
                 onDrinkListChanged.invoke(it)
             }.launchIn(this)
+
+            startDrinkingModel.errorToastFlow.filterNotNull().onEach {
+                onNewToastMessage(it.value)
+            }.launchIn(this)
         }
     }
 
@@ -60,6 +65,10 @@ class NativeStartDrinkingViewModel(
 
     fun updatePeakHour(seekbarValue: Int) {
         startDrinkingModel.setPeakTimeInHoursMinutes(seekbarValue)
+    }
+
+    fun startDrinking() {
+        startDrinkingModel.startDrinking()
     }
 
     fun onDestroy() {

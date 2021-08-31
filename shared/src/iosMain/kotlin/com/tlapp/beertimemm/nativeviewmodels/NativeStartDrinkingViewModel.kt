@@ -3,6 +3,7 @@ package com.tlapp.beertimemm.nativeviewmodels
 import co.touchlab.stately.ensureNeverFrozen
 import com.tlapp.beertimemm.models.AlcoholUnit
 import com.tlapp.beertimemm.viewmodels.StartDrinkingModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.filterNotNull
@@ -21,33 +22,35 @@ class NativeStartDrinkingViewModel(
 ) {
 
     private val startDrinkingModel = StartDrinkingModel()
-    private val scope = MainScope()
+    private var scope: CoroutineScope? = null
 
     init {
         ensureNeverFrozen()
     }
 
     fun observeUpdates() {
-        scope.launch {
-            startDrinkingModel.wantedBloodLevelUiModelFlow.filterNotNull().onEach {
-                onWantedBloodLevelTextChanged.invoke(it)
-            }.launchIn(this)
+        scope = MainScope().also { coroutineScope ->
+            coroutineScope.launch {
+                startDrinkingModel.wantedBloodLevelUiModelFlow.filterNotNull().onEach {
+                    onWantedBloodLevelTextChanged.invoke(it)
+                }.launchIn(this)
 
-            startDrinkingModel.finishDrinkingSeekBarUiModelFlow.filterNotNull().onEach {
-                onDrinkUntilDisplayTextChanged.invoke(it)
-            }.launchIn(this)
+                startDrinkingModel.finishDrinkingSeekBarUiModelFlow.filterNotNull().onEach {
+                    onDrinkUntilDisplayTextChanged.invoke(it)
+                }.launchIn(this)
 
-            startDrinkingModel.peakTimeSeekBarUiModelFlow.filterNotNull().onEach {
-                onPeakHourDisplayTextChanged.invoke(it)
-            }.launchIn(this)
+                startDrinkingModel.peakTimeSeekBarUiModelFlow.filterNotNull().onEach {
+                    onPeakHourDisplayTextChanged.invoke(it)
+                }.launchIn(this)
 
-            startDrinkingModel.getDrinks().filterNotNull().onEach {
-                onDrinkListChanged.invoke(it)
-            }.launchIn(this)
+                startDrinkingModel.getDrinks().filterNotNull().onEach {
+                    onDrinkListChanged.invoke(it)
+                }.launchIn(this)
 
-            startDrinkingModel.errorToastFlow.filterNotNull().onEach {
-                onNewToastMessage(it.value)
-            }.launchIn(this)
+                startDrinkingModel.errorToastFlow.filterNotNull().onEach {
+                    onNewToastMessage(it.value)
+                }.launchIn(this)
+            }
         }
     }
 
@@ -72,6 +75,7 @@ class NativeStartDrinkingViewModel(
     }
 
     fun onDestroy() {
-        scope.cancel()
+        scope?.cancel()
+        scope = null
     }
 }

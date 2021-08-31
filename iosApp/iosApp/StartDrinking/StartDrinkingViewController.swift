@@ -78,6 +78,10 @@ class StartDrinkingViewController : UIViewController, UITableViewDelegate, UITab
         viewModel.onDestroy()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.observeUpdates()
+    }
+    
     override func viewDidLoad() {
         scrollView = UIScrollView()
         scrollView.isScrollEnabled = true
@@ -110,8 +114,6 @@ class StartDrinkingViewController : UIViewController, UITableViewDelegate, UITab
         contentView.addSubview(hoursDrinkingView)
         contentView.addSubview(drinkTableView)
         arrangeViews()
-  
-        viewModel.observeUpdates()
     }
     
     func setupTableView() {

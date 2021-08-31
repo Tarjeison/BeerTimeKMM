@@ -29,7 +29,8 @@ class WantedBloodLevelView: UIView {
     }
     
     func initViews() {
-        translatesAutoresizingMaskIntoConstraints = false 
+        translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = .white
         wantedBloodLevelImageView = UIImageView()
         wantedBloodLevelSlider = UISlider()
         wantedBloodLevelText = UITextView()

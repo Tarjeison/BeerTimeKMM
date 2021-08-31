@@ -35,6 +35,7 @@ class HoursDrinkingView: UIView {
     
     func initViews() {
         translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = .white
         hoursDrinkingImageView = UIImageView()
         hoursDrinkingSlider = UISlider()
         hoursDrinkingText = UITextView()

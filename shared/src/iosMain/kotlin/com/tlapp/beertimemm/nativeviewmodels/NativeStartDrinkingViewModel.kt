@@ -2,6 +2,7 @@ package com.tlapp.beertimemm.nativeviewmodels
 
 import co.touchlab.stately.ensureNeverFrozen
 import com.tlapp.beertimemm.models.AlcoholUnit
+import com.tlapp.beertimemm.models.AlertDialogUiModel
 import com.tlapp.beertimemm.viewmodels.StartDrinkingModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
@@ -18,7 +19,8 @@ class NativeStartDrinkingViewModel(
     private val onDrinkUntilDisplayTextChanged: (String) -> Unit,
     private val onPeakHourDisplayTextChanged: (String) -> Unit,
     private val onDrinkListChanged: (List<AlcoholUnit>) -> Unit,
-    private val onNewToastMessage: (String) -> Unit
+    private val onNewToastMessage: (String) -> Unit,
+    private val onAlertDialogMessage: (AlertDialogUiModel) -> Unit
 ) {
 
     private val startDrinkingModel = StartDrinkingModel()
@@ -49,6 +51,10 @@ class NativeStartDrinkingViewModel(
 
                 startDrinkingModel.errorToastFlow.filterNotNull().onEach {
                     onNewToastMessage(it.value)
+                }.launchIn(this)
+
+                startDrinkingModel.alertFlow.filterNotNull().onEach {
+                    onAlertDialogMessage(it.value)
                 }.launchIn(this)
             }
         }

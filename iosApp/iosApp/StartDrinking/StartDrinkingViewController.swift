@@ -71,6 +71,18 @@ class StartDrinkingViewController : UIViewController, UITableViewDelegate, UITab
             if let vc = self {
                 vc.showToast(message: displayValue)
             }
+        },
+        onAlertDialogMessage: { [weak self] alertUiModel in
+            if let vc = self {
+                let alert = UIAlertController(title: alertUiModel.title, message: alertUiModel.message, preferredStyle: .alert)
+
+                alert.addAction(UIAlertAction(title: alertUiModel.positiveButtonText, style: .default, handler: { _ in
+                    alertUiModel.onClick()
+                }))
+                alert.addAction(UIAlertAction(title: alertUiModel.negativeButtonText, style: .cancel, handler: nil))
+
+                vc.present(alert, animated: true)
+            }
         }
         )
     

@@ -22,12 +22,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let profileStorage = koin.get(objCClass: ProfileStorage.self) as! ProfileStorage
         profileStorage.saveUserProfile(userProfile: UserProfile(gender: Gender.male, weight: 75))
 
-        // Manually launch storyboard so that ViewController doesn't initialize before Koin
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = storyboard.instantiateViewController(identifier: "NavigationControllerBase")
+        let tabController = UITabBarController()
+        tabController.view.backgroundColor = .white
+        let startDrinkingViewNavController = UINavigationController(rootViewController: StartDrinkingViewController())
+        let countDownViewNavController = UINavigationController(rootViewController: CountDownViewController())
+        let profileViewNavController = UINavigationController(rootViewController: ProfileViewController())
+        startDrinkingViewNavController.navigationBar.barTintColor = UIColor(named: "Orange")
+        countDownViewNavController.navigationBar.barTintColor = UIColor(named: "Orange")
+        profileViewNavController.navigationBar.barTintColor = UIColor(named: "Orange")
+        startDrinkingViewNavController.title = "Start drinking"
+        countDownViewNavController.title = "Current status"
+        profileViewNavController.title = "Profile"
+        tabController.setViewControllers([startDrinkingViewNavController, countDownViewNavController, profileViewNavController], animated: false)
+        
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.rootViewController = viewController
+        self.window?.rootViewController = tabController
         self.window?.makeKeyAndVisible()
         
         return true

@@ -18,3 +18,10 @@ actual class DisplayDateHelperImpl : DisplayDateHelper {
     }
 }
 
+fun Instant.toDisplayValue(): String {
+    val timeFormatter = NSDateFormatter().apply {
+        dateStyle = NSDateFormatterNoStyle
+        timeStyle = NSDateFormatterShortStyle
+    }
+    return timeFormatter.stringFromDate(this.toNSDate())
+}

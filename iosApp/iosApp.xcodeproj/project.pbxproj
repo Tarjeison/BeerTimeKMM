@@ -3,11 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		943B9C22002F6736CA69E1DF /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C71B00E654ABC168DC4B2F6A /* Pods_iosApp.framework */; };
+		C823D03B26E40B0B00DF3947 /* ChartHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C823D03A26E40B0B00DF3947 /* ChartHelper.swift */; };
+		C823D03D26E4110200DF3947 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = C823D03C26E4110200DF3947 /* Image.swift */; };
 		C82F073426DD310D00F21CD9 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82F073326DD310D00F21CD9 /* Toast.swift */; };
 		C855A6DE26D432F10068FA39 /* WantedBloodLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C855A6DD26D432F10068FA39 /* WantedBloodLevelView.swift */; };
 		C855A6E026D5659A0068FA39 /* HoursDrinkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C855A6DF26D5659A0068FA39 /* HoursDrinkingView.swift */; };
@@ -28,6 +30,8 @@
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3622A3241EBE645FFEB8696 /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
 		C71B00E654ABC168DC4B2F6A /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C823D03A26E40B0B00DF3947 /* ChartHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartHelper.swift; sourceTree = "<group>"; };
+		C823D03C26E4110200DF3947 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		C82F073326DD310D00F21CD9 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		C855A6DD26D432F10068FA39 /* WantedBloodLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WantedBloodLevelView.swift; sourceTree = "<group>"; };
 		C855A6DF26D5659A0068FA39 /* HoursDrinkingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoursDrinkingView.swift; sourceTree = "<group>"; };
@@ -103,6 +107,7 @@
 			isa = PBXGroup;
 			children = (
 				C82F073326DD310D00F21CD9 /* Toast.swift */,
+				C823D03C26E4110200DF3947 /* Image.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -123,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				C89F567526DEBA8F006F59DD /* CountDownViewController.swift */,
+				C823D03A26E40B0B00DF3947 /* ChartHelper.swift */,
 			);
 			path = CountDown;
 			sourceTree = "<group>";
@@ -163,6 +169,7 @@
 				7555FF77242A565900829871 /* Sources */,
 				7555FF79242A565900829871 /* Resources */,
 				FF039A2276D266CCC32CEAF1 /* Frameworks */,
+				E3A00160A25BB7A8F964356D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -219,6 +226,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		E3A00160A25BB7A8F964356D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iosApp/Pods-iosApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-iosApp/Pods-iosApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-iosApp/Pods-iosApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		F52BC4D2AAA63CB83C92DEDA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -250,9 +274,11 @@
 			files = (
 				C8E7E32B26D267D100D35ADF /* AppDelegate.swift in Sources */,
 				C8E7E33026D2714C00D35ADF /* CustomSlider.swift in Sources */,
+				C823D03B26E40B0B00DF3947 /* ChartHelper.swift in Sources */,
 				C89F567626DEBA8F006F59DD /* CountDownViewController.swift in Sources */,
 				C855A6E026D5659A0068FA39 /* HoursDrinkingView.swift in Sources */,
 				C8F1EB5626D29244002724E0 /* Koin.swift in Sources */,
+				C823D03D26E4110200DF3947 /* Image.swift in Sources */,
 				C885CD0A26D6C3EF00CDC062 /* DrinkItemViewCell.swift in Sources */,
 				C89F567926DEBC30006F59DD /* ProfileViewController.swift in Sources */,
 				C855A6DE26D432F10068FA39 /* WantedBloodLevelView.swift in Sources */,

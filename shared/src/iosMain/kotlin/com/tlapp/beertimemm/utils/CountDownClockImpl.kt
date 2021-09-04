@@ -18,7 +18,7 @@ actual class CountDownClockImpl : CountDownClock {
     ) {
         countDownTimer?.invalidate()
         remainingDurationInMs = duration.inWholeMilliseconds
-        countDownTimer = NSTimer.scheduledTimerWithTimeInterval(oneSecond, false) {
+        countDownTimer = NSTimer.scheduledTimerWithTimeInterval(oneSecond, true) {
             remainingDurationInMs -= 1000L
             if (remainingDurationInMs < 0L) {
                 onFinished.invoke()

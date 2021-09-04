@@ -1,16 +1,25 @@
 PODS:
+  - Charts (3.6.0):
+    - Charts/Core (= 3.6.0)
+  - Charts/Core (3.6.0)
   - shared (1.0)
 
 DEPENDENCIES:
+  - Charts
   - shared (from `../shared`)
+
+SPEC REPOS:
+  trunk:
+    - Charts
 
 EXTERNAL SOURCES:
   shared:
     :path: "../shared"
 
 SPEC CHECKSUMS:
+  Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
   shared: 29346581d099b8843a69aab157c4d0577c3c8287
 
-PODFILE CHECKSUM: f282da88f39e69507b0a255187c8a6b644477756
+PODFILE CHECKSUM: 844e295fc0315424d874dd0fe3cc29ac1de92c96
 
 COCOAPODS: 1.10.1

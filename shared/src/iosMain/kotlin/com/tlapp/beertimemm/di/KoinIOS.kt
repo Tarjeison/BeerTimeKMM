@@ -6,6 +6,8 @@ import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import com.tlapp.beertimemm.drinking.DrinkNotificationScheduler
 import com.tlapp.beertimemm.drinking.LocalNotificationScheduler
+import com.tlapp.beertimemm.utils.CountDownClock
+import com.tlapp.beertimemm.utils.CountDownClockImpl
 import com.tlapp.beertimemm.utils.DisplayDateHelper
 import com.tlapp.beertimemm.utils.DisplayDateHelperImpl
 import drinkdb.Drink
@@ -30,6 +32,7 @@ fun initKoinIos(
     }
 )
 
+@ExperimentalTime
 actual val platformModule: Module = module {
     single<SqlDriver> {
         NativeSqliteDriver(
@@ -40,6 +43,7 @@ actual val platformModule: Module = module {
 
     single<DisplayDateHelper> { DisplayDateHelperImpl() }
     single<DrinkNotificationScheduler> { LocalNotificationScheduler() }
+    single<CountDownClock> { CountDownClockImpl() }
 }
 
 fun Koin.get(objCClass: ObjCClass): Any {

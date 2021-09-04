@@ -118,7 +118,6 @@ class CountDownFragment : Fragment(R.layout.fragment_timer) {
         val data = LineData(set1)
         data.setValueTextSize(9f)
         data.setDrawValues(false)
-
         chartBac.data = data
         chartBac.invalidate()
 

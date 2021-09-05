@@ -15,8 +15,63 @@ class CountDownViewController: UIViewController {
     
     var countDownText: UITextView!
     
+    lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.isScrollEnabled = true 
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
+    lazy var contentView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     lazy var drinkChart: LineChartView = {
-        return LineChartView()
+        let chart = LineChartView()
+        chart.translatesAutoresizingMaskIntoConstraints = false
+        chart.isHidden = true
+        return chart
+    }()
+    
+    lazy var drinkStatusIcon: UIImageView = {
+        let image = UIImage(named: "drunk")
+        let imageView = UIImageView(image: image)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    lazy var untilNextTextView: UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.font = .systemFont(ofSize: 16)
+        textView.isScrollEnabled = false
+        textView.isExclusiveTouch = false
+        textView.text = "Until next drink"
+        return textView
+    }()
+    
+    lazy var nDrinksTextView: UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.font = .systemFont(ofSize: 16)
+        textView.isScrollEnabled = false
+        textView.layer.cornerRadius = 5
+        textView.layer.backgroundColor = UIColor.cyan.cgColor
+        textView.isHidden = true
+        return textView
+    }()
+    
+    lazy var stopDrinkingButton: UIButton = {
+       let button = UIButton(frame: CGRect(x: 0, y: 0, width: 400, height: 94))
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Stop drinking", for: .normal)
+        button.layer.cornerRadius = 15
+        button.contentEdgeInsets = UIEdgeInsets.init(top: 10,left: 10,bottom: 10,right: 10)
+        button.backgroundColor = UIColor(named: "Green")
+        button.addTarget(self, action: #selector(onStopDrinkingClicked), for: .touchUpInside)
+        return button
     }()
     
     lazy var viewModel = NativeCountDownViewModel(
@@ -29,6 +84,23 @@ class CountDownViewController: UIViewController {
             if let vc = self {
                 vc.updateCurrentlyDrinkingView(drinkingModel: drinkingModel)
             }
+        },
+        onNotStartedDrinking: { [weak self] in
+            if let vc = self {
+                vc.drinkChart.isHidden = true
+                vc.nDrinksTextView.isHidden = true
+                vc.stopDrinkingButton.isHidden = true
+            }
+        },
+        onCountDownDescriptionChanged: { [weak self] displayValue in
+            if let vc = self {
+                vc.untilNextTextView.text = displayValue
+            }
+        },
+        onNUnitsConsumedChanged: { [weak self] displayValue in
+            if let vc = self {
+                vc.nDrinksTextView.text = displayValue
+            }
         }
     )
     
@@ -37,34 +109,79 @@ class CountDownViewController: UIViewController {
         viewModel.observeData()
     }
     
+    
     override func viewWillDisappear(_ animated: Bool) {
         viewModel.onDestroy()
     }
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         countDownText = UITextView()
-        view.addSubview(countDownText)
-        view.addSubview(drinkChart)
-        drinkChart.translatesAutoresizingMaskIntoConstraints = false
-        drinkChart.isHidden = false
-        drinkChart.topAnchor.constraint(equalTo: countDownText.bottomAnchor).isActive = true
-        drinkChart.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        drinkChart.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        drinkChart.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(countDownText)
+        contentView.addSubview(drinkChart)
+        contentView.addSubview(drinkStatusIcon)
+        contentView.addSubview(untilNextTextView)
+        contentView.addSubview(nDrinksTextView)
+        contentView.addSubview(stopDrinkingButton)
+        
+        scrollView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        scrollView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        contentView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        contentView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+        contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+        
+        stopDrinkingButton.topAnchor.constraint(equalTo: drinkChart.bottomAnchor, constant: 32).isActive = true
+        stopDrinkingButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        stopDrinkingButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        
+        untilNextTextView.leftAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 32).isActive = true
+        untilNextTextView.topAnchor.constraint(equalTo: countDownText.bottomAnchor).isActive = true
+        
+        nDrinksTextView.topAnchor.constraint(equalTo: drinkStatusIcon.bottomAnchor, constant: 60).isActive = true
+        nDrinksTextView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        nDrinksTextView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 32).isActive = true
+        nDrinksTextView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -32).isActive = true
+        nDrinksTextView.textAlignment = .center
+        
+        drinkStatusIcon.topAnchor.constraint(equalTo: countDownText.bottomAnchor).isActive = true
+        drinkStatusIcon.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 32).isActive = true
+        drinkStatusIcon.widthAnchor.constraint(equalToConstant: 128).isActive = true
+        drinkStatusIcon.heightAnchor.constraint(equalToConstant: 128).isActive = true
+        
+        drinkChart.topAnchor.constraint(equalTo: nDrinksTextView.bottomAnchor, constant: 32).isActive = true
+        drinkChart.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant:-8).isActive = true
+        drinkChart.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 8).isActive = true
+        
         drinkChart.heightAnchor.constraint(equalToConstant: 200).isActive = true
         
         countDownText.font = .systemFont(ofSize: 64)
         countDownText.translatesAutoresizingMaskIntoConstraints = false
-        countDownText.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32).isActive = true
-        countDownText.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        countDownText.sizeToFit()
+        countDownText.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 32).isActive = true
+        countDownText.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        countDownText.layoutMargins.left = 10
+        countDownText.layoutMargins.right = 10
+        countDownText.textAlignment = .center
         countDownText.isScrollEnabled = false
         countDownText.text = "11:20"
+        
+        updateScrollViewHeight()
         
     }
     
     private func updateCurrentlyDrinkingView(drinkingModel: DrinkStatusModel.Drinking) {
+        nDrinksTextView.isHidden = false
+        nDrinksTextView.layoutIfNeeded()
+        drinkChart.isHidden = false
+        drinkChart.layoutIfNeeded()
+        stopDrinkingButton.isHidden = false
+        stopDrinkingButton.layoutIfNeeded()
+        
         let entryList = drinkingModel.graphList.map { element in
             ChartDataEntry(x: Double(element.x), y: Double(element.y), icon: UIImage(named: element.iconName)?.scalePreservingAspectRatio(targetSize: CGSize(width: 10, height: 10)))
         }
@@ -84,20 +201,38 @@ class CountDownViewController: UIViewController {
             entry.drinkAt.toDisplayValue()
         }))
         drinkChart.xAxis.granularity = 1
+        drinkChart.leftAxis.removeAllLimitLines()
         drinkChart.leftAxis.addLimitLine(createLimitLine(drawValue: Double(drinkingModel.wantedBloodLevel * 10)))
         drinkChart.leftAxis.axisMinimum = 0
-        drinkChart.leftAxis.axisMaximum = Double(drinkingModel.graphList.map({ entry in entry.y }).max() ?? 1.5 + 0.2)
+        
+        drinkChart.leftAxis.spaceMax = 0.2
+        drinkChart.leftAxis.axisMaximum = Double(drinkingModel.wantedBloodLevel * 10 + 0.2)
         drinkChart.rightAxis.drawGridLinesEnabled = false
+        drinkChart.rightAxis.enabled = false
         drinkChart.rightAxis.drawLabelsEnabled = false
         // drinkChart.description.enabled
         drinkChart.legend.enabled = false
+        
         drinkChart.isMultipleTouchEnabled = false
         drinkChart.animate(xAxisDuration: 0.25)
         let data = LineChartData(dataSet: set)
         data.setValueFont(.systemFont(ofSize: 9))
         data.setDrawValues(false)
-        drinkChart.isHidden = false
-        drinkChart.data = data
         
+        drinkChart.data = data
+    }
+    
+    func updateScrollViewHeight() {
+        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: contentView.frame.height)
+    }
+    
+    @objc func onStopDrinkingClicked() {
+        let alert = UIAlertController(title: "Are you sure?", message: "You will lose your current progress and all alarms will be deleted", preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+            self.viewModel.stopDrinking()
+        }))
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        self.present(alert, animated: true)
     }
 }

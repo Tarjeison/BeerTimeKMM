@@ -14,8 +14,8 @@
             filePath = "iosApp/CountDown/CountDownViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
             landmarkName = "updateCurrentlyDrinkingView(drinkingModel:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -30,8 +30,8 @@
             filePath = "iosApp/CountDown/CountDownViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
             landmarkName = "updateCurrentlyDrinkingView(drinkingModel:)"
             landmarkType = "7">
          </BreakpointContent>

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "beer.png",
+      "filename" : "sleeping.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "beer-1.png",
+      "filename" : "sleeping-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "beer-2.png",
+      "filename" : "sleeping-2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

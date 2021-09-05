@@ -38,6 +38,10 @@ class CountDownModel : KoinComponent {
     val nOfUnitsDisplayValueFlow: StateFlow<String?> get() = _nOfUnitsDisplayValueFlow
 
     init {
+        initModels()
+    }
+
+    fun initModels() {
         drinkCoordinator.getDrinkingCalculator()?.let {
             val drinkTimes = drinkCoordinator.getDrinkingTimes()
             when {

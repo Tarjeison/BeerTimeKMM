@@ -6,6 +6,7 @@ import com.tlapp.beertimemm.viewmodels.DrinkStatusModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -14,7 +15,10 @@ import kotlin.time.ExperimentalTime
 @ExperimentalTime
 class NativeCountDownViewModel(
     private val onCountDownChanged: (String) -> Unit,
-    private val onCurrentlyDrinking: (DrinkStatusModel.Drinking) -> Unit
+    private val onCurrentlyDrinking: (DrinkStatusModel.Drinking) -> Unit,
+    private val onNotStartedDrinking: () -> Unit,
+    private val onCountDownDescriptionChanged: (String) -> Unit,
+    private val onNUnitsConsumedChanged: (String) -> Unit
 ) {
 
     private var scope: CoroutineScope? = null
@@ -26,25 +30,32 @@ class NativeCountDownViewModel(
 
     fun observeData() {
         ensureScopeNotNull()
+        countDownModel.initModels()
         scope?.launch {
             countDownModel.countDownDisplayValueFlow.onEach {
                 onCountDownChanged.invoke(it)
             }.launchIn(this)
 
-            countDownModel.drinkStatusModelFlow.onEach { drinkStatusModel ->
-                drinkStatusModel?.let {
-                    when (it) {
-                        DrinkStatusModel.NotStarted -> {
-                            // Nothing yet
-                        }
-                        is DrinkStatusModel.Drinking -> {
-                            onCurrentlyDrinking.invoke(it)
-                        }
-                        DrinkStatusModel.Finished -> {
-                            // Nothing yet
-                        }
+            countDownModel.drinkStatusModelFlow.filterNotNull().onEach {
+                when (it) {
+                    DrinkStatusModel.NotStarted -> {
+                        onNotStartedDrinking.invoke()
+                    }
+                    is DrinkStatusModel.Drinking -> {
+                        onCurrentlyDrinking.invoke(it)
+                    }
+                    DrinkStatusModel.Finished -> {
+                        // Nothing yet
                     }
                 }
+            }.launchIn(this)
+
+            countDownModel.countDownDescriptionDisplayValueFlow.onEach {
+                onCountDownDescriptionChanged.invoke(it)
+            }.launchIn(this)
+
+            countDownModel.nOfUnitsDisplayValueFlow.filterNotNull().onEach {
+                onNUnitsConsumedChanged.invoke(it)
             }.launchIn(this)
         }
     }
@@ -56,6 +67,10 @@ class NativeCountDownViewModel(
                 startCountDown()
             }
         }
+    }
+
+    fun stopDrinking() {
+        countDownModel.stopDrinking()
     }
 
     fun onDestroy() {

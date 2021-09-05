@@ -16,8 +16,8 @@ class MeFragment : Fragment(R.layout.fragment_me) {
     private val viewModel = MeViewModel()
     private val onItemClick: (navigationType: MePageNavigationType) -> Unit = { navigationType ->
         val navigationId = when (navigationType) {
-            MePageNavigationType.PROFILE -> R.id.action_meFragment_to_myDrinksFragment
-            MePageNavigationType.MY_DRINKS -> R.id.action_meFragment_to_profileFragment
+            MePageNavigationType.PROFILE -> R.id.action_meFragment_to_profileFragment
+            MePageNavigationType.MY_DRINKS -> R.id.action_meFragment_to_myDrinksFragment
         }
         findNavController().navigate(navigationId)
     }

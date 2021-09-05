@@ -16,7 +16,7 @@
 		C855A6E226D567070068FA39 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = C855A6E126D567070068FA39 /* Const.swift */; };
 		C885CD0A26D6C3EF00CDC062 /* DrinkItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C885CD0926D6C3EF00CDC062 /* DrinkItemViewCell.swift */; };
 		C89F567626DEBA8F006F59DD /* CountDownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89F567526DEBA8F006F59DD /* CountDownViewController.swift */; };
-		C89F567926DEBC30006F59DD /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89F567826DEBC30006F59DD /* ProfileViewController.swift */; };
+		C89F567926DEBC30006F59DD /* MePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89F567826DEBC30006F59DD /* MePageViewController.swift */; };
 		C8E7E32326D2624300D35ADF /* StartDrinkingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E7E32226D2624300D35ADF /* StartDrinkingViewController.swift */; };
 		C8E7E32926D2649700D35ADF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8E7E32826D2649700D35ADF /* Assets.xcassets */; };
 		C8E7E32B26D267D100D35ADF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E7E32A26D267D100D35ADF /* AppDelegate.swift */; };
@@ -38,7 +38,7 @@
 		C855A6E126D567070068FA39 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		C885CD0926D6C3EF00CDC062 /* DrinkItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkItemViewCell.swift; sourceTree = "<group>"; };
 		C89F567526DEBA8F006F59DD /* CountDownViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownViewController.swift; sourceTree = "<group>"; };
-		C89F567826DEBC30006F59DD /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		C89F567826DEBC30006F59DD /* MePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MePageViewController.swift; sourceTree = "<group>"; };
 		C8E7E32226D2624300D35ADF /* StartDrinkingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartDrinkingViewController.swift; sourceTree = "<group>"; };
 		C8E7E32826D2649700D35ADF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C8E7E32A26D267D100D35ADF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -136,7 +136,7 @@
 		C89F567726DEBC1A006F59DD /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				C89F567826DEBC30006F59DD /* ProfileViewController.swift */,
+				C89F567826DEBC30006F59DD /* MePageViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -280,7 +280,7 @@
 				C8F1EB5626D29244002724E0 /* Koin.swift in Sources */,
 				C823D03D26E4110200DF3947 /* Image.swift in Sources */,
 				C885CD0A26D6C3EF00CDC062 /* DrinkItemViewCell.swift in Sources */,
-				C89F567926DEBC30006F59DD /* ProfileViewController.swift in Sources */,
+				C89F567926DEBC30006F59DD /* MePageViewController.swift in Sources */,
 				C855A6DE26D432F10068FA39 /* WantedBloodLevelView.swift in Sources */,
 				C8E7E32326D2624300D35ADF /* StartDrinkingViewController.swift in Sources */,
 				C82F073426DD310D00F21CD9 /* Toast.swift in Sources */,

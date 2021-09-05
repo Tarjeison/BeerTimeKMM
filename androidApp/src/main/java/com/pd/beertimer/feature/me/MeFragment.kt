@@ -8,12 +8,17 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.pd.beertimer.R
 import com.pd.beertimer.databinding.FragmentMeBinding
 import com.pd.beertimer.util.viewBinding
+import com.tlapp.beertimemm.models.MePageNavigationType
 
 class MeFragment : Fragment(R.layout.fragment_me) {
 
     private val binding by viewBinding(FragmentMeBinding::bind)
     private val viewModel = MeViewModel()
-    private val onItemClick: (navigationId: Int) -> Unit = { navigationId ->
+    private val onItemClick: (navigationType: MePageNavigationType) -> Unit = { navigationType ->
+        val navigationId = when (navigationType) {
+            MePageNavigationType.PROFILE -> R.id.action_meFragment_to_myDrinksFragment
+            MePageNavigationType.MY_DRINKS -> R.id.action_meFragment_to_profileFragment
+        }
         findNavController().navigate(navigationId)
     }
 

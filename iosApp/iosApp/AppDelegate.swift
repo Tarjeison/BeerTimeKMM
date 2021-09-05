@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabController.view.backgroundColor = .white
         let startDrinkingViewNavController = UINavigationController(rootViewController: StartDrinkingViewController())
         let countDownViewNavController = UINavigationController(rootViewController: CountDownViewController())
-        let profileViewNavController = UINavigationController(rootViewController: ProfileViewController())
+        let profileViewNavController = UINavigationController(rootViewController: MePageViewController())
         startDrinkingViewNavController.navigationBar.barTintColor = UIColor(named: "Orange")
         countDownViewNavController.navigationBar.barTintColor = UIColor(named: "Orange")
         profileViewNavController.navigationBar.barTintColor = UIColor(named: "Orange")

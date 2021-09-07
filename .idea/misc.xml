@@ -4,9 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="androidApp/src/main/res/drawable/fade_orange.xml" value="0.1" />
+        <entry key="androidApp/src/main/res/drawable/ic_cocktail.xml" value="0.5192708333333333" />
+        <entry key="androidApp/src/main/res/layout/fragment_me.xml" value="0.24010416666666667" />
         <entry key="androidApp/src/main/res/layout/fragment_startdrinking.xml" value="0.44176706827309237" />
         <entry key="androidApp/src/main/res/layout/fragment_timer.xml" value="0.2876459741856177" />
         <entry key="androidApp/src/main/res/layout/fragment_welcome.xml" value="0.4302536231884058" />
+        <entry key="androidApp/src/main/res/layout/me_item.xml" value="0.2318957373031513" />
       </map>
     </option>
   </component>

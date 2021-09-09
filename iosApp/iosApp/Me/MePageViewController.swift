@@ -56,11 +56,11 @@ extension MePageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch mePageItems[indexPath.row].navigation {
         case MePageNavigationType.profile:
-            navigationController?.pushViewController(ProfileViewController(), animated: true)
+            navigationController?.pushViewController(ProfileViewController(), animated: false)
             break
             
         case MePageNavigationType.myDrinks:
-            navigationController?.pushViewController(MyDrinksViewController(), animated: true)
+            navigationController?.pushViewController(MyDrinksViewController(), animated: false)
         default:
             break
             

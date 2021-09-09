@@ -14,6 +14,7 @@
 		C855A6DE26D432F10068FA39 /* WantedBloodLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C855A6DD26D432F10068FA39 /* WantedBloodLevelView.swift */; };
 		C855A6E026D5659A0068FA39 /* HoursDrinkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C855A6DF26D5659A0068FA39 /* HoursDrinkingView.swift */; };
 		C855A6E226D567070068FA39 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = C855A6E126D567070068FA39 /* Const.swift */; };
+		C86D2C1F26EA93700057405D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86D2C1E26EA93700057405D /* Extensions.swift */; };
 		C885CD0A26D6C3EF00CDC062 /* DrinkItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C885CD0926D6C3EF00CDC062 /* DrinkItemViewCell.swift */; };
 		C89F567626DEBA8F006F59DD /* CountDownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89F567526DEBA8F006F59DD /* CountDownViewController.swift */; };
 		C89F567926DEBC30006F59DD /* MePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89F567826DEBC30006F59DD /* MePageViewController.swift */; };
@@ -39,6 +40,7 @@
 		C855A6DD26D432F10068FA39 /* WantedBloodLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WantedBloodLevelView.swift; sourceTree = "<group>"; };
 		C855A6DF26D5659A0068FA39 /* HoursDrinkingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoursDrinkingView.swift; sourceTree = "<group>"; };
 		C855A6E126D567070068FA39 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
+		C86D2C1E26EA93700057405D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C885CD0926D6C3EF00CDC062 /* DrinkItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkItemViewCell.swift; sourceTree = "<group>"; };
 		C89F567526DEBA8F006F59DD /* CountDownViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownViewController.swift; sourceTree = "<group>"; };
 		C89F567826DEBC30006F59DD /* MePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MePageViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 			children = (
 				C82F073326DD310D00F21CD9 /* Toast.swift */,
 				C823D03C26E4110200DF3947 /* Image.swift */,
+				C86D2C1E26EA93700057405D /* Extensions.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 				C855A6DE26D432F10068FA39 /* WantedBloodLevelView.swift in Sources */,
 				C8E7E32326D2624300D35ADF /* StartDrinkingViewController.swift in Sources */,
 				C8A60BFA26E808FC0071D18C /* ProfileViewController.swift in Sources */,
+				C86D2C1F26EA93700057405D /* Extensions.swift in Sources */,
 				C82F073426DD310D00F21CD9 /* Toast.swift in Sources */,
 				C855A6E226D567070068FA39 /* Const.swift in Sources */,
 			);

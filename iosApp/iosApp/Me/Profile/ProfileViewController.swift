@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import shared
 
 class ProfileViewController: UIViewController, UITextFieldDelegate {
     
@@ -18,6 +19,13 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     private let literButtonTag = 2
     
     private let separatorHeight: CGFloat = 1
+    
+    lazy var viewModel = NativeProfileViewModel(
+        onToastMessage: { [weak self] toastUiModel in
+            if let vc = self {
+                vc.showToast(message: toastUiModel.displayMessage)
+            }
+        })
     
     lazy var profileIcon: UIImageView = {
         let imageView = UIImageView()
@@ -86,8 +94,6 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tag = ozButtonTag
-        let image = UIImage(named: "unchecked")
-        button.setImage(image, for: .normal)
         return button
     }()
     
@@ -95,8 +101,6 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tag = literButtonTag
-        let image = UIImage(named: "unchecked")
-        button.setImage(image, for: .normal)
         return button
     }()
     
@@ -132,6 +136,29 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         textView.font = .systemFont(ofSize: 16)
         return textView
     }()
+    
+    lazy var saveButton: UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 400, height: 94))
+         button.translatesAutoresizingMaskIntoConstraints = false
+         button.setTitle("Save profile", for: .normal)
+         button.layer.cornerRadius = 15
+         button.contentEdgeInsets = UIEdgeInsets.init(top: 10,left: 10,bottom: 10,right: 10)
+         button.backgroundColor = UIColor(named: "Green")
+      
+         return button
+    }()
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel.observeToastFlow()
+        setValuesFromStoredProfile()
+    }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        viewModel.onDestroy()
+    }
+    
     
     
     override func viewDidLoad() {
@@ -214,6 +241,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         literDescription.centerYAnchor.constraint(equalTo: ozCheckButton.centerYAnchor).isActive = true
         metricDescription.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
         metricDescription.centerYAnchor.constraint(equalTo: ozCheckButton.centerYAnchor).isActive = true
+        
         let separator4 = commonSeparator()
         view.addSubview(separator4)
         separator4.topAnchor.constraint(equalTo: ozCheckButton.bottomAnchor, constant: 8).isActive = true
@@ -222,6 +250,37 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         separator4.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
         
         
+        view.addSubview(saveButton)
+        saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
+        saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        saveButton.addTarget(self, action: #selector(onSaveProfileClicked), for: .touchUpInside)
+        
+        
+    }
+    
+    func setValuesFromStoredProfile() {
+        guard let userProfile = viewModel.getUserProfile() else {
+            return
+        }
+        switch (userProfile.gender) {
+        case Gender.male:
+            setSelectedGender(tag: genderMaleTag)
+        case Gender.female:
+            setSelectedGender(tag: genderFemaleTag)
+        default:
+            break
+        }
+        
+        switch (viewModel.preferredVolume) {
+        case PreferredVolume.liter:
+            setSelectedMetric(tag: literButtonTag)
+        case PreferredVolume.ounces:
+            setSelectedMetric(tag: ozButtonTag)
+        default:
+            break
+        }
+        
+        weigthTextInput.text = userProfile.weight.description
     }
     
     @objc func onGenderButtonClicked(button: UIButton) {
@@ -230,6 +289,20 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     
     @objc func onMetricButtonClicked(button: UIButton) {
         setSelectedMetric(tag: button.tag)
+    }
+    
+    @objc func onSaveProfileClicked(button: UIButton) {
+        let weightKInt: KotlinInt?
+        if let weight = Int32(weigthTextInput.text ?? "") {
+            weightKInt = KotlinInt.init(int: weight)
+        } else {
+            weightKInt = nil
+        }
+        
+        var gender: Gender? = nil
+        if (femaleButton.isSelected) { gender = Gender.female }
+        if (maleButton.isSelected) { gender = Gender.male }
+        viewModel.saveUserProfile(weight: weightKInt, gender: gender)
     }
     
     func setSelectedMetric(tag: Int) {

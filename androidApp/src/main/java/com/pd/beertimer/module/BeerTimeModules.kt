@@ -16,12 +16,14 @@ import com.pd.beertimer.util.SHARED_PREF_BEER_TIME
 import com.pd.beertimer.util.StorageHelper
 import com.pd.beertimer.util.VolumeConverter
 import com.tlapp.beertimemm.drinking.DrinkNotificationScheduler
+import kotlinx.serialization.ExperimentalSerializationApi
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import kotlin.time.ExperimentalTime
 
+@ExperimentalSerializationApi
 @ExperimentalTime
 fun beerTimeModules(applicationContext: Application) = module {
     single<Context> {
@@ -41,7 +43,7 @@ fun beerTimeModules(applicationContext: Application) = module {
     }
 
     viewModel {
-        ProfileViewModel(profileStorage = get())
+        ProfileViewModel(profileModel = get())
     }
 
     factory {

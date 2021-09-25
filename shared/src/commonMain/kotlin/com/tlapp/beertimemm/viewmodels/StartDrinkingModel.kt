@@ -24,16 +24,17 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
+import kotlinx.serialization.ExperimentalSerializationApi
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
+@ExperimentalSerializationApi
 @ExperimentalTime
 class StartDrinkingModel : KoinComponent {
     private val databaseHelper: DatabaseHelper by inject()
     private val profileStorage: ProfileStorage by inject()
-    private val drinkStorage: DrinkStorage by inject()
     private val drinkCoordinator: DrinkCoordinator by inject()
     private val clock: Clock by inject()
     private val displayDateHelper: DisplayDateHelper by inject()

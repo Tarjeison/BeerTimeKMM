@@ -25,7 +25,7 @@ class ProfileStorage(private val settings: Settings) {
     fun getPreferredVolume(): PreferredVolume {
         return settings.get<String>(PREFERRED_VOLUME_KEY)?.let {
             PreferredVolume.valueOf(it)
-        } ?: PreferredVolume.KG
+        } ?: PreferredVolume.LITER
     }
 
     fun savePreferredVolume(preferredVolume: PreferredVolume) {
@@ -34,5 +34,5 @@ class ProfileStorage(private val settings: Settings) {
 }
 
 enum class PreferredVolume {
-    KG, LBS
+    LITER, OUNCES
 }

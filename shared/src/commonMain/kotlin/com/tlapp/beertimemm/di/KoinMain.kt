@@ -6,9 +6,11 @@ import com.tlapp.beertimemm.sqldelight.DatabaseHelper
 import com.tlapp.beertimemm.storage.DrinkStorage
 import com.tlapp.beertimemm.storage.ProfileStorage
 import com.tlapp.beertimemm.viewmodels.CountDownModel
+import com.tlapp.beertimemm.viewmodels.ProfileModel
 import com.tlapp.beertimemm.viewmodels.StartDrinkingModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.datetime.Clock
+import kotlinx.serialization.ExperimentalSerializationApi
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -40,7 +42,8 @@ internal inline fun <reified T> Scope.getWith(vararg params: Any?): T {
     return get(parameters = { parametersOf(*params) })
 }
 
-@OptIn(ExperimentalTime::class)
+@ExperimentalTime
+@ExperimentalSerializationApi
 private val coreModule = module {
     single {
         DatabaseHelper(
@@ -67,6 +70,10 @@ private val coreModule = module {
 
     factory {
         StartDrinkingModel()
+    }
+
+    factory {
+        ProfileModel()
     }
 
     factory {

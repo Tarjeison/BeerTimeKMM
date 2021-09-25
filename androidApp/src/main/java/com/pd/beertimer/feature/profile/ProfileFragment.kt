@@ -2,7 +2,6 @@ package com.pd.beertimer.feature.profile
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -10,24 +9,34 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import com.pd.beertimer.R
 import com.pd.beertimer.databinding.FragmentProfileBinding
-import com.pd.beertimer.util.SHARED_PREF_USES_LITERS
 import com.pd.beertimer.util.ToastHelper
+import com.pd.beertimer.util.getIconFromName
+import com.pd.beertimer.util.observe
 import com.pd.beertimer.util.viewBinding
 import com.tlapp.beertimemm.models.Gender
-import com.tlapp.beertimemm.models.UserProfile
+import com.tlapp.beertimemm.storage.PreferredVolume
 import kotlinx.android.synthetic.main.fragment_profile.*
-import org.koin.android.ext.android.inject
+import kotlinx.serialization.ExperimentalSerializationApi
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+@ExperimentalSerializationApi
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private val profileViewModel: ProfileViewModel by viewModel()
     private val binding by viewBinding(FragmentProfileBinding::bind)
-    private val sharedPreferences: SharedPreferences by inject()
 
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        observe(profileViewModel.toastLiveData) {
+            ToastHelper.createToast(
+                layoutInflater,
+                context,
+                it.displayMessage,
+                context?.getIconFromName(it.iconName) ?: R.drawable.ic_superhero_pineapple
+            )
+        }
 
         binding.clProfile.setOnTouchListener { v, _ ->
             val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
@@ -67,63 +76,30 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     }
 
     private fun setupRadioGroup() {
-        val isUsingLiters = sharedPreferences.getBoolean(SHARED_PREF_USES_LITERS, true)
+        val isUsingLiters = profileViewModel.preferredVolume == PreferredVolume.LITER
         binding.rUnit.check(if (isUsingLiters) R.id.bLiter else R.id.bOunce)
         binding.rUnit.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.bLiter -> saveUnitToSharedPreferences(true)
-                R.id.bOunce -> saveUnitToSharedPreferences(false)
+                R.id.bLiter -> saveUnitToSharedPreferences(PreferredVolume.LITER)
+                R.id.bOunce -> saveUnitToSharedPreferences(PreferredVolume.OUNCES)
             }
         }
     }
 
-    private fun saveUnitToSharedPreferences(isLiters: Boolean) {
-        sharedPreferences.edit().putBoolean(SHARED_PREF_USES_LITERS, isLiters).apply()
+    private fun saveUnitToSharedPreferences(preferredVolume: PreferredVolume) {
+        profileViewModel.savePreferredVolume(preferredVolume)
     }
 
     private fun createSaveClickListener(): View.OnClickListener {
         return View.OnClickListener {
-            if (fieldsAreSet()) {
-                val profile = UserProfile(
-                    if (binding.ibFemale.isSelected) {
-                        Gender.FEMALE
-                    } else {
-                        Gender.MALE
-                    },
-                    binding.etWeight.text?.toString()?.toInt() ?: 0
-                )
-                profileViewModel.saveUserProfile(profile)
-                ToastHelper.createToast(
-                    layoutInflater,
-                    context,
-                    R.string.profile_updated,
-                    R.drawable.ic_superhero_pineapple
-                )
-
+            val gender = when {
+                binding.ibFemale.isSelected -> Gender.FEMALE
+                binding.ibMale.isSelected -> Gender.MALE
+                else -> null
             }
-
-        }
-    }
-
-    private fun fieldsAreSet(): Boolean {
-        return if (!(binding.ibMale.isSelected || binding.ibFemale.isSelected)) {
-            ToastHelper.createToast(
-                layoutInflater,
-                context,
-                R.string.profile_error_no_gender,
-                R.drawable.ic_pineapple_confused
-            )
-            false
-        } else if (binding.etWeight.text.isEmpty()) {
-            ToastHelper.createToast(
-                layoutInflater,
-                context,
-                R.string.profile_blank_weight,
-                R.drawable.ic_pineapple_confused
-            )
-            false
-        } else {
-            true
+            val weight = binding.etWeight.text?.takeIf { it.isNotEmpty() }
+                ?.toString()?.toInt()
+            profileViewModel.saveUserProfile(weight, gender)
         }
     }
 }

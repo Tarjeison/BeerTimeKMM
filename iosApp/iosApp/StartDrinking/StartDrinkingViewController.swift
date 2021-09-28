@@ -207,9 +207,33 @@ class StartDrinkingViewController : UIViewController, UITableViewDelegate, UITab
             
         }
     }
-    
+
     @objc func startDrinkingPressed() {
-        viewModel.startDrinking()
+        UNUserNotificationCenter.current().getNotificationSettings { (notificationSettings) in
+                switch notificationSettings.authorizationStatus {
+                case .notDetermined:
+                    self.requestAuthorization(completionHandler: { (success) in
+                        DispatchQueue.main.async {
+                            self.viewModel.startDrinking()
+                        }
+                    })
+                default:
+                    DispatchQueue.main.async {
+                        self.viewModel.startDrinking()
+                    }
+                }
+            }
+    }
+    
+    private func requestAuthorization(completionHandler: @escaping (_ success: Bool) -> ()) {
+        // Request Authorization
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (success, error) in
+            if let error = error {
+                print("Request Authorization Failed (\(error), \(error.localizedDescription))")
+            }
+
+            completionHandler(success)
+        }
     }
 }
 

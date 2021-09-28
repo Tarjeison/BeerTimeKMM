@@ -14,7 +14,7 @@ func startKoin() {
     
     let userDefaults = UserDefaults(suiteName: "BEERTIME_SETTINGS")!
     
-    let koinApplication = KoinIOSKt.doInitKoinIos(userDefaults: userDefaults)
+    let koinApplication = KoinIOSKt.doInitKoinIos(userDefaults: userDefaults, drinkNotificationScheduler: NotificationScheduler.init())
     _koin = koinApplication.koin
 }
 

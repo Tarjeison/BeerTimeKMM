@@ -5,7 +5,6 @@ import com.russhwolf.settings.Settings
 import com.squareup.sqldelight.db.SqlDriver
 import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 import com.tlapp.beertimemm.drinking.DrinkNotificationScheduler
-import com.tlapp.beertimemm.drinking.LocalNotificationScheduler
 import com.tlapp.beertimemm.utils.CountDownClock
 import com.tlapp.beertimemm.utils.CountDownClockImpl
 import com.tlapp.beertimemm.utils.DisplayDateHelper
@@ -25,10 +24,12 @@ import kotlin.time.ExperimentalTime
 
 @ExperimentalTime
 fun initKoinIos(
-    userDefaults: NSUserDefaults
+    userDefaults: NSUserDefaults,
+    drinkNotificationScheduler: DrinkNotificationScheduler
 ): KoinApplication = initKoin(
     module {
         single<Settings> { AppleSettings(userDefaults) }
+        single<DrinkNotificationScheduler> { drinkNotificationScheduler }
     }
 )
 
@@ -42,7 +43,6 @@ actual val platformModule: Module = module {
     }
 
     single<DisplayDateHelper> { DisplayDateHelperImpl() }
-    single<DrinkNotificationScheduler> { LocalNotificationScheduler() }
     single<CountDownClock> { CountDownClockImpl() }
 }
 

@@ -11,6 +11,7 @@
 		C823D03B26E40B0B00DF3947 /* ChartHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C823D03A26E40B0B00DF3947 /* ChartHelper.swift */; };
 		C823D03D26E4110200DF3947 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = C823D03C26E4110200DF3947 /* Image.swift */; };
 		C82F073426DD310D00F21CD9 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82F073326DD310D00F21CD9 /* Toast.swift */; };
+		C83842EF270253F600CA4282 /* NotificationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83842EE270253F600CA4282 /* NotificationExtensions.swift */; };
 		C855A6DE26D432F10068FA39 /* WantedBloodLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C855A6DD26D432F10068FA39 /* WantedBloodLevelView.swift */; };
 		C855A6E026D5659A0068FA39 /* HoursDrinkingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C855A6DF26D5659A0068FA39 /* HoursDrinkingView.swift */; };
 		C855A6E226D567070068FA39 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = C855A6E126D567070068FA39 /* Const.swift */; };
@@ -26,6 +27,7 @@
 		C8E7E32B26D267D100D35ADF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E7E32A26D267D100D35ADF /* AppDelegate.swift */; };
 		C8E7E32D26D26D7E00D35ADF /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8E7E32C26D26D7E00D35ADF /* Color.xcassets */; };
 		C8E7E33026D2714C00D35ADF /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E7E32F26D2714C00D35ADF /* CustomSlider.swift */; };
+		C8F1C06C2700FE1C002D44E8 /* NotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F1C06B2700FE1C002D44E8 /* NotificationScheduler.swift */; };
 		C8F1EB5626D29244002724E0 /* Koin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8F1EB5526D29244002724E0 /* Koin.swift */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +39,7 @@
 		C823D03A26E40B0B00DF3947 /* ChartHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartHelper.swift; sourceTree = "<group>"; };
 		C823D03C26E4110200DF3947 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		C82F073326DD310D00F21CD9 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
+		C83842EE270253F600CA4282 /* NotificationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtensions.swift; sourceTree = "<group>"; };
 		C855A6DD26D432F10068FA39 /* WantedBloodLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WantedBloodLevelView.swift; sourceTree = "<group>"; };
 		C855A6DF26D5659A0068FA39 /* HoursDrinkingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoursDrinkingView.swift; sourceTree = "<group>"; };
 		C855A6E126D567070068FA39 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
@@ -52,6 +55,7 @@
 		C8E7E32A26D267D100D35ADF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C8E7E32C26D26D7E00D35ADF /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 		C8E7E32F26D2714C00D35ADF /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
+		C8F1C06B2700FE1C002D44E8 /* NotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationScheduler.swift; sourceTree = "<group>"; };
 		C8F1EB5526D29244002724E0 /* Koin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Koin.swift; sourceTree = "<group>"; };
 		F073D32319EE7B2DDC03193C /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.release.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,6 +93,7 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				C883FAF32700FB2100F23F31 /* Notification */,
 				C89F567726DEBC1A006F59DD /* Me */,
 				C89F567426DEBA7C006F59DD /* CountDown */,
 				C82F073226DD30FD00F21CD9 /* Util */,
@@ -131,6 +136,15 @@
 				C885CD0926D6C3EF00CDC062 /* DrinkItemViewCell.swift */,
 			);
 			path = StartDrinking;
+			sourceTree = "<group>";
+		};
+		C883FAF32700FB2100F23F31 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				C8F1C06B2700FE1C002D44E8 /* NotificationScheduler.swift */,
+				C83842EE270253F600CA4282 /* NotificationExtensions.swift */,
+			);
+			path = Notification;
 			sourceTree = "<group>";
 		};
 		C89F567426DEBA7C006F59DD /* CountDown */ = {
@@ -304,10 +318,12 @@
 				C8E7E33026D2714C00D35ADF /* CustomSlider.swift in Sources */,
 				C823D03B26E40B0B00DF3947 /* ChartHelper.swift in Sources */,
 				C89F567626DEBA8F006F59DD /* CountDownViewController.swift in Sources */,
+				C8F1C06C2700FE1C002D44E8 /* NotificationScheduler.swift in Sources */,
 				C855A6E026D5659A0068FA39 /* HoursDrinkingView.swift in Sources */,
 				C8F1EB5626D29244002724E0 /* Koin.swift in Sources */,
 				C823D03D26E4110200DF3947 /* Image.swift in Sources */,
 				C8A60BFC26E8090E0071D18C /* MyDrinksViewController.swift in Sources */,
+				C83842EF270253F600CA4282 /* NotificationExtensions.swift in Sources */,
 				C885CD0A26D6C3EF00CDC062 /* DrinkItemViewCell.swift in Sources */,
 				C8A60BF626E7D33A0071D18C /* MeItemCell.swift in Sources */,
 				C89F567926DEBC30006F59DD /* MePageViewController.swift in Sources */,

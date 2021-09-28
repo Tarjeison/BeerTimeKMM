@@ -43,7 +43,8 @@ class DrinkCoordinatorImpl(): DrinkCoordinator, KoinComponent {
         }
 
         drinkStorage.saveDrinkingTimesAndCalculator(drinkingTimes, drinkingCalculator)
-        drinkNotificationScheduler.scheduleNotification(drinkingTimes[1].toEpochMilliseconds())
+        // The first element is the first beer, which should not give a notification
+        drinkNotificationScheduler.scheduleNotification(drinkingTimes.slice(1..drinkingTimes.lastIndex))
         return Success(true)
     }
 

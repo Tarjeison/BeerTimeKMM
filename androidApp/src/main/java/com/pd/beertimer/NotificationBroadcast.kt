@@ -8,8 +8,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.pd.beertimer.util.CHANNEL_ID
 import com.pd.beertimer.util.NOTIFICATION_ID
+import com.pd.beertimer.util.scheduleNotificationAtMs
 import com.tlapp.beertimemm.drinking.DrinkCoordinator
-import com.tlapp.beertimemm.drinking.DrinkNotificationScheduler
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.time.ExperimentalTime
@@ -17,7 +17,6 @@ import kotlin.time.ExperimentalTime
 @ExperimentalTime
 class NotificationBroadcast : BroadcastReceiver(), KoinComponent {
     private val drinkCoordinator: DrinkCoordinator by inject()
-    private val notificationScheduler: DrinkNotificationScheduler by inject()
     override fun onReceive(context: Context?, p1: Intent?) {
         context?.let { contextNonNull ->
 
@@ -29,7 +28,7 @@ class NotificationBroadcast : BroadcastReceiver(), KoinComponent {
             drinkCoordinator.getNextDrinkDrinkingTime()?.let {
                 isLastAlarm = false
                 val triggerTimeInMs = it.toEpochMilliseconds()
-                notificationScheduler.scheduleNotification(triggerTimeInMs)
+                contextNonNull.scheduleNotificationAtMs(triggerTimeInMs)
             }
 
             val pendingIntent: PendingIntent = PendingIntent.getActivity(contextNonNull, 0, intent, 0)

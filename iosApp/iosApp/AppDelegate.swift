@@ -40,6 +40,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.rootViewController = tabController
         self.window?.makeKeyAndVisible()
         
+        // UNUserNotificationCenter.current().delegate = self
+        
         return true
     }
 }

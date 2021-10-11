@@ -26,6 +26,7 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.koin.core.context.startKoin
@@ -39,6 +40,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.time.ExperimentalTime
 
+@ExperimentalSerializationApi
 @ExperimentalTime
 internal class StartDrinkingModelTest : BaseTest(), KoinTest {
 
@@ -53,7 +55,7 @@ internal class StartDrinkingModelTest : BaseTest(), KoinTest {
 
     private var notificationScheduled = false
     private val drinkCoordinator = object : DrinkNotificationScheduler {
-        override fun scheduleNotification(notificationTimeInMs: Long) {
+        override fun scheduleNotification(drinkingTimes: List<Instant>) {
             notificationScheduled = true
         }
 

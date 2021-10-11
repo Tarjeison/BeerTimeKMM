@@ -1,6 +1,7 @@
 package com.tlapp.beertimemm.mock
 
 import com.tlapp.beertimemm.drinking.DrinkNotificationScheduler
+import kotlinx.datetime.Instant
 
 class DrinkNotificationSchedulerMock(): DrinkNotificationScheduler {
 
@@ -12,8 +13,8 @@ class DrinkNotificationSchedulerMock(): DrinkNotificationScheduler {
         alarmCancelled = false
     }
 
-    override fun scheduleNotification(notificationTimeInMs: Long) {
-        notificationScheduledWithMs = notificationTimeInMs
+    override fun scheduleNotification(drinkingTimes: List<Instant>) {
+        notificationScheduledWithMs = drinkingTimes[1].toEpochMilliseconds()
     }
 
     override fun cancelAlarm() {

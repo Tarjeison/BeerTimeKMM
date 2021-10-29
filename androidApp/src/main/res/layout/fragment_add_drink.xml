@@ -29,6 +29,7 @@
         app:layout_constraintTop_toBottomOf="@id/addDrinkImageTop">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etDrinkName"
             android:layout_width="match_parent"
             android:maxLength="12"
             android:layout_height="match_parent" />
@@ -45,6 +46,7 @@
         app:layout_constraintTop_toBottomOf="@id/tiDrinkName">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPercentage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="numberDecimal" />
@@ -60,6 +62,7 @@
         app:layout_constraintTop_toBottomOf="@id/tiPercentage">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etVolume"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="numberDecimal" />

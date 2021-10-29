@@ -11,10 +11,12 @@ import com.tlapp.beertimemm.viewmodels.StartDrinkingModel
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.serialization.ExperimentalSerializationApi
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.time.ExperimentalTime
 
+@ExperimentalSerializationApi
 @ExperimentalTime
 class StartDrinkingViewModel : ViewModel(), KoinComponent {
 

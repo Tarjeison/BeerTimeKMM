@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.pd.beertimer">
 
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
     <application
         android:name="com.pd.beertimer.BeerTimerApplication"
         android:icon="@drawable/ic_pineapple_smile"
@@ -10,6 +12,7 @@
         android:allowBackup="true"
         android:roundIcon="@drawable/ic_pineapple_smile"
         android:supportsRtl="true"
+
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
         <activity

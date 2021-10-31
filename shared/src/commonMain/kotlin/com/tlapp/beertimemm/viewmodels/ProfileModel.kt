@@ -10,11 +10,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
-import kotlinx.serialization.ExperimentalSerializationApi
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-@ExperimentalSerializationApi
 class ProfileModel : KoinComponent {
     private val profileStorage: ProfileStorage by inject()
 

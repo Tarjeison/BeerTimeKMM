@@ -14,7 +14,6 @@ import com.pd.beertimer.util.ToastHelper
 import com.pd.beertimer.util.observe
 import com.pd.beertimer.util.viewBinding
 import com.tlapp.beertimemm.models.AlcoholUnit
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.time.ExperimentalTime
 
@@ -26,7 +25,6 @@ class StartDrinkingFragment : Fragment(R.layout.fragment_startdrinking) {
     private val startDrinkingViewModel: StartDrinkingViewModel by viewModel()
     private lateinit var alcoholAdapter: AlcoholAdapterV2
 
-    @ExperimentalCoroutinesApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

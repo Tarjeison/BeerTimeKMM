@@ -12,6 +12,7 @@ import androidx.annotation.StringRes
 import com.pd.beertimer.R
 
 object ToastHelper {
+    @Suppress("DEPRECATION")
     fun createToast(
         layoutInflater: LayoutInflater,
         nullableContext: Context?,
@@ -33,6 +34,7 @@ object ToastHelper {
         }
     }
 
+    @Suppress("DEPRECATION")
     fun createToast(
         layoutInflater: LayoutInflater,
         nullableContext: Context?,

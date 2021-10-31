@@ -18,7 +18,7 @@ import org.koin.core.component.inject
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
-@ExperimentalTime
+@OptIn(ExperimentalTime::class)
 class CountDownModel : KoinComponent {
 
     private val clock: Clock by inject()

@@ -5,8 +5,9 @@ import platform.CoreFoundation.CFRunLoopGetCurrent
 import platform.CoreFoundation.CFRunLoopRun
 import platform.CoreFoundation.CFRunLoopStop
 
-@DelicateCoroutinesApi
+
 actual abstract class BaseTest {
+    @OptIn(DelicateCoroutinesApi::class)
     actual fun <T> runTest(block: suspend CoroutineScope.() -> T) {
         var error: Throwable? = null
         GlobalScope.launch(Dispatchers.Main) {

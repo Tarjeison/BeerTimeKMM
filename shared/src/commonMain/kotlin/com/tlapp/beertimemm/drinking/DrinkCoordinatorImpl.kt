@@ -10,9 +10,8 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import kotlin.time.ExperimentalTime
 
-@ExperimentalTime
+
 interface DrinkCoordinator {
     fun startDrinking(drinkingCalculator: DrinkingCalculator): Result<Boolean, String>
     fun stopDrinking()
@@ -22,7 +21,6 @@ interface DrinkCoordinator {
     fun isDrinking(): Boolean
 }
 
-@ExperimentalTime
 class DrinkCoordinatorImpl(): DrinkCoordinator, KoinComponent {
     private val drinkStorage: DrinkStorage by inject()
     private val drinkNotificationScheduler: DrinkNotificationScheduler by inject()

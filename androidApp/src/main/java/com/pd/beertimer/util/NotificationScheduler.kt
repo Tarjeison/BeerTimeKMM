@@ -7,11 +7,9 @@ import android.content.Intent
 import com.pd.beertimer.NotificationBroadcast
 import com.tlapp.beertimemm.drinking.DrinkNotificationScheduler
 import kotlinx.datetime.Instant
-import kotlin.time.ExperimentalTime
 
 private const val REQUEST_CODE: Int = 1337727272
 
-@ExperimentalTime
 class NotificationScheduler(
     private val application: Context,
 ) : DrinkNotificationScheduler {
@@ -35,7 +33,7 @@ class NotificationScheduler(
     }
 }
 
-@ExperimentalTime
+
 fun Context.scheduleNotificationAtMs(notificationTimeInMs: Long) {
     val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
     val alarmIntent = Intent(this, NotificationBroadcast::class.java).let { intent ->

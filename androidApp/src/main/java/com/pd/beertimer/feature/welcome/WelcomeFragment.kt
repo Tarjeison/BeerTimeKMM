@@ -7,9 +7,7 @@ import com.pd.beertimer.MainActivity
 import com.pd.beertimer.R
 import com.pd.beertimer.databinding.FragmentWelcomeBinding
 import com.pd.beertimer.util.viewBinding
-import kotlin.time.ExperimentalTime
 
-@ExperimentalTime
 class WelcomeFragment: Fragment(R.layout.fragment_welcome) {
 
     private val binding by viewBinding(FragmentWelcomeBinding::bind)

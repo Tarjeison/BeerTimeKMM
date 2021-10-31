@@ -10,7 +10,8 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-@ExperimentalSerializationApi
+
+@OptIn(ExperimentalSerializationApi::class)
 class ProfileStorage(private val settings: Settings) {
     fun getUserProfile(): UserProfile? {
         return settings.get<String>(PROFILE_KEY)?.let {

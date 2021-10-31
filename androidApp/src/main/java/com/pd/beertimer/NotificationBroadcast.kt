@@ -14,7 +14,6 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.time.ExperimentalTime
 
-@ExperimentalTime
 class NotificationBroadcast : BroadcastReceiver(), KoinComponent {
     private val drinkCoordinator: DrinkCoordinator by inject()
     override fun onReceive(context: Context?, p1: Intent?) {

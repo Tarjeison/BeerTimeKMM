@@ -15,11 +15,13 @@ import com.tlapp.beertimemm.models.UserProfile
 import com.tlapp.beertimemm.resources.Strings.ERROR_NO_BLOOD_LEVEL_SET
 import com.tlapp.beertimemm.resources.Strings.ERROR_NO_DRINK_SELECTED
 import com.tlapp.beertimemm.resources.Strings.ERROR_NO_PROFILE_FOUND
+import com.tlapp.beertimemm.resources.Strings.ERROR_TOO_SHORT_DRINK_INTERVAL
 import com.tlapp.beertimemm.sqldelight.DatabaseHelper
 import com.tlapp.beertimemm.storage.ProfileStorage
 import com.tlapp.beertimemm.utils.DisplayDateHelper
 import com.tlapp.beertimemm.utils.Failure
 import com.tlapp.beertimemm.utils.PROFILE_KEY
+import com.tlapp.beertimemm.utils.isDebug
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.datetime.Clock
@@ -115,7 +117,11 @@ internal class StartDrinkingModelTest : BaseTest(), KoinTest {
         startDrinkingModel.setWantedBloodLevel(20)
         startDrinkingModel.startDrinking()
         startDrinkingModel.errorToastFlow.filterNotNull().test {
-            assertEquals(ERROR_NO_PROFILE_FOUND, expectItem().value)
+            if (isDebug()) {
+                assertEquals(ERROR_NO_PROFILE_FOUND, expectItem().value)
+            } else {
+                assertEquals(ERROR_TOO_SHORT_DRINK_INTERVAL, expectItem().value)
+            }
             expectNoEvents()
         }
     }
@@ -126,6 +132,8 @@ internal class StartDrinkingModelTest : BaseTest(), KoinTest {
         mockSettings.putString(PROFILE_KEY, Json.encodeToString(UserProfile(Gender.MALE, 70)))
         startDrinkingModel.setSelectedUnit(TEST_ALCOHOL_UNIT)
         startDrinkingModel.setWantedBloodLevel(20)
+        startDrinkingModel.setFinishDrinkingInHoursMinutes(1000)
+        startDrinkingModel.setPeakTimeInHoursMinutes(1000)
         startDrinkingModel.startDrinking()
         startDrinkingModel.navigateToCountDownFlow.filterNotNull().test {
             assertEquals(true, expectItem().value)
@@ -134,12 +142,14 @@ internal class StartDrinkingModelTest : BaseTest(), KoinTest {
     }
 
     @Test
-    fun whenStartDrinkingSucceedsAndDrinkCoordinatorRreturnsFailure_navigationFlowIsNotUpdatedAndErrorFlowIsUpdated() = runTest {
+    fun whenStartDrinkingSucceedsAndDrinkCoordinatorReturnsFailure_navigationFlowIsNotUpdatedAndErrorFlowIsUpdated() = runTest {
         val startDrinkingModel = getKoin().get<StartDrinkingModel>()
         mockSettings.putString(PROFILE_KEY, Json.encodeToString(UserProfile(Gender.MALE, 70)))
         drinkCoordinatorMock.startDrinkingReturnValue = Failure("Test")
         startDrinkingModel.setSelectedUnit(TEST_ALCOHOL_UNIT)
         startDrinkingModel.setWantedBloodLevel(20)
+        startDrinkingModel.setFinishDrinkingInHoursMinutes(1000)
+        startDrinkingModel.setPeakTimeInHoursMinutes(1000)
         startDrinkingModel.startDrinking()
         startDrinkingModel.navigateToCountDownFlow.filterNotNull().test {
             expectNoEvents()
@@ -179,8 +189,9 @@ internal class StartDrinkingModelTest : BaseTest(), KoinTest {
             expectEvent()
             expectNoEvents()
         }
+        val expectedTime = if (isDebug()) Instant.parse("1970-01-18T05:40:37.200Z") else Instant.parse("1970-01-18T06:40:37.200Z")
         assertEquals(
-            Instant.parse("1970-01-18T05:40:37.200Z"),
+            expectedTime,
             displayDateHelperMock.lastInvokedWith!!.toInstant(TimeZone.currentSystemDefault())
         )
     }
@@ -193,9 +204,10 @@ internal class StartDrinkingModelTest : BaseTest(), KoinTest {
             expectEvent()
             expectNoEvents()
         }
+        val expectedTime = if (isDebug()) Instant.parse("1970-01-18T06:20:37.200Z") else Instant.parse("1970-01-18T07:20:37.200Z")
 
         assertEquals(
-            Instant.parse("1970-01-18T06:20:37.200Z"),
+            expectedTime,
             displayDateHelperMock.lastInvokedWith!!.toInstant(TimeZone.currentSystemDefault())
         )
     }

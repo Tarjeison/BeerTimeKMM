@@ -8,9 +8,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import kotlin.time.ExperimentalTime
 
-@ExperimentalTime
 class CountDownViewModel : ViewModel(), KoinComponent {
     private val countDownModel: CountDownModel by inject()
 

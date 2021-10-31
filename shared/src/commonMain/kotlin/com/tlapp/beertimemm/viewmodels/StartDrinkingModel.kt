@@ -30,8 +30,7 @@ import org.koin.core.component.inject
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
-@ExperimentalSerializationApi
-@ExperimentalTime
+@OptIn(ExperimentalTime::class)
 class StartDrinkingModel : KoinComponent {
     private val databaseHelper: DatabaseHelper by inject()
     private val profileStorage: ProfileStorage by inject()

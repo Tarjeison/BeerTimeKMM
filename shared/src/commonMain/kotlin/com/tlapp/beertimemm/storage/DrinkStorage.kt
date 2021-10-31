@@ -5,17 +5,14 @@ import com.russhwolf.settings.get
 import com.tlapp.beertimemm.models.DrinkingCalculator
 import com.tlapp.beertimemm.utils.DRINKING_CALCULATOR_KEY
 import com.tlapp.beertimemm.utils.DRINKING_TIMES_KEY
-import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
-import kotlin.time.Duration
-import kotlin.time.ExperimentalTime
 
-@ExperimentalTime
+@OptIn(ExperimentalSerializationApi::class)
 internal class DrinkStorage(private val settings: Settings): KoinComponent {
 
     fun getExistingDrinkingTimes(): List<Instant>? {

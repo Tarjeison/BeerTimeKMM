@@ -42,8 +42,6 @@ internal inline fun <reified T> Scope.getWith(vararg params: Any?): T {
     return get(parameters = { parametersOf(*params) })
 }
 
-@ExperimentalTime
-@ExperimentalSerializationApi
 private val coreModule = module {
     single {
         DatabaseHelper(

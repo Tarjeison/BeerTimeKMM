@@ -6,7 +6,7 @@ import kotlin.math.roundToInt
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
-@ExperimentalTime
+@OptIn(ExperimentalTime::class)
 @Serializable
 data class DrinkingCalculator(
     val userProfile: UserProfile,
@@ -80,21 +80,21 @@ data class DrinkingCalculator(
         return ((preferredUnit.gramPerUnit * nConsumed / (userProfile.weight * 1000 * genderConst)) * 100 - (duration.inWholeMinutes / 60f) * 0.015).toFloat()
     }
 
-    fun changeDuration(previousDrinkingTimes: List<Instant>, numConsumed: Int) {
-        val gramsConsumed = numConsumed * preferredUnit.gramPerUnit
-        val now = Clock.System.now()
-        val newDuration = peakTime.minus(now)
-        val currentBac = (gramsConsumed / (userProfile.weight * 1000 * genderConst)) * 100 -
-                now.minus(previousDrinkingTimes.first()).inWholeHours * 0.015
-
-        val bacAtEndNoMoreUnits = currentBac - (newDuration.inWholeHours * 0.015)
-        if (bacAtEndNoMoreUnits > wantedBloodLevel) {
-            // No more drinks needed
-        } else {
-            val neededGrams =
-                ((wantedBloodLevel + 0.015 * newDuration.inWholeHours) * ((userProfile.weight * 1000 * genderConst))) / 100
-        }
-    }
+//    fun changeDuration(previousDrinkingTimes: List<Instant>, numConsumed: Int) {
+//        val gramsConsumed = numConsumed * preferredUnit.gramPerUnit
+//        val now = Clock.System.now()
+//        val newDuration = peakTime.minus(now)
+//        val currentBac = (gramsConsumed / (userProfile.weight * 1000 * genderConst)) * 100 -
+//                now.minus(previousDrinkingTimes.first()).inWholeHours * 0.015
+//
+//        val bacAtEndNoMoreUnits = currentBac - (newDuration.inWholeHours * 0.015)
+//        if (bacAtEndNoMoreUnits > wantedBloodLevel) {
+//            // No more drinks needed
+//        } else {
+//            val neededGrams =
+//                ((wantedBloodLevel + 0.015 * newDuration.inWholeHours) * ((userProfile.weight * 1000 * genderConst))) / 100
+//        }
+//    }
 }
 
 

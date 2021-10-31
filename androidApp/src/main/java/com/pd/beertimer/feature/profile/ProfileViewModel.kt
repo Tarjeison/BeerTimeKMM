@@ -6,11 +6,9 @@ import com.tlapp.beertimemm.models.Gender
 import com.tlapp.beertimemm.models.UserProfile
 import com.tlapp.beertimemm.storage.PreferredVolume
 import com.tlapp.beertimemm.viewmodels.ProfileModel
-import kotlinx.serialization.ExperimentalSerializationApi
 
 
-@ExperimentalSerializationApi
-class ProfileViewModel(private val profileModel: ProfileModel): ViewModel() {
+class ProfileViewModel(private val profileModel: ProfileModel) : ViewModel() {
 
     val toastLiveData = profileModel.toastFlow.asLiveData()
 

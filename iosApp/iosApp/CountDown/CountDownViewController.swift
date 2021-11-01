@@ -172,7 +172,21 @@ class CountDownViewController: UIViewController {
         
         updateScrollViewHeight()
         
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(appBecameActive), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
+    
+    @objc private func appMovedToBackground()  {
+        viewModel.onDestroy()
+
+    }
+
+    @objc private func appBecameActive()  {
+        viewModel.startCountDown()
+        viewModel.observeData()
+    }
+
     
     private func updateCurrentlyDrinkingView(drinkingModel: DrinkStatusModel.Drinking) {
         nDrinksTextView.isHidden = false

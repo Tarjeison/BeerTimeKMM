@@ -85,5 +85,6 @@ class NativeStartDrinkingViewModel(
     fun onDestroy() {
         scope?.cancel()
         scope = null
+        startDrinkingModel.onDestroy()
     }
 }

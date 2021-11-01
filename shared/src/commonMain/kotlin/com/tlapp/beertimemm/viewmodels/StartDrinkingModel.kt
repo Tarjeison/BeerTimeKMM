@@ -112,6 +112,10 @@ class StartDrinkingModel : KoinComponent {
         selectedUnitFlow.value = selectedUnit
     }
 
+    fun onDestroy() {
+        _alertFlow.value = null
+    }
+
     fun startDrinking() {
         if (drinkCoordinator.isDrinking()) {
             val alertDialogUiModel = AlertDialogUiModel(

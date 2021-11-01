@@ -1,31 +1,26 @@
 package com.pd.beertimer.feature.drinks
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.tlapp.beertimemm.models.MyDrinkItem
 import com.tlapp.beertimemm.sqldelight.DatabaseHelper
 import com.tlapp.beertimemm.sqldelight.toDrinkItem
+import com.tlapp.beertimemm.viewmodels.MyDrinksModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
-class MyDrinksViewModel(private val databaseHelper: DatabaseHelper): ViewModel() {
+class MyDrinksViewModel(
+    private val myDrinksModel: MyDrinksModel,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+): ViewModel() {
 
-    private val _drinksLiveData = MutableLiveData<List<MyDrinkItem>>()
-    val drinksLiveData: LiveData<List<MyDrinkItem>> = _drinksLiveData
-
-    init {
-        databaseHelper.selectAllItems().onEach { drinkList ->
-            _drinksLiveData.postValue(drinkList.map { it.toDrinkItem() })
-        }.launchIn(viewModelScope)
-    }
+    val drinksLiveData: LiveData<List<MyDrinkItem>> = myDrinksModel.getDrinks().asLiveData()
 
     fun deleteDrink(drinkKey: Long) {
-        viewModelScope.launch(Dispatchers.IO) {
-            databaseHelper.deleteDrink(drinkKey)
+        viewModelScope.launch(dispatcher) {
+            myDrinksModel.deleteDrink(drinkKey)
         }
     }
 }

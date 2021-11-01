@@ -72,7 +72,7 @@ fun beerTimeModules(applicationContext: Application) = module {
         getFirebaseAnalytics()
     }
 
-    viewModel { MyDrinksViewModel(databaseHelper = get()) }
+    viewModel { MyDrinksViewModel(myDrinksModel = get()) }
 
     viewModel { AddDrinkViewModel(databaseHelper = get(), sharedPreferences = get()) }
 

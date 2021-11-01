@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		943B9C22002F6736CA69E1DF /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C71B00E654ABC168DC4B2F6A /* Pods_iosApp.framework */; };
 		C8129871273083540022A2BE /* KeyboardViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8129870273083540022A2BE /* KeyboardViewControllerExtension.swift */; };
+		C8129873273086B80022A2BE /* MyDrinkItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8129872273086B80022A2BE /* MyDrinkItemCell.swift */; };
 		C823D03B26E40B0B00DF3947 /* ChartHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C823D03A26E40B0B00DF3947 /* ChartHelper.swift */; };
 		C823D03D26E4110200DF3947 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = C823D03C26E4110200DF3947 /* Image.swift */; };
 		C82F073426DD310D00F21CD9 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82F073326DD310D00F21CD9 /* Toast.swift */; };
@@ -38,6 +39,7 @@
 		B3622A3241EBE645FFEB8696 /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
 		C71B00E654ABC168DC4B2F6A /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8129870273083540022A2BE /* KeyboardViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewControllerExtension.swift; sourceTree = "<group>"; };
+		C8129872273086B80022A2BE /* MyDrinkItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDrinkItemCell.swift; sourceTree = "<group>"; };
 		C823D03A26E40B0B00DF3947 /* ChartHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartHelper.swift; sourceTree = "<group>"; };
 		C823D03C26E4110200DF3947 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		C82F073326DD310D00F21CD9 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				C8A60BFB26E8090E0071D18C /* MyDrinksViewController.swift */,
+				C8129872273086B80022A2BE /* MyDrinkItemCell.swift */,
 			);
 			path = MyDrinks;
 			sourceTree = "<group>";
@@ -327,6 +330,7 @@
 				C823D03D26E4110200DF3947 /* Image.swift in Sources */,
 				C8A60BFC26E8090E0071D18C /* MyDrinksViewController.swift in Sources */,
 				C8129871273083540022A2BE /* KeyboardViewControllerExtension.swift in Sources */,
+				C8129873273086B80022A2BE /* MyDrinkItemCell.swift in Sources */,
 				C83842EF270253F600CA4282 /* NotificationExtensions.swift in Sources */,
 				C885CD0A26D6C3EF00CDC062 /* DrinkItemViewCell.swift in Sources */,
 				C8A60BF626E7D33A0071D18C /* MeItemCell.swift in Sources */,

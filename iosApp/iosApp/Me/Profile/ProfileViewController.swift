@@ -255,7 +255,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         saveButton.addTarget(self, action: #selector(onSaveProfileClicked), for: .touchUpInside)
         
-        
+        hideKeyboardWhenTappedAround()
     }
     
     func setValuesFromStoredProfile() {

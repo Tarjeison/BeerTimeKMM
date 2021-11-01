@@ -148,6 +148,7 @@ class StartDrinkingViewController : UIViewController, UITableViewDelegate, UITab
         startDrinkingButton.layer.cornerRadius = 10
         startDrinkingButton.centerXAnchor.constraint(equalTo: footerView.centerXAnchor).isActive = true
         startDrinkingButton.centerYAnchor.constraint(equalTo: footerView.centerYAnchor).isActive = true
+        startDrinkingButton.contentEdgeInsets = UIEdgeInsets.init(top: 10,left: 10,bottom: 10,right: 10)
         startDrinkingButton.addTarget(self, action: #selector(startDrinkingPressed), for: .touchUpInside)
         
         drinkTableView.tableFooterView = footerView

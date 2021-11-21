@@ -13,7 +13,6 @@ import shared
 class MyDrinksViewController: UIViewController {
 
     private var drinkArray: Array<MyDrinkItem> = []
-
     
     lazy var viewModel = NativeMyDrinksViewModel { [weak self] myDrinks in
         if let vc = self {
@@ -41,7 +40,6 @@ class MyDrinksViewController: UIViewController {
         drinkTableView.tableFooterView = footerView
         drinkTableView.rowHeight = 64
         drinkTableView.estimatedRowHeight = 64
-        drinkTableView.isScrollEnabled = false
         drinkTableView.register(MyDrinkItemCell.self, forCellReuseIdentifier: "MyCell")
         drinkTableView.dataSource = self
         drinkTableView.delegate = self
@@ -67,11 +65,21 @@ class MyDrinksViewController: UIViewController {
 }
 
 extension MyDrinksViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
+    private func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {}
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            viewModel.deleteDrink(drinkKey: drinkArray[indexPath.row].key)
+            drinkArray.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return drinkArray.count
     }
+    
+    
 }
 
 extension  MyDrinksViewController: UITableViewDataSource {
@@ -80,6 +88,8 @@ extension  MyDrinksViewController: UITableViewDataSource {
         cell.drinkName.text = drinkArray[indexPath.row].name
         cell.drinkDescription.text = drinkArray[indexPath.row].getDescription()
         cell.drinkIcon.image = UIImage(named: drinkArray[indexPath.row].iconName)
+        cell.tag = Int(drinkArray[indexPath.row].key)
         return cell
     }
 }
+

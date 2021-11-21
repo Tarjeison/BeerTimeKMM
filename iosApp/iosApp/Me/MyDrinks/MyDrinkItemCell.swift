@@ -14,7 +14,7 @@ class MyDrinkItemCell: UITableViewCell {
     var drinkIcon = UIImageView()
     var drinkName = UITextView()
     var drinkDescription = UITextView()
-    var trashIcon = UIImageView()
+    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -30,12 +30,10 @@ class MyDrinkItemCell: UITableViewCell {
         drinkIcon.translatesAutoresizingMaskIntoConstraints = false
         drinkName.translatesAutoresizingMaskIntoConstraints = false
         drinkDescription.translatesAutoresizingMaskIntoConstraints = false
-        trashIcon.translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(drinkIcon)
         addSubview(drinkName)
         addSubview(drinkDescription)
-        addSubview(trashIcon)
         
         drinkIcon.leftAnchor.constraint(equalTo: leftAnchor, constant: 32).isActive = true
         drinkIcon.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
@@ -55,11 +53,5 @@ class MyDrinkItemCell: UITableViewCell {
         drinkDescription.isScrollEnabled = false
         drinkDescription.backgroundColor = .clear
         drinkDescription.leftAnchor.constraint(equalTo: drinkName.leftAnchor).isActive = true
-        
-        trashIcon.rightAnchor.constraint(equalTo: rightAnchor, constant: -32).isActive = true
-        trashIcon.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        trashIcon.heightAnchor.constraint(equalToConstant: 32).isActive = true
-        trashIcon.widthAnchor.constraint(equalToConstant: 32).isActive = true
-        trashIcon.image = UIImage(named: "trash")
     }
 }

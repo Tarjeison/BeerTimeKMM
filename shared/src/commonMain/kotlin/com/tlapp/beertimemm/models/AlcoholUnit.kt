@@ -21,6 +21,5 @@ data class AlcoholUnit(
         }
 
         return "${(percentage * 100)}%, $formattedVolume L"
-
     }
 }

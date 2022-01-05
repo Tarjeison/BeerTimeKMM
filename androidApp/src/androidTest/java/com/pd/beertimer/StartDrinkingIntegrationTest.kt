@@ -10,7 +10,6 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.pd.beertimer.feature.startdrinking.StartDrinkingViewModel
 import com.pd.beertimer.util.hasTextValue
 import com.pd.beertimer.util.isToast
 import com.pd.beertimer.util.setProgress
@@ -18,15 +17,12 @@ import com.tlapp.beertimemm.drinking.DrinkCoordinator
 import com.tlapp.beertimemm.models.Gender
 import com.tlapp.beertimemm.models.UserProfile
 import com.tlapp.beertimemm.storage.ProfileStorage
-import io.mockk.mockk
 import kotlinx.serialization.ExperimentalSerializationApi
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.dsl.module
 import org.koin.test.KoinTest
 import kotlin.time.ExperimentalTime
 

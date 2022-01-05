@@ -26,17 +26,17 @@ class MyDrinksViewController: UIViewController {
         drinkTableView.translatesAutoresizingMaskIntoConstraints = false
         
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 128))
-        let startDrinkingButton = UIButton(frame: CGRect(x: 0, y: 0, width: 400, height: 84))
-        footerView.addSubview(startDrinkingButton)
-        startDrinkingButton.translatesAutoresizingMaskIntoConstraints = false
-        startDrinkingButton.setTitle("Add drink", for: .normal)
-        startDrinkingButton.backgroundColor = UIColor(named: "Green")
-        startDrinkingButton.titleLabel?.sizeToFit()
-        startDrinkingButton.layer.cornerRadius = 10
-        startDrinkingButton.centerXAnchor.constraint(equalTo: footerView.centerXAnchor).isActive = true
-        startDrinkingButton.centerYAnchor.constraint(equalTo: footerView.centerYAnchor).isActive = true
-        startDrinkingButton.contentEdgeInsets = UIEdgeInsets.init(top: 10,left: 10,bottom: 10,right: 10)
-        
+        let addDrinkButton = UIButton(frame: CGRect(x: 0, y: 0, width: 400, height: 84))
+        footerView.addSubview(addDrinkButton)
+        addDrinkButton.translatesAutoresizingMaskIntoConstraints = false
+        addDrinkButton.setTitle("Add drink", for: .normal)
+        addDrinkButton.backgroundColor = UIColor(named: "Green")
+        addDrinkButton.titleLabel?.sizeToFit()
+        addDrinkButton.layer.cornerRadius = 10
+        addDrinkButton.centerXAnchor.constraint(equalTo: footerView.centerXAnchor).isActive = true
+        addDrinkButton.centerYAnchor.constraint(equalTo: footerView.centerYAnchor).isActive = true
+        addDrinkButton.contentEdgeInsets = UIEdgeInsets.init(top: 10,left: 10,bottom: 10,right: 10)
+        addDrinkButton.addTarget(self, action: #selector(onAddDrinkPressed), for: .touchUpInside)
         drinkTableView.tableFooterView = footerView
         drinkTableView.rowHeight = 64
         drinkTableView.estimatedRowHeight = 64
@@ -45,6 +45,10 @@ class MyDrinksViewController: UIViewController {
         drinkTableView.delegate = self
         return drinkTableView
     }()
+    
+    @objc func onAddDrinkPressed() {
+        navigationController?.pushViewController(AddDrinkViewController(), animated: false)
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         viewModel.observeDrinks()

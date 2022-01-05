@@ -1,15 +1,16 @@
-package com.pd.beertimer.util
+package com.tlapp.beertimemm.utils
 
-import android.content.SharedPreferences
+import com.tlapp.beertimemm.storage.PreferredVolume
+import com.tlapp.beertimemm.storage.ProfileStorage
 
 const val LITER_TO_OZ_RATIO = 33.8140226F
 private const val LITER_DESCRIPTION = "L"
 private const val OUNCE_DESCRIPTION = " oz"
 
-class VolumeConverter(private val sharedPreferences: SharedPreferences) {
+class VolumeConverter(private val profileStorage: ProfileStorage) {
 
     fun floatLiterToVolumeString(liter: Float): String {
-        val isUsingLiter = sharedPreferences.getBoolean(SHARED_PREF_USES_LITERS, true)
+        val isUsingLiter = profileStorage.getPreferredVolume() == PreferredVolume.LITER
         val floatVolume = if (isUsingLiter) liter else liter * LITER_TO_OZ_RATIO
         val formattedFloat = floatVolume.toString()
 

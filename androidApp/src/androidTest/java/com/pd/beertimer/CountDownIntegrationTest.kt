@@ -15,9 +15,7 @@ import com.tlapp.beertimemm.models.UserProfile
 import com.tlapp.beertimemm.storage.ProfileStorage
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import kotlinx.serialization.ExperimentalSerializationApi
-import nl.joery.animatedbottombar.AnimatedBottomBar
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

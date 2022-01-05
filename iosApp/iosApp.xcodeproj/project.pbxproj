@@ -19,6 +19,7 @@
 		C855A6E226D567070068FA39 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = C855A6E126D567070068FA39 /* Const.swift */; };
 		C86D2C1F26EA93700057405D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86D2C1E26EA93700057405D /* Extensions.swift */; };
 		C885CD0A26D6C3EF00CDC062 /* DrinkItemViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C885CD0926D6C3EF00CDC062 /* DrinkItemViewCell.swift */; };
+		C891AF3927861B8200D6C7C6 /* AddDrinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C891AF3827861B8200D6C7C6 /* AddDrinkViewController.swift */; };
 		C89F567626DEBA8F006F59DD /* CountDownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89F567526DEBA8F006F59DD /* CountDownViewController.swift */; };
 		C89F567926DEBC30006F59DD /* MePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89F567826DEBC30006F59DD /* MePageViewController.swift */; };
 		C8A60BF626E7D33A0071D18C /* MeItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A60BF526E7D33A0071D18C /* MeItemCell.swift */; };
@@ -49,6 +50,7 @@
 		C855A6E126D567070068FA39 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		C86D2C1E26EA93700057405D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		C885CD0926D6C3EF00CDC062 /* DrinkItemViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkItemViewCell.swift; sourceTree = "<group>"; };
+		C891AF3827861B8200D6C7C6 /* AddDrinkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDrinkViewController.swift; sourceTree = "<group>"; };
 		C89F567526DEBA8F006F59DD /* CountDownViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownViewController.swift; sourceTree = "<group>"; };
 		C89F567826DEBC30006F59DD /* MePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MePageViewController.swift; sourceTree = "<group>"; };
 		C8A60BF526E7D33A0071D18C /* MeItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeItemCell.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 			children = (
 				C8A60BFB26E8090E0071D18C /* MyDrinksViewController.swift */,
 				C8129872273086B80022A2BE /* MyDrinkItemCell.swift */,
+				C891AF3827861B8200D6C7C6 /* AddDrinkViewController.swift */,
 			);
 			path = MyDrinks;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 				C86D2C1F26EA93700057405D /* Extensions.swift in Sources */,
 				C82F073426DD310D00F21CD9 /* Toast.swift in Sources */,
 				C855A6E226D567070068FA39 /* Const.swift in Sources */,
+				C891AF3927861B8200D6C7C6 /* AddDrinkViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -5,7 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pd.beertimer.R
-import com.pd.beertimer.models.DrinkIconItem
+import com.tlapp.beertimemm.models.DrinkIconItem
+import com.pd.beertimer.util.getIconFromName
 import kotlinx.android.synthetic.main.item_drink_icon.view.*
 
 class DrinkIconAdapter(
@@ -43,7 +44,9 @@ class DrinkIconAdapter(
                 itemView.isSelected = true
             }
             itemView.isSelected = drinkIconItem.selected
-            itemView.ivDrinkIcon.setImageResource(drinkIconItem.drinkId)
+            itemView.context.getIconFromName(drinkIconItem.iconString)?.let { icon ->
+                itemView.ivDrinkIcon.setImageResource(icon)
+            }
         }
     }
 }

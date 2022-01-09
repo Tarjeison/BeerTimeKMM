@@ -14,6 +14,7 @@ import com.pd.beertimer.databinding.FragmentAddDrinkBinding
 import com.pd.beertimer.util.*
 import com.tlapp.beertimemm.utils.Failure
 import com.tlapp.beertimemm.utils.Success
+import com.tlapp.beertimemm.viewmodels.AddDrinkInputField
 import kotlinx.android.synthetic.main.fragment_add_drink.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -66,20 +67,20 @@ class AddDrinkFragment : Fragment(R.layout.fragment_add_drink) {
         }
     }
 
-    private fun handleErrorResult(failure: Failure<Pair<AddDrinkInputField, Int>>) {
+    private fun handleErrorResult(failure: Failure<Pair<AddDrinkInputField, String>>) {
         when (failure.reason.first) {
             AddDrinkInputField.DRINK_NAME -> {
-                binding.tiDrinkName.error = getString(failure.reason.second)
+                binding.tiDrinkName.error = failure.reason.second
                 binding.tiPercentage.error = null
                 binding.tiVolume.error = null
             }
             AddDrinkInputField.DRINK_VOLUME -> {
-                binding.tiVolume.error = getString(failure.reason.second)
+                binding.tiVolume.error = failure.reason.second
                 binding.tiPercentage.error = null
                 binding.tiDrinkName.error = null
             }
             AddDrinkInputField.DRINK_PERCENTAGE -> {
-                binding.tiPercentage.error = getString(failure.reason.second)
+                binding.tiPercentage.error = failure.reason.second
                 binding.tiVolume.error = null
                 binding.tiDrinkName.error = null
             }

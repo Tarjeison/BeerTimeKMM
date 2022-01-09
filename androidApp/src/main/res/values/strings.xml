@@ -72,17 +72,6 @@
     <string name="add_volume_desc_liter">How large is your drink in liters?</string>
     <string name="add_volume_desc_ounce">How large is your drink in ounces?</string>
     <string name="add">Add</string>
-    <string name="add_drink_missing_name">You\'ll need to add a name for your drink</string>
-    <string name="add_drink_missing_percentage">If the drink is without alcohol, I recommend just drinking it normally without this app.</string>
-    <string name="add_drink_to_strong">Whao! Over 100%? That\'s too much my friend.</string>
-    <string name="add_drink_missing_volume">"If you can't win by reason, go for volume. "</string>
-    <string name="add_drink_success">"A new day, a new drink! "</string>
-    <string name="startdrinking_nothing_to_drink">"Whops! It seems like you will have to drink nothing based on your selected unit and wanted BAC. "</string>
-    <string name="add_drink_to_weak">Are drinks really drinks if they\'re under 2%?</string>
-    <string name="add_drink_volume_too_low_liter">What\'s this volume? A baby shot? Please have your drink larger than 0.02L</string>
-    <string name="add_drink_volume_too_low_ounce">What\'s this volume? A baby shot? Please have your drink larger than 1 oz</string>
-    <string name="add_drink_volume_too_high_liter">Whao, take it easy. Drinks over 1L is too much for this app to handle.</string>
-    <string name="add_drink_volume_too_high_ounce">Whao, take it easy. Drinks over 33 oz is too much for this app to handle.</string>
     <string name="notification_last">Time to go home?</string>
     <string name="info_how_does_this_app_work">How does this app work?</string>
     <string name="info_how_does_this_app_work_text">Before you start drinking you will have to select the following values: \n\n - Wanted blood alcohol content (BAC) \n\n - How long you will be drinking \n\n - When you want to reach your BAC target \n\n - The drink you\'re planning to drink.  \n\nFor instance, say you\'re planning to drink for 7 hours and reach a BAC of 1‰. You might also want to reach your BAC target before the 7 hours has gone, no problem; just set the time for when you want to reach your BAC taget to e.g. 3 hours. \n\nSelecting a drink might seem difficult, what if you want to switch between different drinks? Well, honestly, it doesn\'t matter that much. The calculation made based on the grams of alcohol in your selected drink, so e.g. if you swap a small beer with a glass of wine you probably won\'t be that of (unless your glass fits a bottle of wine that is). You could find a \"standard\" unit for your country and select that as your drink for the night. \n\nEnjoy!</string>

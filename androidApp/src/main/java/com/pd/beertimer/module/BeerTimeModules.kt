@@ -14,7 +14,7 @@ import com.pd.beertimer.feature.startdrinking.StartDrinkingViewModel
 import com.pd.beertimer.util.NotificationScheduler
 import com.pd.beertimer.util.SHARED_PREF_BEER_TIME
 import com.pd.beertimer.util.StorageHelper
-import com.pd.beertimer.util.VolumeConverter
+import com.tlapp.beertimemm.utils.VolumeConverter
 import com.tlapp.beertimemm.drinking.DrinkNotificationScheduler
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -44,10 +44,6 @@ fun beerTimeModules(applicationContext: Application) = module {
     }
 
     factory {
-        VolumeConverter(sharedPreferences = get())
-    }
-
-    factory {
         get<Context>().getSharedPreferences(
             SHARED_PREF_BEER_TIME,
             Context.MODE_PRIVATE
@@ -74,7 +70,7 @@ fun beerTimeModules(applicationContext: Application) = module {
 
     viewModel { MyDrinksViewModel(myDrinksModel = get()) }
 
-    viewModel { AddDrinkViewModel(databaseHelper = get(), sharedPreferences = get()) }
+    viewModel { AddDrinkViewModel(addDrinkModel = get()) }
 
 }
 

@@ -26,8 +26,6 @@ class AddDrinkViewModel(
         drinkVolume: String?,
         drinkIconName: String?
     ) {
-        viewModelScope.launch {
-            addDrinkModel.addDrink(drinkName, drinkPercentage, drinkVolume, drinkIconName)
-        }
+        addDrinkModel.addDrink(drinkName, drinkPercentage, drinkVolume, drinkIconName)
     }
 }

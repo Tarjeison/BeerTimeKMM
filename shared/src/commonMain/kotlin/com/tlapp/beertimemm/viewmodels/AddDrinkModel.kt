@@ -35,17 +35,30 @@ class AddDrinkModel : KoinComponent {
     private val drinkIconItems = listOf(
         DrinkIconItem(
             iconString = "ic_beer",
+            tag = 1
         ),
         DrinkIconItem(
             iconString = "ic_wine",
+            tag = 2
         ),
         DrinkIconItem(
             iconString = "ic_cocktail",
+            tag = 3
         )
     )
 
     fun getDrinkIcons(): List<DrinkIconItem> {
         return drinkIconItems
+    }
+
+    fun addDrink(
+        drinkName: String?,
+        drinkPercentage: String?,
+        drinkVolume: String?,
+        drinkIconTag: Int?
+    ) {
+        val iconName = drinkIconItems.firstOrNull { it.tag == drinkIconTag }?.iconString
+        addDrink(drinkName, drinkPercentage, drinkVolume, iconName)
     }
 
     fun addDrink(
@@ -74,7 +87,7 @@ class AddDrinkModel : KoinComponent {
     }
 
     private fun validateDrinkPercentage(drinkPercentage: String?): Float? {
-        val drinkPercentageNonNullFloat = drinkPercentage?.toFloatOrNull() ?: run {
+        val drinkPercentageNonNullFloat = drinkPercentage?.replace(",", ".")?.toFloat() ?: run {
             _addDrinkResultStateFlow.value =
                 Failure(
                     Pair(
@@ -107,7 +120,7 @@ class AddDrinkModel : KoinComponent {
 
     private fun validateDrinkVolume(drinkVolume: String?): Float? {
         val isUsingLiters = profileStorage.getPreferredVolume() == PreferredVolume.LITER
-        val drinkValidFormat = drinkVolume?.toFloatOrNull() ?: run {
+        val drinkValidFormat = drinkVolume?.replace(",", ".")?.toFloat() ?: run {
             _addDrinkResultStateFlow.value =
                 Failure(
                     Pair(AddDrinkInputField.DRINK_VOLUME, NO_VOLUME_DRINK)

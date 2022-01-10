@@ -30,10 +30,12 @@ class NativeAddDrinkViewModel(
         drinkName: String?,
         drinkPercentage: String?,
         drinkVolume: String?,
-        drinkIconName: String?
+        drinkIconTag: Int?
     ) {
-        addDrinkModel.addDrink(drinkName, drinkPercentage, drinkVolume, drinkIconName)
+        addDrinkModel.addDrink(drinkName, drinkPercentage, drinkVolume, drinkIconTag)
     }
+
+    fun getDrinkIcons() = addDrinkModel.getDrinkIcons()
 
     fun observeDrinkResultsFlow() {
         scope = MainScope().apply {

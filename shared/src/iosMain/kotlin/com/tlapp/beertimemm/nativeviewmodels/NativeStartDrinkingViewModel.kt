@@ -22,7 +22,8 @@ class NativeStartDrinkingViewModel(
     private val onPeakHourDisplayTextChanged: (String) -> Unit,
     private val onDrinkListChanged: (List<AlcoholUnit>) -> Unit,
     private val onNewToastMessage: (String) -> Unit,
-    private val onAlertDialogMessage: (AlertDialogUiModel) -> Unit
+    private val onAlertDialogMessage: (AlertDialogUiModel) -> Unit,
+    private val onNavigateToCountDown: () -> Unit,
 ) {
 
     private val startDrinkingModel = StartDrinkingModel()
@@ -57,6 +58,13 @@ class NativeStartDrinkingViewModel(
 
                 startDrinkingModel.alertFlow.filterNotNull().onEach {
                     onAlertDialogMessage(it.value)
+                }.launchIn(this)
+
+                startDrinkingModel.navigateToCountDownFlow.filterNotNull().onEach {
+                    if (it.value) {
+                        onNavigateToCountDown.invoke()
+                        startDrinkingModel.resetNavigation()
+                    }
                 }.launchIn(this)
             }
         }

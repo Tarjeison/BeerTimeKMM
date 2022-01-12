@@ -70,6 +70,11 @@ class StartDrinkingModel : KoinComponent {
         }
     }
 
+    // Until base issue is resolved
+    fun resetNavigation() {
+        _navigateToCountDownFlow.value = AlwaysDistinct(false)
+    }
+
     fun setWantedBloodLevel(wantedBloodLevelProgress: Int) {
         this.wantedBloodLevel = (wantedBloodLevelProgress.toFloat() / 100)
         val wantedBloodLevelProgressDisplayValue = (wantedBloodLevelProgress.toFloat() / 10).toString()

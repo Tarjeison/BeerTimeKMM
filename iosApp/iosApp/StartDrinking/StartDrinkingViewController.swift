@@ -83,8 +83,13 @@ class StartDrinkingViewController : UIViewController, UITableViewDelegate, UITab
 
                 vc.present(alert, animated: true)
             }
+        },
+        onNavigateToCountDown: { [weak self] in
+            if let vc = self {
+                vc.tabBarController?.selectedIndex = 1
+            }
         }
-        )
+    )
     
     override func viewWillDisappear(_ animated: Bool) {
         viewModel.onDestroy()

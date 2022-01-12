@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let tabController = UITabBarController()
         tabController.view.backgroundColor = .white
+        tabController.tabBar.tintColor = .black
         let startDrinkingViewNavController = UINavigationController(rootViewController: StartDrinkingViewController())
         let countDownViewNavController = UINavigationController(rootViewController: CountDownViewController())
         let profileViewNavController = UINavigationController(rootViewController: MePageViewController())
@@ -44,8 +45,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         profileViewNavController.navigationBar.standardAppearance
         
         startDrinkingViewNavController.title = "Start drinking"
+        startDrinkingViewNavController.tabBarItem.image = UIImage(named: "beer_tab_icon")?.scalePreservingAspectRatio(targetSize: CGSize(width: 22, height: 22))
         countDownViewNavController.title = "Current status"
-        profileViewNavController.title = "Profile"
+        countDownViewNavController.tabBarItem.image = UIImage(named: "timer_tab_icon")?.scalePreservingAspectRatio(targetSize: CGSize(width: 22, height: 22))
+        profileViewNavController.title = "Me"
+        profileViewNavController.tabBarItem.image = UIImage(named: "profile_tab_icon")?.scalePreservingAspectRatio(targetSize: CGSize(width: 22, height: 22))
         tabController.setViewControllers([startDrinkingViewNavController, countDownViewNavController, profileViewNavController], animated: false)
         
         

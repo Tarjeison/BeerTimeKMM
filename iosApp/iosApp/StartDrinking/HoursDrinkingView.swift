@@ -61,7 +61,7 @@ class HoursDrinkingView: UIView {
     
     func setupViews() {
         if UIImage(named: "drunk") != nil {
-            hoursDrinkingImageView.image = UIImage(named: "reading")
+            hoursDrinkingImageView.image = UIImage(named: "hourglass")
             print("Image found")
             hoursDrinkingImageView.contentMode = .scaleAspectFit
             hoursDrinkingImageView.translatesAutoresizingMaskIntoConstraints = false

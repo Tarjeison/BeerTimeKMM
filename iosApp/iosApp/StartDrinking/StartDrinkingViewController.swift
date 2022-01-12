@@ -133,7 +133,7 @@ class StartDrinkingViewController : UIViewController, UITableViewDelegate, UITab
         drinkTableView.translatesAutoresizingMaskIntoConstraints = false
         
         let headerView: UIView = UIView.init(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 30))
-        let labelView: UILabel = UILabel.init(frame: CGRect(x: 32, y: 5, width: view.frame.width, height: 24))
+        let labelView: UILabel = UILabel.init(frame: CGRect(x: 24, y: 5, width: view.frame.width, height: 24))
         labelView.text = "What will you be drinking?"
         labelView.font = .systemFont(ofSize: 16)
         headerView.addSubview(labelView)

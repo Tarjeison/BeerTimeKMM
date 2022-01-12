@@ -178,20 +178,20 @@ class AddDrinkModelTest : BaseTest(), KoinTest {
     }
 
     @Test
-    fun validDrink_withOutIconName_isSavedCorrectlyWithDefaultIconName() = runTest {
+    fun validDrink_isSavedCorrectly_whenUsingIconTag() = runTest {
         get<ProfileStorage>().savePreferredVolume(PreferredVolume.LITER)
         val addDrinkModel = AddDrinkModel()
-        val drinkName = "Another Correct Drink"
+        val drinkName = "Correct Drink"
         val drinkPercentage = "2"
         val drinkVolume = "0.5"
-        val drinkIconName = "ic_beer"
-        addDrinkModel.addDrink(drinkName, drinkPercentage, drinkVolume, null)
+        val drinkIconTag = 2
+        addDrinkModel.addDrink(drinkName, drinkPercentage, drinkVolume, drinkIconTag)
         databaseHelper.selectAllItems().test {
             val drinks = expectItem()
             val insertedDrink = drinks.first { it.name == drinkName }
             assertEquals(0.02F, insertedDrink.percentage)
             assertEquals(drinkVolume.toFloat(), insertedDrink.volume)
-            assertEquals(drinkIconName, insertedDrink.icon_name)
+            assertEquals(addDrinkModel.getDrinkIcons().find { it.tag == drinkIconTag }?.iconString, insertedDrink.icon_name)
 
             // Clean up
             databaseHelper.deleteDrink(insertedDrink.key)

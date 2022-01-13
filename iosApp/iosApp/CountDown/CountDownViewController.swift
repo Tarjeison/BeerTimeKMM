@@ -58,7 +58,7 @@ class CountDownViewController: UIViewController {
         textView.font = .systemFont(ofSize: 16)
         textView.isScrollEnabled = false
         textView.layer.cornerRadius = 5
-        textView.layer.backgroundColor = UIColor.cyan.cgColor
+        textView.backgroundColor = UIColor(named: "LightBlue")
         textView.isHidden = true
         return textView
     }()
@@ -71,6 +71,7 @@ class CountDownViewController: UIViewController {
         button.contentEdgeInsets = UIEdgeInsets.init(top: 10,left: 10,bottom: 10,right: 10)
         button.backgroundColor = UIColor(named: "Green")
         button.addTarget(self, action: #selector(onStopDrinkingClicked), for: .touchUpInside)
+        button.isHidden = true
         return button
     }()
     
@@ -234,6 +235,8 @@ class CountDownViewController: UIViewController {
         data.setDrawValues(false)
         
         drinkChart.data = data
+        drinkChart.extraRightOffset = 12
+        drinkChart.sizeToFit()
     }
     
     func updateScrollViewHeight() {

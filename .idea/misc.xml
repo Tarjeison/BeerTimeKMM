@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="androidApp/src/main/res/drawable/card_blue.xml" value="0.2109375" />
         <entry key="androidApp/src/main/res/drawable/fade_orange.xml" value="0.1" />
         <entry key="androidApp/src/main/res/drawable/ic_cocktail.xml" value="0.5192708333333333" />
         <entry key="androidApp/src/main/res/layout/activity_main.xml" value="0.17135416666666667" />

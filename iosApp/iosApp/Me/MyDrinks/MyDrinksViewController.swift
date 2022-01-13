@@ -17,6 +17,7 @@ class MyDrinksViewController: UIViewController {
     lazy var viewModel = NativeMyDrinksViewModel { [weak self] myDrinks in
         if let vc = self {
             vc.drinkArray = myDrinks
+            vc.drinkTableView.tableFooterView?.isHidden = false
             vc.drinkTableView.reloadData()
         }
     }
@@ -26,6 +27,7 @@ class MyDrinksViewController: UIViewController {
         drinkTableView.translatesAutoresizingMaskIntoConstraints = false
         
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 128))
+        footerView.isHidden = true
         let addDrinkButton = UIButton(frame: CGRect(x: 0, y: 0, width: 400, height: 84))
         footerView.addSubview(addDrinkButton)
         addDrinkButton.translatesAutoresizingMaskIntoConstraints = false

@@ -15,5 +15,6 @@ iosApp/.idea/*
 .externalNativeBuild
 .cxx
 local.properties
+iosApp/iosApp.xcworkspace/xcuserdata/*
 /androidApp/release/*
 *google-services.json*

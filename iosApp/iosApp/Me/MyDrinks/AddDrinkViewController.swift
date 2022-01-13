@@ -165,6 +165,7 @@ class AddDrinkViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         view.addSubview(topImage)
         view.addSubview(nameTextField)
         view.addSubview(percentageTextInput)

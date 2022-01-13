@@ -60,6 +60,7 @@ class MyDrinksViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         view.addSubview(drinkTableView)
         drinkTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         drinkTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true

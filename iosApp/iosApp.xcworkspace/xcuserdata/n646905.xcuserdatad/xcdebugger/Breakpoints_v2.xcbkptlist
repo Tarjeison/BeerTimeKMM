@@ -14,8 +14,8 @@
             filePath = "iosApp/Me/Profile/ProfileViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "302"
-            endingLineNumber = "302"
+            startingLineNumber = "303"
+            endingLineNumber = "303"
             landmarkName = "onSaveProfileClicked(button:)"
             landmarkType = "7">
          </BreakpointContent>

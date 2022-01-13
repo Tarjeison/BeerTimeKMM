@@ -20,7 +20,7 @@ extension UIViewController {
         toastLabel.widthAnchor.constraint(equalToConstant: 200).isActive = true
         toastLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         toastLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100).isActive = true 
-        toastLabel.backgroundColor = UIColor.blue
+        toastLabel.backgroundColor = UIColor(named: "LightBlue")
         toastLabel.textColor = UIColor.black
         toastLabel.numberOfLines = 4
         toastLabel.textAlignment = .center;

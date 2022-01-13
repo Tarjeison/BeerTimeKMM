@@ -94,6 +94,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tag = ozButtonTag
+        button.setImage(UIImage(named: "unchecked"), for: .normal)
         return button
     }()
     
@@ -101,6 +102,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.tag = literButtonTag
+        button.setImage(UIImage(named: "unchecked"), for: .normal)
         return button
     }()
     

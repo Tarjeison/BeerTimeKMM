@@ -19,8 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         startKoin()
-        let profileStorage = koin.get(objCClass: ProfileStorage.self) as! ProfileStorage
-        profileStorage.saveUserProfile(userProfile: UserProfile(gender: Gender.male, weight: 75))
         
         let tabController = UITabBarController()
         tabController.view.backgroundColor = .white
@@ -40,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         countDownViewNavController.navigationBar.scrollEdgeAppearance = countDownViewNavController.navigationBar.standardAppearance
         
         profileViewNavController.navigationBar.barTintColor = UIColor(named: "Orange")
+        profileViewNavController.navigationBar.tintColor = .darkGray
         profileViewNavController.navigationBar.standardAppearance = appearance
         profileViewNavController.navigationBar.scrollEdgeAppearance =
         profileViewNavController.navigationBar.standardAppearance

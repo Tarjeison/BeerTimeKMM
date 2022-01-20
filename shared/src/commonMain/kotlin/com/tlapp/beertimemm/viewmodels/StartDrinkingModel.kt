@@ -117,6 +117,7 @@ class StartDrinkingModel : KoinComponent {
 
     fun onDestroy() {
         _alertFlow.value = null
+        _errorToastFlow.value = null
     }
 
     fun startDrinking() {

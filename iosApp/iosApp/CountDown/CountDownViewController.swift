@@ -235,7 +235,7 @@ class CountDownViewController: UIViewController {
         data.setDrawValues(false)
         
         drinkChart.data = data
-        drinkChart.extraRightOffset = 12
+        drinkChart.extraRightOffset = 20
         drinkChart.sizeToFit()
     }
     

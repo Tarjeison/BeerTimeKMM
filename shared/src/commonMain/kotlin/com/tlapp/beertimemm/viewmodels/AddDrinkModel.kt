@@ -87,7 +87,7 @@ class AddDrinkModel : KoinComponent {
     }
 
     private fun validateDrinkPercentage(drinkPercentage: String?): Float? {
-        val drinkPercentageNonNullFloat = drinkPercentage?.replace(",", ".")?.toFloat() ?: run {
+        val drinkPercentageNonNullFloat = drinkPercentage?.replace(",", ".")?.toFloatOrNull() ?: run {
             _addDrinkResultStateFlow.value =
                 Failure(
                     Pair(
@@ -120,7 +120,7 @@ class AddDrinkModel : KoinComponent {
 
     private fun validateDrinkVolume(drinkVolume: String?): Float? {
         val isUsingLiters = profileStorage.getPreferredVolume() == PreferredVolume.LITER
-        val drinkValidFormat = drinkVolume?.replace(",", ".")?.toFloat() ?: run {
+        val drinkValidFormat = drinkVolume?.replace(",", ".")?.toFloatOrNull() ?: run {
             _addDrinkResultStateFlow.value =
                 Failure(
                     Pair(AddDrinkInputField.DRINK_VOLUME, NO_VOLUME_DRINK)

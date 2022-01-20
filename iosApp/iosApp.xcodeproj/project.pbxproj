@@ -472,6 +472,7 @@
 			baseConfigurationReference = B3622A3241EBE645FFEB8696 /* Pods-iosApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NMCY37P8RZ;
 				ENABLE_PREVIEWS = YES;
@@ -500,6 +501,7 @@
 			baseConfigurationReference = F073D32319EE7B2DDC03193C /* Pods-iosApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = NMCY37P8RZ;
 				ENABLE_PREVIEWS = YES;

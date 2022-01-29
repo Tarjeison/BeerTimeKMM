@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     }
 
     private fun checkForFirstTimeLaunch() {
-        if (sharedPreferences.getBoolean(SHARED_PREF_FIRST_TIME_LAUNCH, true)) {
+        if (sharedPreferences.getBoolean(SHARED_PREF_FIRST_TIME_LAUNCH, true) && !BuildConfig.DEBUG) {
             sharedPreferences.edit().putBoolean(SHARED_PREF_FIRST_TIME_LAUNCH, false).apply()
             supportFragmentManager.beginTransaction().apply {
                 replace(R.id.activityFragmentContainer, WelcomeFragment())

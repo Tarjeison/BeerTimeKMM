@@ -5,19 +5,21 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
+import androidx.test.espresso.assertion.ViewAssertions.doesNotExist
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.pd.beertimer.util.clickChildViewWithId
+import com.tlapp.beertimemm.storage.PreferredVolume
+import com.tlapp.beertimemm.storage.ProfileStorage
 import kotlinx.android.synthetic.main.activity_main.*
-import org.hamcrest.Matchers.allOf
-import org.hamcrest.core.IsNot.not
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.java.KoinJavaComponent.getKoin
 import java.lang.Thread.sleep
 import kotlin.time.ExperimentalTime
 
@@ -30,6 +32,9 @@ class MyDrinksIntegrationTest {
 
     @Before
     fun setup() {
+        getKoin().get<ProfileStorage>().apply {
+            savePreferredVolume(PreferredVolume.LITER)
+        }
         activityRule.scenario.onActivity { activity ->
             activity.bottom_bar.selectTabAt(2)
         }
@@ -54,6 +59,6 @@ class MyDrinksIntegrationTest {
             )
         )
         sleep(100)
-        onView(allOf(withId(R.id.tvDrinkName))).check(matches(not(withText("TestDrink"))))
+        onView(withText("TestDrink")).check(doesNotExist())
     }
 }

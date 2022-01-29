@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		943B9C22002F6736CA69E1DF /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C71B00E654ABC168DC4B2F6A /* Pods_iosApp.framework */; };
+		C80E8EA32799F5A900767C44 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80E8EA22799F5A900767C44 /* IntroViewController.swift */; };
 		C8129871273083540022A2BE /* KeyboardViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8129870273083540022A2BE /* KeyboardViewControllerExtension.swift */; };
 		C8129873273086B80022A2BE /* MyDrinkItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8129872273086B80022A2BE /* MyDrinkItemCell.swift */; };
 		C823D03B26E40B0B00DF3947 /* ChartHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C823D03A26E40B0B00DF3947 /* ChartHelper.swift */; };
@@ -39,6 +40,7 @@
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3622A3241EBE645FFEB8696 /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
 		C71B00E654ABC168DC4B2F6A /* Pods_iosApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C80E8EA22799F5A900767C44 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IntroViewController.swift; path = "../../../../../Library/Mobile Documents/com~apple~CloudDocs/IntroViewController.swift"; sourceTree = "<group>"; };
 		C8129870273083540022A2BE /* KeyboardViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewControllerExtension.swift; sourceTree = "<group>"; };
 		C8129872273086B80022A2BE /* MyDrinkItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDrinkItemCell.swift; sourceTree = "<group>"; };
 		C823D03A26E40B0B00DF3947 /* ChartHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartHelper.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 				C855A6DF26D5659A0068FA39 /* HoursDrinkingView.swift */,
 				C855A6E126D567070068FA39 /* Const.swift */,
 				C885CD0926D6C3EF00CDC062 /* DrinkItemViewCell.swift */,
+				C80E8EA22799F5A900767C44 /* IntroViewController.swift */,
 			);
 			path = StartDrinking;
 			sourceTree = "<group>";
@@ -323,6 +326,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C80E8EA32799F5A900767C44 /* IntroViewController.swift in Sources */,
 				C8E7E32B26D267D100D35ADF /* AppDelegate.swift in Sources */,
 				C8E7E33026D2714C00D35ADF /* CustomSlider.swift in Sources */,
 				C823D03B26E40B0B00DF3947 /* ChartHelper.swift in Sources */,
@@ -474,6 +478,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = NMCY37P8RZ;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
@@ -481,6 +486,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -503,6 +509,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = NMCY37P8RZ;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
@@ -510,6 +517,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

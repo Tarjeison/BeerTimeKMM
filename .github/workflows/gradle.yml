@@ -41,6 +41,10 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
           cache: gradle
+      - name: Decode google services json
+        env:
+          FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
+        run: echo $FIREBASE_SECRET > androidApp/google-services.json
       - name: Instrumentation Tests
         uses: reactivecircus/android-emulator-runner@v2
         with:

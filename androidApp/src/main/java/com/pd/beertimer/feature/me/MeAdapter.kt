@@ -3,13 +3,14 @@ package com.pd.beertimer.feature.me
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.pd.beertimer.R
 import com.pd.beertimer.util.getIconFromName
 import com.tlapp.beertimemm.models.MePageItem
 import com.tlapp.beertimemm.models.MePageNavigationType
-import kotlinx.android.synthetic.main.me_item.view.*
 
 class MeAdapter(
     private val meItems: MutableList<MePageItem>,
@@ -31,13 +32,13 @@ class MeAdapter(
     inner class MeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(meItem: MePageItem) {
-            itemView.itemMe.setOnClickListener { onClick.invoke(meItem.navigation) }
+            itemView.findViewById<View>(R.id.itemMe).setOnClickListener { onClick.invoke(meItem.navigation) }
             itemView.context.getIconFromName(meItem.iconName)?.let {
-                itemView.ivMe.setImageDrawable(
+                itemView.findViewById<ImageView>(R.id.ivMe).setImageDrawable(
                     ContextCompat.getDrawable(itemView.context, it)
                 )
             }
-            itemView.tvMe.text = meItem.title
+            itemView.findViewById<TextView>(R.id.tvMe).text = meItem.title
         }
     }
 }

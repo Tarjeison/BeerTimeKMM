@@ -5,15 +5,16 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pd.beertimer.R
 import com.pd.beertimer.models.InfoDto
-import kotlinx.android.synthetic.main.item_info.view.*
 
 class InfoAdapter(private val infoDtos: List<InfoDto>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return InfoViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_info, parent, false )
+            LayoutInflater.from(parent.context).inflate(R.layout.item_info, parent, false)
         )
     }
 
@@ -32,26 +33,28 @@ class InfoAdapter(private val infoDtos: List<InfoDto>) : RecyclerView.Adapter<Re
                 setRightWeightedInfo(infoDto)
             }
 
-            itemView.tvInfoText.movementMethod = LinkMovementMethod.getInstance()
-            itemView.tvInfoText.setLinkTextColor(Color.BLUE)
+            itemView.findViewById<TextView>(R.id.tvInfoText).apply {
+                movementMethod = LinkMovementMethod.getInstance()
+                setLinkTextColor(Color.BLUE)
+            }
         }
 
         private fun setLeftWeightedInfo(infoDto: InfoDto) {
-            itemView.tvInfoLeft.text = infoDto.title
-            itemView.ivInfoRight.setImageDrawable(itemView.context.getDrawable(infoDto.iconId))
-            itemView.tvInfoText.text = infoDto.infoText
+            itemView.findViewById<TextView>(R.id.tvInfoLeft).text = infoDto.title
+            itemView.findViewById<ImageView>(R.id.ivInfoRight).setImageDrawable(itemView.context.getDrawable(infoDto.iconId))
+            itemView.findViewById<TextView>(R.id.tvInfoText).text = infoDto.infoText
 
-            itemView.tvInfoLeft.visibility = View.VISIBLE
-            itemView.ivInfoRight.visibility = View.VISIBLE
+            itemView.findViewById<TextView>(R.id.tvInfoLeft).visibility = View.VISIBLE
+            itemView.findViewById<ImageView>(R.id.ivInfoRight).visibility = View.VISIBLE
         }
 
         private fun setRightWeightedInfo(infoDto: InfoDto) {
-            itemView.tvInfoRight.text = infoDto.title
-            itemView.ivInfoLeft.setImageDrawable(itemView.context.getDrawable(infoDto.iconId))
-            itemView.tvInfoText.text = infoDto.infoText
+            itemView.findViewById<TextView>(R.id.tvInfoRight).text = infoDto.title
+            itemView.findViewById<ImageView>(R.id.ivInfoLeft).setImageDrawable(itemView.context.getDrawable(infoDto.iconId))
+            itemView.findViewById<TextView>(R.id.tvInfoLeft).text = infoDto.infoText
 
-            itemView.tvInfoRight.visibility = View.VISIBLE
-            itemView.ivInfoLeft.visibility = View.VISIBLE
+            itemView.findViewById<TextView>(R.id.tvInfoRight).visibility = View.VISIBLE
+            itemView.findViewById<ImageView>(R.id.ivInfoLeft).visibility = View.VISIBLE
 
         }
     }

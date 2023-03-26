@@ -16,6 +16,7 @@ import kotlinx.datetime.Instant
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
@@ -132,7 +133,7 @@ class CountDownModel : KoinComponent {
     }
 
     private fun millisToDisplayString(millis: Long): String {
-        val duration = Duration.Companion.milliseconds(millis)
+        val duration = millis.milliseconds
         val minutes = duration.inWholeMinutes - duration.inWholeHours * 60
         val seconds = duration.inWholeSeconds - duration.inWholeMinutes * 60
         return if (duration.inWholeHours != 0L) {

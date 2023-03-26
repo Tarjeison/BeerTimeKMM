@@ -17,7 +17,6 @@ import com.pd.beertimer.feature.countdown.charts.ChartHelper
 import com.pd.beertimer.util.observe
 import com.pd.beertimer.util.viewBinding
 import com.tlapp.beertimemm.viewmodels.DrinkStatusModel
-import kotlinx.android.synthetic.main.fragment_timer.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.time.ExperimentalTime
 
@@ -64,11 +63,11 @@ class CountDownFragment : Fragment(R.layout.fragment_timer) {
                 R.drawable.ic_pineapple_smile
             )
         )
-        ivCountDownPineapple.visibility = View.VISIBLE
-        clNumOfUnits.visibility = View.VISIBLE
+        binding.ivCountDownPineapple.visibility = View.VISIBLE
+        binding.clNumOfUnits.visibility = View.VISIBLE
 
-        bStopDrinking.visibility = View.VISIBLE
-        bStopDrinking.setOnClickListener {
+        binding.bStopDrinking.visibility = View.VISIBLE
+        binding.bStopDrinking.setOnClickListener {
             AlertDialog.Builder(this.context)
                 .setTitle(R.string.startdrinking_are_you_sure)
                 .setMessage(R.string.countdown_stopdrinking_toast)
@@ -96,7 +95,7 @@ class CountDownFragment : Fragment(R.layout.fragment_timer) {
         set1.fillDrawable = drawable
 
         set1.fillFormatter = IFillFormatter { _, _ ->
-            chartBac.axisLeft.axisMinimum
+            binding.chartBac.axisLeft.axisMinimum
         }
 
         val axisFormatter = chartHelper.createAxisLabelFormatterFromLocalDateTimeList(
@@ -104,22 +103,22 @@ class CountDownFragment : Fragment(R.layout.fragment_timer) {
             requireContext()
         )
 
-        chartBac.xAxis.valueFormatter = axisFormatter
-        chartBac.xAxis.granularity = 1f
-        chartBac.axisLeft.addLimitLine(chartHelper.createLimitLine(drinkingModel.wantedBloodLevel * 10F))
-        chartBac.axisLeft.axisMinimum = 0f
-        chartBac.axisLeft.axisMaximum = (drinkingModel.graphList.maxOf { it.y }) + 0.2f
-        chartBac.axisRight.setDrawGridLines(false)
-        chartBac.axisRight.setDrawLabels(false)
-        chartBac.description.isEnabled = false
-        chartBac.legend.isEnabled = false
-        chartBac.animateX(250)
+        binding.chartBac.xAxis.valueFormatter = axisFormatter
+        binding.chartBac.xAxis.granularity = 1f
+        binding.chartBac.axisLeft.addLimitLine(chartHelper.createLimitLine(drinkingModel.wantedBloodLevel * 10F))
+        binding.chartBac.axisLeft.axisMinimum = 0f
+        binding.chartBac.axisLeft.axisMaximum = (drinkingModel.graphList.maxOf { it.y }) + 0.2f
+        binding.chartBac.axisRight.setDrawGridLines(false)
+        binding.chartBac.axisRight.setDrawLabels(false)
+        binding.chartBac.description.isEnabled = false
+        binding.chartBac.legend.isEnabled = false
+        binding.chartBac.animateX(250)
 
         val data = LineData(set1)
         data.setValueTextSize(9f)
         data.setDrawValues(false)
-        chartBac.data = data
-        chartBac.invalidate()
+        binding.chartBac.data = data
+        binding.chartBac.invalidate()
 
     }
 
@@ -134,21 +133,21 @@ class CountDownFragment : Fragment(R.layout.fragment_timer) {
     }
 
     private fun setViewsDrinkingNotStarted() {
-        tvTimeToNext.text = getText(R.string.countdown_not_started_drinking)
-        tcClock.text = getString(R.string.countdown_drinking_clock_not_started)
+        binding.tvTimeToNext.text = getText(R.string.countdown_not_started_drinking)
+        binding.tcClock.text = getString(R.string.countdown_drinking_clock_not_started)
         if (this::countDownTimer.isInitialized) {
             countDownTimer.cancel()
         }
-        ivCurrentlyDrinking.visibility = View.GONE
-        chartBac.visibility = View.GONE
-        bStopDrinking.visibility = View.GONE
-        ivCountDownPineapple.setImageDrawable(
+        binding.ivCurrentlyDrinking.visibility = View.GONE
+        binding.chartBac.visibility = View.GONE
+        binding.bStopDrinking.visibility = View.GONE
+        binding.ivCountDownPineapple.setImageDrawable(
             AppCompatResources.getDrawable(
                 requireContext(),
                 R.drawable.ic_pineapple_sleeping
             )
         )
-        clNumOfUnits.visibility = View.INVISIBLE
+        binding.clNumOfUnits.visibility = View.INVISIBLE
     }
 
     override fun onPause() {

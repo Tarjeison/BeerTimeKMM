@@ -10,6 +10,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -17,10 +18,8 @@ import com.pd.beertimer.feature.welcome.WelcomeFragment
 import com.pd.beertimer.util.CHANNEL_ID
 import com.pd.beertimer.util.SHARED_PREF_FIRST_TIME_LAUNCH
 import com.tlapp.beertimemm.drinking.DrinkCoordinator
-import kotlinx.android.synthetic.main.activity_main.*
 import nl.joery.animatedbottombar.AnimatedBottomBar
 import org.koin.android.ext.android.inject
-import kotlin.time.ExperimentalTime
 
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
 
@@ -33,7 +32,7 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(findViewById(R.id.toolbar))
         setUpBottomBar()
         createNotificationChannel()
         setupToolbar()
@@ -96,13 +95,13 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
 
     private fun setupToolbar() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        toolbar.setNavigationOnClickListener {
+        findViewById<Toolbar>(R.id.toolbar).setNavigationOnClickListener {
             findNavController(R.id.nav_host_fragment).popBackStack()
         }
     }
 
     private fun setUpBottomBar() {
-        bottom_bar.setOnTabSelectListener(object : AnimatedBottomBar.OnTabSelectListener {
+        findViewById<AnimatedBottomBar>(R.id.bottom_bar).setOnTabSelectListener(object : AnimatedBottomBar.OnTabSelectListener {
             override fun onTabSelected(
                 lastIndex: Int,
                 lastTab: AnimatedBottomBar.Tab?,
@@ -158,16 +157,17 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
     ) {
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
         supportActionBar?.setDisplayShowHomeEnabled(false)
-        bottom_bar.visibility = View.VISIBLE
+        val bottomBar = findViewById<AnimatedBottomBar>(R.id.bottom_bar)
+        bottomBar.visibility = View.VISIBLE
 
         this.menu?.findItem(R.id.action_info)?.isVisible = true
         when (destination.id) {
-            R.id.countDownFragment -> bottom_bar.selectTabById(R.id.tab_timer)
-            R.id.startDrinkingFragment -> bottom_bar.selectTabById(R.id.tab_home)
-            R.id.meFragment -> bottom_bar.selectTabById(R.id.tab_profile)
+            R.id.countDownFragment -> bottomBar.selectTabById(R.id.tab_timer)
+            R.id.startDrinkingFragment -> bottomBar.selectTabById(R.id.tab_home)
+            R.id.meFragment -> bottomBar.selectTabById(R.id.tab_profile)
             R.id.infoFragment, R.id.profileFragment, R.id.myDrinksFragment, R.id.addDrinkFragment -> {
                 this.menu?.findItem(R.id.action_info)?.isVisible = false
-                bottom_bar.visibility = View.GONE
+                bottomBar.visibility = View.GONE
                 supportActionBar?.setDisplayHomeAsUpEnabled(true)
                 supportActionBar?.setDisplayShowHomeEnabled(true)
             }

@@ -3,15 +3,13 @@ package com.pd.beertimer.feature.drinks
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.pd.beertimer.R
 import com.tlapp.beertimemm.models.MyDrinkItem
 import com.tlapp.beertimemm.utils.VolumeConverter
-import kotlinx.android.synthetic.main.item_drink_v2.view.icDrink
-import kotlinx.android.synthetic.main.item_drink_v2.view.tvDrinkName
-import kotlinx.android.synthetic.main.item_drink_v2.view.tvPercentAndVolume
-import kotlinx.android.synthetic.main.item_my_drink.view.*
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -45,13 +43,13 @@ class MyDrinksAdapter(
 
         fun bind(drinkItem: MyDrinkItem) {
             setIcon(drinkItem.iconName)
-            itemView.tvDrinkName.text = drinkItem.name
-            itemView.tvPercentAndVolume.text = String.format(
+            itemView.findViewById<TextView>(R.id.tvDrinkName).text = drinkItem.name
+            itemView.findViewById<TextView>(R.id.tvPercentAndVolume).text = String.format(
                 itemView.context.getString(R.string.startdrinking_percent_volume_drink),
                 (drinkItem.percentage * 100).toString(),
                 volumeConverter.floatLiterToVolumeString(drinkItem.volume)
             )
-            itemView.ivDelete.setOnClickListener {
+            itemView.findViewById<ImageView>(R.id.ivDelete).setOnClickListener {
                 onDeleteClick.invoke(drinkItem.key)
             }
         }
@@ -64,11 +62,11 @@ class MyDrinksAdapter(
             )
 
             if (iconResId == 0) {
-                itemView.icDrink.setImageDrawable(
+                itemView.findViewById<ImageView>(R.id.icDrink).setImageDrawable(
                     ContextCompat.getDrawable(itemView.context, R.drawable.ic_beer)
                 )
             } else {
-                itemView.icDrink.setImageDrawable(
+                itemView.findViewById<ImageView>(R.id.icDrink).setImageDrawable(
                     ContextCompat.getDrawable(itemView.context, iconResId)
                 )
             }

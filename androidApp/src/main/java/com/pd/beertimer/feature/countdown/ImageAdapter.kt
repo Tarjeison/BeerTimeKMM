@@ -3,14 +3,15 @@ package com.pd.beertimer.feature.countdown
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 import com.pd.beertimer.R
-import kotlinx.android.synthetic.main.item_image.view.*
 
 class ImageAdapter(private val imageIds: MutableList<Int>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return ImageViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_image, parent, false )
+            LayoutInflater.from(parent.context).inflate(R.layout.item_image, parent, false)
         )
     }
 
@@ -29,7 +30,7 @@ class ImageAdapter(private val imageIds: MutableList<Int>) : RecyclerView.Adapte
     class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(imageId: Int) {
-            itemView.ivItemDrink.setImageDrawable(itemView.context.getDrawable(imageId))
+            itemView.findViewById<ImageView>(R.id.ivItemDrink).setImageDrawable(AppCompatResources.getDrawable(itemView.context, imageId))
         }
     }
 }

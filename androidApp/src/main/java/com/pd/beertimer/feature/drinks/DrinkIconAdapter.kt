@@ -3,11 +3,11 @@ package com.pd.beertimer.feature.drinks
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.pd.beertimer.R
 import com.tlapp.beertimemm.models.DrinkIconItem
 import com.pd.beertimer.util.getIconFromName
-import kotlinx.android.synthetic.main.item_drink_icon.view.*
 
 class DrinkIconAdapter(
     private val drinkIconItems: MutableList<DrinkIconItem>
@@ -32,7 +32,7 @@ class DrinkIconAdapter(
     inner class DrinkIconViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(drinkIconItem: DrinkIconItem) {
-            itemView.clDrink.setOnClickListener {
+            itemView.findViewById<View>(R.id.clDrink).setOnClickListener {
                 drinkIconItems.filter { it != drinkIconItem }
                     .forEach { drinkIconItem ->
                         if (drinkIconItem.selected) {
@@ -45,7 +45,7 @@ class DrinkIconAdapter(
             }
             itemView.isSelected = drinkIconItem.selected
             itemView.context.getIconFromName(drinkIconItem.iconString)?.let { icon ->
-                itemView.ivDrinkIcon.setImageResource(icon)
+                itemView.findViewById<ImageView>(R.id.ivDrinkIcon).setImageResource(icon)
             }
         }
     }

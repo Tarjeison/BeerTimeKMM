@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.pd.beertimer.R
-import kotlinx.android.synthetic.main.fragment_info.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class InfoFragment : Fragment() {
@@ -26,8 +26,10 @@ class InfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         infoAdapter = InfoAdapter(infoViewModel.getInfoDtos())
-        rvInfo.layoutManager = LinearLayoutManager(context)
-        rvInfo.adapter = infoAdapter
+        view.findViewById<RecyclerView>(R.id.rvInfo).apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = infoAdapter
+        }
         infoAdapter.notifyDataSetChanged()
     }
 }

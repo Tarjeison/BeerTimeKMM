@@ -34,19 +34,21 @@ kotlin {
         summary = "Some description for the Shared Module"
         homepage = "Link to the Shared Module homepage"
         ios.deploymentTarget = "14.1"
-        frameworkName = "shared"
+        framework {
+            baseName = "shared"
+        }
         podfile = project.file("../iosApp/Podfile")
     }
 
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("com.squareup.sqldelight:runtime:1.5.0")
+                implementation("com.squareup.sqldelight:runtime:1.5.5")
                 implementation("com.russhwolf:multiplatform-settings:0.7.7")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1-native-mt")
                 implementation("io.insert-koin:koin-core:3.0.2")
-                implementation("com.squareup.sqldelight:coroutines-extensions:1.5.0")
+                implementation("com.squareup.sqldelight:coroutines-extensions:1.5.5")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.2.1")
             }
         }
@@ -61,7 +63,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation("com.squareup.sqldelight:android-driver:1.5.0")
+                implementation("com.squareup.sqldelight:android-driver:1.5.5")
             }
         }
         val androidTest by getting {
@@ -79,7 +81,7 @@ kotlin {
         }
         val iosMain by getting {
             dependencies {
-                implementation("com.squareup.sqldelight:native-driver:1.5.0")
+                implementation("com.squareup.sqldelight:native-driver:1.5.5")
             }
         }
         val iosTest by getting
@@ -87,11 +89,11 @@ kotlin {
 }
 
 android {
-    compileSdkVersion(30)
+    compileSdk = 33
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdkVersion(22)
-        targetSdkVersion(30)
+        minSdk = 22
+        targetSdk = 33
     }
 }
 

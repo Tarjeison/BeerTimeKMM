@@ -15,7 +15,6 @@ import com.pd.beertimer.util.*
 import com.tlapp.beertimemm.utils.Failure
 import com.tlapp.beertimemm.utils.Success
 import com.tlapp.beertimemm.viewmodels.AddDrinkInputField
-import kotlinx.android.synthetic.main.fragment_add_drink.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -31,7 +30,7 @@ class AddDrinkFragment : Fragment(R.layout.fragment_add_drink) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val isUsingLiters = sharedPreferences.getBoolean(SHARED_PREF_USES_LITERS, true)
-        tiVolume.setHint(if (isUsingLiters) R.string.add_volume_desc_liter else R.string.add_volume_desc_ounce)
+        binding.tiVolume.setHint(if (isUsingLiters) R.string.add_volume_desc_liter else R.string.add_volume_desc_ounce)
         binding.clAddDrink.setOnTouchListener { v, _ ->
             val imm = context?.getSystemService(INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(v?.windowToken, 0)

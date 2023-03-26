@@ -25,7 +25,8 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import kotlin.time.Duration
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.minutes
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
@@ -84,13 +85,13 @@ class StartDrinkingModel : KoinComponent {
     fun setFinishDrinkingInHoursMinutes(seekBarValue: Int) {
         val minDrinkingTimeInHours = if (isDebug()) 0 else 1
         val hoursDrinking = (seekBarValue / 60) + minDrinkingTimeInHours
-        clock.now().plus(Duration.Companion.minutes(2)).plus(Duration.Companion.minutes(2))
+        clock.now().plus(2.minutes).plus(2.minutes)
         var minutesDrinking = (seekBarValue - ((seekBarValue / 60) * 60) + (10 - seekBarValue % 10))
         minutesDrinking -= clock.now().toLocalDateTime(TimeZone.currentSystemDefault()).minute % 10
         finishDrinkingInHoursMinutes = Pair(hoursDrinking, minutesDrinking)
         _finishDrinkingSeekBarUiModelFlow.value =
             displayDateHelper.localDateTimeToHourMinuteString(
-                clock.now().plus(Duration.Companion.hours(hoursDrinking)).plus(Duration.minutes(minutesDrinking)).toLocalDateTime(
+                clock.now().plus(hoursDrinking.hours).plus(minutesDrinking.minutes).toLocalDateTime(
                     TimeZone.currentSystemDefault()
                 ), true
             )
@@ -105,7 +106,7 @@ class StartDrinkingModel : KoinComponent {
         peakInHoursMinutes = Pair(hoursDrinking, minutesDrinking)
         _peakTimeSeekBarUiModelFlow.value =
             displayDateHelper.localDateTimeToHourMinuteString(
-                clock.now().plus(Duration.Companion.hours(hoursDrinking)).plus(Duration.minutes(minutesDrinking)).toLocalDateTime(
+                clock.now().plus(hoursDrinking.hours).plus(minutesDrinking.minutes).toLocalDateTime(
                     TimeZone.currentSystemDefault()
                 ), true
             )
@@ -181,12 +182,12 @@ class StartDrinkingModel : KoinComponent {
             userProfile = profile,
             wantedBloodLevel = selectedBloodLevel,
             endTime = Clock.System.now().plus(
-                Duration.hours(selectedHoursDrinking.first)
-                    .plus(Duration.minutes(selectedHoursDrinking.second))
+                selectedHoursDrinking.first.hours
+                    .plus(selectedHoursDrinking.second.minutes)
             ),
             peakTime = Clock.System.now().plus(
-                Duration.hours(selectedPeakHour.first)
-                    .plus(Duration.minutes(selectedPeakHour.second))
+                selectedPeakHour.first.hours
+                    .plus(selectedPeakHour.second.minutes)
             ),
             preferredUnit = selectedUnitNonNull
         )

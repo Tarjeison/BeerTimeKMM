@@ -16,5 +16,6 @@ iosApp/.idea/*
 .cxx
 local.properties
 iosApp/iosApp.xcworkspace/xcuserdata/*
+iosApp/Pods/Pods.xcodeproj/xcuserdata/*
 /androidApp/release/*
-*google-services.json*
+androidApp/google-services.json

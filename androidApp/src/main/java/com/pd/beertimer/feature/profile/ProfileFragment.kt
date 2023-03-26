@@ -15,7 +15,6 @@ import com.pd.beertimer.util.observe
 import com.pd.beertimer.util.viewBinding
 import com.tlapp.beertimemm.models.Gender
 import com.tlapp.beertimemm.storage.PreferredVolume
-import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -50,12 +49,12 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             binding.etWeight.setText(it.weight.toString())
             when (it.gender) {
                 Gender.FEMALE -> {
-                    ibFemale.isSelected = true
-                    ibFemale.setBackgroundColor(Color.LTGRAY)
+                    binding.ibFemale.isSelected = true
+                    binding.ibFemale.setBackgroundColor(Color.LTGRAY)
                 }
                 Gender.MALE -> {
-                    ibMale.isSelected = true
-                    ibMale.setBackgroundColor(Color.LTGRAY)
+                    binding.ibMale.isSelected = true
+                    binding.ibMale.setBackgroundColor(Color.LTGRAY)
                 }
             }
         }
